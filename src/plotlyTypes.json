@@ -1,0 +1,6158 @@
+[
+    {
+        "name": "StaticPlots",
+        "props": [
+            {
+                "name": "resize",
+                "returnType": {
+                    "name": "PlotData"
+                },
+                "parameters": [
+                    {
+                        "name": "root",
+                        "type": {
+                            "name": "Root"
+                        }
+                    },
+                    {
+                        "name": "str",
+                        "type": {
+                            "name": "String"
+                        }
+                    },
+                    {
+                        "name": "func",
+                        "type": {
+                            "parameters": [],
+                            "returnType": {
+                                "name": "String"
+                            }
+                        }
+                    },
+                    {
+                        "name": "union",
+                        "type": {
+                            "types": [
+                                {
+                                    "name": "Number"
+                                },
+                                {
+                                    "name": "Point"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Point",
+        "props": [
+            {
+                "name": "x",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "y",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "z",
+                "type": {
+                    "name": "number"
+                }
+            }
+        ]
+    },
+    {
+        "name": "PlotScatterDataPoint",
+        "props": [
+            {
+                "name": "curveNumber",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "data",
+                "type": {
+                    "name": "PlotData"
+                }
+            },
+            {
+                "name": "pointIndex",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "pointNumber",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "x",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "xaxis",
+                "type": {
+                    "name": "LayoutAxis"
+                }
+            },
+            {
+                "name": "y",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "yaxis",
+                "type": {
+                    "name": "LayoutAxis"
+                }
+            }
+        ]
+    },
+    {
+        "name": "PlotDatum",
+        "props": [
+            {
+                "name": "curveNumber",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "data",
+                "type": {
+                    "name": "PlotData"
+                }
+            },
+            {
+                "name": "pointIndex",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "pointNumber",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "x",
+                "type": {
+                    "name": "Datum"
+                }
+            },
+            {
+                "name": "xaxis",
+                "type": {
+                    "name": "LayoutAxis"
+                }
+            },
+            {
+                "name": "y",
+                "type": {
+                    "name": "Datum"
+                }
+            },
+            {
+                "name": "yaxis",
+                "type": {
+                    "name": "LayoutAxis"
+                }
+            }
+        ]
+    },
+    {
+        "name": "PlotMouseEvent",
+        "props": [
+            {
+                "name": "points",
+                "type": {
+                    "elementType": {
+                        "name": "PlotDatum"
+                    }
+                }
+            },
+            {
+                "name": "event",
+                "type": {
+                    "name": "MouseEvent"
+                }
+            }
+        ]
+    },
+    {
+        "name": "PlotCoordinate",
+        "props": [
+            {
+                "name": "x",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "y",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "pointNumber",
+                "type": {
+                    "name": "number"
+                }
+            }
+        ]
+    },
+    {
+        "name": "SelectionRange",
+        "props": [
+            {
+                "name": "x",
+                "type": {
+                    "elementType": {
+                        "name": "number"
+                    }
+                }
+            },
+            {
+                "name": "y",
+                "type": {
+                    "elementType": {
+                        "name": "number"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "PlotSelectionEvent",
+        "props": [
+            {
+                "name": "points",
+                "type": {
+                    "elementType": {
+                        "name": "PlotDatum"
+                    }
+                }
+            },
+            {
+                "name": "range",
+                "type": {
+                    "name": "SelectionRange"
+                }
+            },
+            {
+                "name": "lassoPoints",
+                "type": {
+                    "name": "SelectionRange"
+                }
+            }
+        ]
+    },
+    {
+        "name": "PlotAxis",
+        "props": [
+            {
+                "name": "range",
+                "type": {
+                    "tupleTypes": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "name": "number"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "autorange",
+                "type": {
+                    "name": "boolean"
+                }
+            }
+        ]
+    },
+    {
+        "name": "PlotScene",
+        "props": [
+            {
+                "name": "center",
+                "type": {
+                    "name": "Point"
+                }
+            },
+            {
+                "name": "eye",
+                "type": {
+                    "name": "Point"
+                }
+            },
+            {
+                "name": "up",
+                "type": {
+                    "name": "Point"
+                }
+            }
+        ]
+    },
+    {
+        "name": "PlotRelayoutEvent",
+        "props": [
+            {
+                "name": "xaxis",
+                "type": {
+                    "name": "PlotAxis"
+                }
+            },
+            {
+                "name": "yaxis",
+                "type": {
+                    "name": "PlotAxis"
+                }
+            },
+            {
+                "name": "scene",
+                "type": {
+                    "name": "PlotScene"
+                }
+            }
+        ]
+    },
+    {
+        "name": "ClickAnnotationEvent",
+        "props": [
+            {
+                "name": "index",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "annotation",
+                "type": {
+                    "name": "Annotations"
+                }
+            },
+            {
+                "name": "fullAnnotation",
+                "type": {
+                    "name": "Annotations"
+                }
+            },
+            {
+                "name": "event",
+                "type": {
+                    "name": "MouseEvent"
+                }
+            }
+        ]
+    },
+    {
+        "name": "FrameAnimationEvent",
+        "props": [
+            {
+                "name": "name",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "frame",
+                "type": {
+                    "name": "Frame"
+                }
+            },
+            {
+                "name": "animation",
+                "type": {
+                    "nestedTypes": [
+                        {
+                            "nestedTypes": [
+                                {
+                                    "name": "number"
+                                },
+                                {
+                                    "name": "boolean"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Transition"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "LegendClickEvent",
+        "props": [
+            {
+                "name": "event",
+                "type": {
+                    "name": "MouseEvent"
+                }
+            },
+            {
+                "name": "node",
+                "type": {
+                    "name": "PlotlyHTMLElement"
+                }
+            },
+            {
+                "name": "curveNumber",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "expandedIndex",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "data",
+                "type": {
+                    "elementType": {
+                        "name": "Data"
+                    }
+                }
+            },
+            {
+                "name": "layout",
+                "type": {
+                    "name": "Partial<Layout>"
+                }
+            },
+            {
+                "name": "frames",
+                "type": {
+                    "elementType": {
+                        "name": "Frame"
+                    }
+                }
+            },
+            {
+                "name": "config",
+                "type": {
+                    "name": "Partial<Config>"
+                }
+            },
+            {
+                "name": "fullData",
+                "type": {
+                    "elementType": {
+                        "name": "Data"
+                    }
+                }
+            },
+            {
+                "name": "fullLayout",
+                "type": {
+                    "name": "Partial<Layout>"
+                }
+            }
+        ]
+    },
+    {
+        "name": "SliderChangeEvent",
+        "props": [
+            {
+                "name": "slider",
+                "type": {
+                    "name": "Slider"
+                }
+            },
+            {
+                "name": "step",
+                "type": {
+                    "name": "SliderStep"
+                }
+            },
+            {
+                "name": "interaction",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "previousActive",
+                "type": {
+                    "name": "number"
+                }
+            }
+        ]
+    },
+    {
+        "name": "SliderStartEvent",
+        "props": [
+            {
+                "name": "slider",
+                "type": {
+                    "name": "Slider"
+                }
+            }
+        ]
+    },
+    {
+        "name": "SliderEndEvent",
+        "props": [
+            {
+                "name": "slider",
+                "type": {
+                    "name": "Slider"
+                }
+            },
+            {
+                "name": "step",
+                "type": {
+                    "name": "SliderStep"
+                }
+            }
+        ]
+    },
+    {
+        "name": "BeforePlotEvent",
+        "props": [
+            {
+                "name": "data",
+                "type": {
+                    "elementType": {
+                        "name": "Data"
+                    }
+                }
+            },
+            {
+                "name": "layout",
+                "type": {
+                    "name": "Partial<Layout>"
+                }
+            },
+            {
+                "name": "config",
+                "type": {
+                    "name": "Partial<Config>"
+                }
+            }
+        ]
+    },
+    {
+        "name": "x",
+        "props": [
+            {
+                "name": "f",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": []
+            }
+        ]
+    },
+    {
+        "name": "PlotlyHTMLElement",
+        "props": [
+            {
+                "name": "on",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": {
+                            "types": [
+                                {
+                                    "literal": "'plotly_click'"
+                                },
+                                {
+                                    "literal": "'plotly_hover'"
+                                },
+                                {
+                                    "literal": "'plotly_unhover'"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "callback",
+                        "type": {
+                            "parameters": [
+                                {
+                                    "name": "event",
+                                    "type": {
+                                        "name": "PlotMouseEvent"
+                                    }
+                                }
+                            ],
+                            "returnType": {
+                                "name": "void"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "on",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": {
+                            "types": [
+                                {
+                                    "literal": "'plotly_selecting'"
+                                },
+                                {
+                                    "literal": "'plotly_selected'"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "callback",
+                        "type": {
+                            "parameters": [
+                                {
+                                    "name": "event",
+                                    "type": {
+                                        "name": "PlotSelectionEvent"
+                                    }
+                                }
+                            ],
+                            "returnType": {
+                                "name": "void"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "on",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": {
+                            "literal": "'plotly_restyle'"
+                        }
+                    },
+                    {
+                        "name": "callback",
+                        "type": {
+                            "parameters": [
+                                {
+                                    "name": "data",
+                                    "type": {
+                                        "name": "PlotRestyleEvent"
+                                    }
+                                }
+                            ],
+                            "returnType": {
+                                "name": "void"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "on",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": {
+                            "literal": "'plotly_relayout'"
+                        }
+                    },
+                    {
+                        "name": "callback",
+                        "type": {
+                            "parameters": [
+                                {
+                                    "name": "event",
+                                    "type": {
+                                        "name": "PlotRelayoutEvent"
+                                    }
+                                }
+                            ],
+                            "returnType": {
+                                "name": "void"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "on",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": {
+                            "literal": "'plotly_clickannotation'"
+                        }
+                    },
+                    {
+                        "name": "callback",
+                        "type": {
+                            "parameters": [
+                                {
+                                    "name": "event",
+                                    "type": {
+                                        "name": "ClickAnnotationEvent"
+                                    }
+                                }
+                            ],
+                            "returnType": {
+                                "name": "void"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "on",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": {
+                            "literal": "'plotly_animatingframe'"
+                        }
+                    },
+                    {
+                        "name": "callback",
+                        "type": {
+                            "parameters": [
+                                {
+                                    "name": "event",
+                                    "type": {
+                                        "name": "FrameAnimationEvent"
+                                    }
+                                }
+                            ],
+                            "returnType": {
+                                "name": "void"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "on",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": {
+                            "types": [
+                                {
+                                    "literal": "'plotly_legendclick'"
+                                },
+                                {
+                                    "literal": "'plotly_legenddoubleclick'"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "callback",
+                        "type": {
+                            "parameters": [
+                                {
+                                    "name": "event",
+                                    "type": {
+                                        "name": "LegendClickEvent"
+                                    }
+                                }
+                            ],
+                            "returnType": {
+                                "name": "boolean"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "on",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": {
+                            "literal": "'plotly_sliderchange'"
+                        }
+                    },
+                    {
+                        "name": "callback",
+                        "type": {
+                            "parameters": [
+                                {
+                                    "name": "event",
+                                    "type": {
+                                        "name": "SliderChangeEvent"
+                                    }
+                                }
+                            ],
+                            "returnType": {
+                                "name": "void"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "on",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": {
+                            "literal": "'plotly_sliderend'"
+                        }
+                    },
+                    {
+                        "name": "callback",
+                        "type": {
+                            "parameters": [
+                                {
+                                    "name": "event",
+                                    "type": {
+                                        "name": "SliderEndEvent"
+                                    }
+                                }
+                            ],
+                            "returnType": {
+                                "name": "void"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "on",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": {
+                            "literal": "'plotly_sliderstart'"
+                        }
+                    },
+                    {
+                        "name": "callback",
+                        "type": {
+                            "parameters": [
+                                {
+                                    "name": "event",
+                                    "type": {
+                                        "name": "SliderStartEvent"
+                                    }
+                                }
+                            ],
+                            "returnType": {
+                                "name": "void"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "on",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": {
+                            "literal": "'plotly_event'"
+                        }
+                    },
+                    {
+                        "name": "callback",
+                        "type": {
+                            "parameters": [
+                                {
+                                    "name": "data",
+                                    "type": {
+                                        "name": "any"
+                                    }
+                                }
+                            ],
+                            "returnType": {
+                                "name": "void"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "on",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": {
+                            "literal": "'plotly_beforeplot'"
+                        }
+                    },
+                    {
+                        "name": "callback",
+                        "type": {
+                            "parameters": [
+                                {
+                                    "name": "event",
+                                    "type": {
+                                        "name": "BeforePlotEvent"
+                                    }
+                                }
+                            ],
+                            "returnType": {
+                                "name": "boolean"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "on",
+                "returnType": {
+                    "name": "void"
+                },
+                "parameters": [
+                    {
+                        "name": "event",
+                        "type": {
+                            "types": [
+                                {
+                                    "literal": "'plotly_afterexport'"
+                                },
+                                {
+                                    "literal": "'plotly_afterplot'"
+                                },
+                                {
+                                    "literal": "'plotly_animated'"
+                                },
+                                {
+                                    "literal": "'plotly_animationinterrupted'"
+                                },
+                                {
+                                    "literal": "'plotly_autosize'"
+                                },
+                                {
+                                    "literal": "'plotly_beforeexport'"
+                                },
+                                {
+                                    "literal": "'plotly_deselect'"
+                                },
+                                {
+                                    "literal": "'plotly_doubleclick'"
+                                },
+                                {
+                                    "literal": "'plotly_framework'"
+                                },
+                                {
+                                    "literal": "'plotly_redraw'"
+                                },
+                                {
+                                    "literal": "'plotly_transitioning'"
+                                },
+                                {
+                                    "literal": "'plotly_transitioninterrupted'"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "callback",
+                        "type": {
+                            "parameters": [],
+                            "returnType": {
+                                "name": "void"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "removeAllListeners",
+                "type": {
+                    "parameters": [
+                        {
+                            "name": "handler",
+                            "type": {
+                                "name": "string"
+                            }
+                        }
+                    ],
+                    "returnType": {
+                        "name": "void"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "ToImgopts",
+        "props": [
+            {
+                "name": "format",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'jpeg'"
+                        },
+                        {
+                            "literal": "'png'"
+                        },
+                        {
+                            "literal": "'webp'"
+                        },
+                        {
+                            "literal": "'svg'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "width",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "height",
+                "type": {
+                    "name": "number"
+                }
+            }
+        ]
+    },
+    {
+        "name": "DownloadImgopts",
+        "props": [
+            {
+                "name": "format",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'jpeg'"
+                        },
+                        {
+                            "literal": "'png'"
+                        },
+                        {
+                            "literal": "'webp'"
+                        },
+                        {
+                            "literal": "'svg'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "width",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "height",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "filename",
+                "type": {
+                    "name": "string"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Layout",
+        "props": [
+            {
+                "name": "title",
+                "type": {
+                    "types": [
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "name": "Partial<{\n\t\ttext: string;\n\t\tfont: Partial<Font>;\n\t\txref: 'container' | 'paper';\n\t\tyref: 'container' | 'paper';\n\t\tx: number;\n\t\ty: number;\n\t\txanchor: 'auto' | 'left' | 'center' | 'right';\n\t\tyanchor: 'auto' | 'top' | 'middle' | 'bottom';\n\t\tpad: Partial<Padding>\n\t}>"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "titlefont",
+                "type": {
+                    "name": "Partial<Font>"
+                }
+            },
+            {
+                "name": "autosize",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "showlegend",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "paper_bgcolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "plot_bgcolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "separators",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "hidesources",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "xaxis",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "xaxis2",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "xaxis3",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "xaxis4",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "xaxis5",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "xaxis6",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "xaxis7",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "xaxis8",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "xaxis9",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "yaxis",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "yaxis2",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "yaxis3",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "yaxis4",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "yaxis5",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "yaxis6",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "yaxis7",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "yaxis8",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "yaxis9",
+                "type": {
+                    "name": "Partial<LayoutAxis>"
+                }
+            },
+            {
+                "name": "margin",
+                "type": {
+                    "name": "Partial<Margin>"
+                }
+            },
+            {
+                "name": "height",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "width",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "hovermode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'closest'"
+                        },
+                        {
+                            "literal": "'x'"
+                        },
+                        {
+                            "literal": "'y'"
+                        },
+                        {
+                            "literal": "false"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "hoverlabel",
+                "type": {
+                    "name": "Partial<HoverLabel>"
+                }
+            },
+            {
+                "name": "calendar",
+                "type": {
+                    "name": "Calendar"
+                }
+            },
+            {
+                "name": "'xaxis.range'",
+                "type": {
+                    "tupleTypes": [
+                        {
+                            "name": "Datum"
+                        },
+                        {
+                            "name": "Datum"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "'xaxis.range[0]'",
+                "type": {
+                    "name": "Datum"
+                }
+            },
+            {
+                "name": "'xaxis.range[1]'",
+                "type": {
+                    "name": "Datum"
+                }
+            },
+            {
+                "name": "'yaxis.range'",
+                "type": {
+                    "tupleTypes": [
+                        {
+                            "name": "Datum"
+                        },
+                        {
+                            "name": "Datum"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "'yaxis.range[0]'",
+                "type": {
+                    "name": "Datum"
+                }
+            },
+            {
+                "name": "'yaxis.range[1]'",
+                "type": {
+                    "name": "Datum"
+                }
+            },
+            {
+                "name": "'yaxis.type'",
+                "type": {
+                    "name": "AxisType"
+                }
+            },
+            {
+                "name": "'xaxis.type'",
+                "type": {
+                    "name": "AxisType"
+                }
+            },
+            {
+                "name": "'xaxis.autorange'",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "'yaxis.autorange'",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "ternary",
+                "type": {
+                    "nestedTypes": []
+                }
+            },
+            {
+                "name": "geo",
+                "type": {
+                    "nestedTypes": []
+                }
+            },
+            {
+                "name": "mapbox",
+                "type": {
+                    "nestedTypes": []
+                }
+            },
+            {
+                "name": "radialaxis",
+                "type": {
+                    "name": "Partial<Axis>"
+                }
+            },
+            {
+                "name": "angularaxis",
+                "type": {
+                    "nestedTypes": []
+                }
+            },
+            {
+                "name": "direction",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'clockwise'"
+                        },
+                        {
+                            "literal": "'counterclockwise'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "dragmode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'zoom'"
+                        },
+                        {
+                            "literal": "'pan'"
+                        },
+                        {
+                            "literal": "'select'"
+                        },
+                        {
+                            "literal": "'lasso'"
+                        },
+                        {
+                            "literal": "'orbit'"
+                        },
+                        {
+                            "literal": "'turntable'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "orientation",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "annotations",
+                "type": {
+                    "name": "Array<Partial<Annotations>>"
+                }
+            },
+            {
+                "name": "shapes",
+                "type": {
+                    "name": "Array<Partial<Shape>>"
+                }
+            },
+            {
+                "name": "images",
+                "type": {
+                    "name": "Array<Partial<Image>>"
+                }
+            },
+            {
+                "name": "updatemenus",
+                "type": {
+                    "nestedTypes": []
+                }
+            },
+            {
+                "name": "sliders",
+                "type": {
+                    "name": "Array<Partial<Slider>>"
+                }
+            },
+            {
+                "name": "legend",
+                "type": {
+                    "name": "Partial<Legend>"
+                }
+            },
+            {
+                "name": "font",
+                "type": {
+                    "name": "Partial<Font>"
+                }
+            },
+            {
+                "name": "scene",
+                "type": {
+                    "name": "Partial<Scene>"
+                }
+            },
+            {
+                "name": "barmode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "\"stack\""
+                        },
+                        {
+                            "literal": "\"group\""
+                        },
+                        {
+                            "literal": "\"overlay\""
+                        },
+                        {
+                            "literal": "\"relative\""
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "bargap",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "bargroupgap",
+                "type": {
+                    "name": "number"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Legend",
+        "props": [
+            {
+                "name": "traceorder",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'grouped'"
+                        },
+                        {
+                            "literal": "'normal'"
+                        },
+                        {
+                            "literal": "'reversed'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "x",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "y",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "borderwidth",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "orientation",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'v'"
+                        },
+                        {
+                            "literal": "'h'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "tracegroupgap",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "xanchor",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'auto'"
+                        },
+                        {
+                            "literal": "'left'"
+                        },
+                        {
+                            "literal": "'center'"
+                        },
+                        {
+                            "literal": "'right'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "yanchor",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'auto'"
+                        },
+                        {
+                            "literal": "'top'"
+                        },
+                        {
+                            "literal": "'middle'"
+                        },
+                        {
+                            "literal": "'bottom'"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "Axis",
+        "props": [
+            {
+                "name": "visible",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "color",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "title",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "titlefont",
+                "type": {
+                    "name": "Partial<Font>"
+                }
+            },
+            {
+                "name": "type",
+                "type": {
+                    "name": "AxisType"
+                }
+            },
+            {
+                "name": "autorange",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "true"
+                        },
+                        {
+                            "literal": "false"
+                        },
+                        {
+                            "literal": "'reversed'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "rangemode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'normal'"
+                        },
+                        {
+                            "literal": "'tozero'"
+                        },
+                        {
+                            "literal": "'nonnegative'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "range",
+                "type": {
+                    "elementType": {
+                        "name": "any"
+                    }
+                }
+            },
+            {
+                "name": "tickmode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'auto'"
+                        },
+                        {
+                            "literal": "'linear'"
+                        },
+                        {
+                            "literal": "'array'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "nticks",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "tick0",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "name": "string"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "dtick",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "name": "string"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "tickvals",
+                "type": {
+                    "elementType": {
+                        "name": "any"
+                    }
+                }
+            },
+            {
+                "name": "ticktext",
+                "type": {
+                    "elementType": {
+                        "name": "string"
+                    }
+                }
+            },
+            {
+                "name": "ticks",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'outside'"
+                        },
+                        {
+                            "literal": "'inside'"
+                        },
+                        {
+                            "literal": "''"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "mirror",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "true"
+                        },
+                        {
+                            "literal": "'ticks'"
+                        },
+                        {
+                            "literal": "false"
+                        },
+                        {
+                            "literal": "'all'"
+                        },
+                        {
+                            "literal": "'allticks'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "ticklen",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "tickwidth",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "tickcolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "showticklabels",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "showspikes",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "spikecolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "spikethickness",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "categoryorder",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'trace'"
+                        },
+                        {
+                            "literal": "'category ascending'"
+                        },
+                        {
+                            "literal": "'category descending'"
+                        },
+                        {
+                            "literal": "'array'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "categoryarray",
+                "type": {
+                    "elementType": {
+                        "name": "any"
+                    }
+                }
+            },
+            {
+                "name": "tickfont",
+                "type": {
+                    "name": "Partial<Font>"
+                }
+            },
+            {
+                "name": "tickangle",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "tickprefix",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "showtickprefix",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'all'"
+                        },
+                        {
+                            "literal": "'first'"
+                        },
+                        {
+                            "literal": "'last'"
+                        },
+                        {
+                            "literal": "'none'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "ticksuffix",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "showticksuffix",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'all'"
+                        },
+                        {
+                            "literal": "'first'"
+                        },
+                        {
+                            "literal": "'last'"
+                        },
+                        {
+                            "literal": "'none'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "showexponent",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'all'"
+                        },
+                        {
+                            "literal": "'first'"
+                        },
+                        {
+                            "literal": "'last'"
+                        },
+                        {
+                            "literal": "'none'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "exponentformat",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'none'"
+                        },
+                        {
+                            "literal": "'e'"
+                        },
+                        {
+                            "literal": "'E'"
+                        },
+                        {
+                            "literal": "'power'"
+                        },
+                        {
+                            "literal": "'SI'"
+                        },
+                        {
+                            "literal": "'B'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "separatethousands",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "tickformat",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "hoverformat",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "showline",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "linecolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "linewidth",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "showgrid",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "gridcolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "gridwidth",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "zeroline",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "zerolinecolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "zerolinewidth",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "calendar",
+                "type": {
+                    "name": "Calendar"
+                }
+            }
+        ]
+    },
+    {
+        "name": "LayoutAxis",
+        "props": [
+            {
+                "name": "fixedrange",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "scaleanchor",
+                "type": {
+                    "name": "AxisName"
+                }
+            },
+            {
+                "name": "scaleratio",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "constrain",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'range'"
+                        },
+                        {
+                            "literal": "'domain'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "constraintoward",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'left'"
+                        },
+                        {
+                            "literal": "'center'"
+                        },
+                        {
+                            "literal": "'right'"
+                        },
+                        {
+                            "literal": "'top'"
+                        },
+                        {
+                            "literal": "'middle'"
+                        },
+                        {
+                            "literal": "'bottom'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "spikedash",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "spikemode",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "anchor",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'free'"
+                        },
+                        {
+                            "name": "AxisName"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "side",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'top'"
+                        },
+                        {
+                            "literal": "'bottom'"
+                        },
+                        {
+                            "literal": "'left'"
+                        },
+                        {
+                            "literal": "'right'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "overlaying",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'free'"
+                        },
+                        {
+                            "name": "AxisName"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "layer",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'above traces'"
+                        },
+                        {
+                            "literal": "'below traces'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "domain",
+                "type": {
+                    "elementType": {
+                        "name": "number"
+                    }
+                }
+            },
+            {
+                "name": "position",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "rangeslider",
+                "type": {
+                    "name": "Partial<RangeSlider>"
+                }
+            },
+            {
+                "name": "rangeselector",
+                "type": {
+                    "name": "Partial<RangeSelector>"
+                }
+            },
+            {
+                "name": "automargin",
+                "type": {
+                    "name": "boolean"
+                }
+            }
+        ]
+    },
+    {
+        "name": "SceneAxis",
+        "props": [
+            {
+                "name": "spikesides",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "showbackground",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "backgroundcolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "showaxeslabels",
+                "type": {
+                    "name": "boolean"
+                }
+            }
+        ]
+    },
+    {
+        "name": "ShapeLine",
+        "props": [
+            {
+                "name": "color",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "width",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "dash",
+                "type": {
+                    "name": "Dash"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Shape",
+        "props": [
+            {
+                "name": "visible",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "layer",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'below'"
+                        },
+                        {
+                            "literal": "'above'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "type",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'rect'"
+                        },
+                        {
+                            "literal": "'circle'"
+                        },
+                        {
+                            "literal": "'line'"
+                        },
+                        {
+                            "literal": "'path'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "path",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "xref",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'x'"
+                        },
+                        {
+                            "literal": "'paper'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "yref",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'paper'"
+                        },
+                        {
+                            "literal": "'y'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "x0",
+                "type": {
+                    "name": "Datum"
+                }
+            },
+            {
+                "name": "y0",
+                "type": {
+                    "name": "Datum"
+                }
+            },
+            {
+                "name": "x1",
+                "type": {
+                    "name": "Datum"
+                }
+            },
+            {
+                "name": "y1",
+                "type": {
+                    "name": "Datum"
+                }
+            },
+            {
+                "name": "fillcolor",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "opacity",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "line",
+                "type": {
+                    "name": "Partial<ShapeLine>"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Margin",
+        "props": [
+            {
+                "name": "t",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "b",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "l",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "r",
+                "type": {
+                    "name": "number"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Icon",
+        "props": [
+            {
+                "name": "width",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "path",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "ascent",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "descent",
+                "type": {
+                    "name": "number"
+                }
+            }
+        ]
+    },
+    {
+        "name": "ModeBarButton",
+        "props": [
+            {
+                "name": "name",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "title",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "icon",
+                "type": {
+                    "types": [
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "name": "Icon"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "gravity",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "click",
+                "type": {
+                    "name": "ButtonClickEvent"
+                }
+            },
+            {
+                "name": "attr",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "val",
+                "type": {
+                    "name": "any"
+                }
+            },
+            {
+                "name": "toggle",
+                "type": {
+                    "name": "boolean"
+                }
+            }
+        ]
+    },
+    {
+        "name": "ErrorOptions",
+        "props": [
+            {
+                "name": "visible",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "symmetric",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "color",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "thickness",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "width",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "opacity",
+                "type": {
+                    "name": "number"
+                }
+            }
+        ]
+    },
+    {
+        "name": "PlotData",
+        "props": [
+            {
+                "name": "type",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'bar'"
+                        },
+                        {
+                            "literal": "'box'"
+                        },
+                        {
+                            "literal": "'candlestick'"
+                        },
+                        {
+                            "literal": "'choropleth'"
+                        },
+                        {
+                            "literal": "'contour'"
+                        },
+                        {
+                            "literal": "'heatmap'"
+                        },
+                        {
+                            "literal": "'histogram'"
+                        },
+                        {
+                            "literal": "'mesh3d'"
+                        },
+                        {
+                            "literal": "'ohlc'"
+                        },
+                        {
+                            "literal": "'parcoords'"
+                        },
+                        {
+                            "literal": "'pie'"
+                        },
+                        {
+                            "literal": "'pointcloud'"
+                        },
+                        {
+                            "literal": "'scatter'"
+                        },
+                        {
+                            "literal": "'scatter3d'"
+                        },
+                        {
+                            "literal": "'scattergeo'"
+                        },
+                        {
+                            "literal": "'scattergl'"
+                        },
+                        {
+                            "literal": "'scatterpolar'"
+                        },
+                        {
+                            "literal": "'scatterternary'"
+                        },
+                        {
+                            "literal": "'surface'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "x",
+                "type": {
+                    "types": [
+                        {
+                            "elementType": {
+                                "name": "Datum"
+                            }
+                        },
+                        {
+                            "elementType": {
+                                "elementType": {
+                                    "name": "Datum"
+                                }
+                            }
+                        },
+                        {
+                            "name": "TypedArray"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "y",
+                "type": {
+                    "types": [
+                        {
+                            "elementType": {
+                                "name": "Datum"
+                            }
+                        },
+                        {
+                            "elementType": {
+                                "elementType": {
+                                    "name": "Datum"
+                                }
+                            }
+                        },
+                        {
+                            "name": "TypedArray"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "z",
+                "type": {
+                    "types": [
+                        {
+                            "elementType": {
+                                "name": "Datum"
+                            }
+                        },
+                        {
+                            "elementType": {
+                                "elementType": {
+                                    "name": "Datum"
+                                }
+                            }
+                        },
+                        {
+                            "elementType": {
+                                "elementType": {
+                                    "elementType": {
+                                        "name": "Datum"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "TypedArray"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "xy",
+                "type": {
+                    "name": "Float32Array"
+                }
+            },
+            {
+                "name": "error_x",
+                "type": {
+                    "name": "ErrorBar"
+                }
+            },
+            {
+                "name": "error_y",
+                "type": {
+                    "name": "ErrorBar"
+                }
+            },
+            {
+                "name": "xaxis",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "yaxis",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "text",
+                "type": {
+                    "types": [
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "elementType": {
+                                "name": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "line",
+                "type": {
+                    "name": "Partial<ScatterLine>"
+                }
+            },
+            {
+                "name": "'line.color'",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "'line.width'",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "'line.dash'",
+                "type": {
+                    "name": "Dash"
+                }
+            },
+            {
+                "name": "'line.shape'",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'linear'"
+                        },
+                        {
+                            "literal": "'spline'"
+                        },
+                        {
+                            "literal": "'hv'"
+                        },
+                        {
+                            "literal": "'vh'"
+                        },
+                        {
+                            "literal": "'hvh'"
+                        },
+                        {
+                            "literal": "'vhv'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "'line.smoothing'",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "'line.simplify'",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "marker",
+                "type": {
+                    "name": "Partial<PlotMarker>"
+                }
+            },
+            {
+                "name": "'marker.symbol'",
+                "type": {
+                    "types": [
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "elementType": {
+                                "name": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "'marker.color'",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "'marker.opacity'",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "elementType": {
+                                "name": "number"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "'marker.size'",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "elementType": {
+                                "name": "number"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "'marker.maxdisplayed'",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "'marker.sizeref'",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "'marker.sizemax'",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "'marker.sizemin'",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "'marker.sizemode'",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'diameter'"
+                        },
+                        {
+                            "literal": "'area'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "'marker.showscale'",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "'marker.line'",
+                "type": {
+                    "name": "Partial<ScatterMarkerLine>"
+                }
+            },
+            {
+                "name": "'marker.colorbar'",
+                "type": {
+                    "nestedTypes": []
+                }
+            },
+            {
+                "name": "mode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'lines'"
+                        },
+                        {
+                            "literal": "'markers'"
+                        },
+                        {
+                            "literal": "'text'"
+                        },
+                        {
+                            "literal": "'lines+markers'"
+                        },
+                        {
+                            "literal": "'text+markers'"
+                        },
+                        {
+                            "literal": "'text+lines'"
+                        },
+                        {
+                            "literal": "'text+lines+markers'"
+                        },
+                        {
+                            "literal": "'none'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "hoveron",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'points'"
+                        },
+                        {
+                            "literal": "'fills'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "hoverinfo",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'all'"
+                        },
+                        {
+                            "literal": "'name'"
+                        },
+                        {
+                            "literal": "'none'"
+                        },
+                        {
+                            "literal": "'skip'"
+                        },
+                        {
+                            "literal": "'text'"
+                        },
+                        {
+                            "literal": "'x'"
+                        },
+                        {
+                            "literal": "'x+text'"
+                        },
+                        {
+                            "literal": "'x+name'"
+                        },
+                        {
+                            "literal": "'x+y'"
+                        },
+                        {
+                            "literal": "'x+y+text'"
+                        },
+                        {
+                            "literal": "'x+y+name'"
+                        },
+                        {
+                            "literal": "'x+y+z'"
+                        },
+                        {
+                            "literal": "'x+y+z+text'"
+                        },
+                        {
+                            "literal": "'x+y+z+name'"
+                        },
+                        {
+                            "literal": "'y+name'"
+                        },
+                        {
+                            "literal": "'y+x'"
+                        },
+                        {
+                            "literal": "'y+text'"
+                        },
+                        {
+                            "literal": "'y+x+text'"
+                        },
+                        {
+                            "literal": "'y+x+name'"
+                        },
+                        {
+                            "literal": "'y+z'"
+                        },
+                        {
+                            "literal": "'y+z+text'"
+                        },
+                        {
+                            "literal": "'y+z+name'"
+                        },
+                        {
+                            "literal": "'y+x+z'"
+                        },
+                        {
+                            "literal": "'y+x+z+text'"
+                        },
+                        {
+                            "literal": "'y+x+z+name'"
+                        },
+                        {
+                            "literal": "'z+x'"
+                        },
+                        {
+                            "literal": "'z+x+text'"
+                        },
+                        {
+                            "literal": "'z+x+name'"
+                        },
+                        {
+                            "literal": "'z+y+x'"
+                        },
+                        {
+                            "literal": "'z+y+x+text'"
+                        },
+                        {
+                            "literal": "'z+y+x+name'"
+                        },
+                        {
+                            "literal": "'z+x+y'"
+                        },
+                        {
+                            "literal": "'z+x+y+text'"
+                        },
+                        {
+                            "literal": "'z+x+y+name'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "hoverlabel",
+                "type": {
+                    "name": "Partial<HoverLabel>"
+                }
+            },
+            {
+                "name": "hovertemplate",
+                "type": {
+                    "types": [
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "elementType": {
+                                "name": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "textinfo",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'label'"
+                        },
+                        {
+                            "literal": "'label+text'"
+                        },
+                        {
+                            "literal": "'label+value'"
+                        },
+                        {
+                            "literal": "'label+percent'"
+                        },
+                        {
+                            "literal": "'label+text+value'"
+                        },
+                        {
+                            "literal": "'label+text+percent'"
+                        },
+                        {
+                            "literal": "'label+value+percent'"
+                        },
+                        {
+                            "literal": "'text'"
+                        },
+                        {
+                            "literal": "'text+value'"
+                        },
+                        {
+                            "literal": "'text+percent'"
+                        },
+                        {
+                            "literal": "'text+value+percent'"
+                        },
+                        {
+                            "literal": "'value'"
+                        },
+                        {
+                            "literal": "'value+percent'"
+                        },
+                        {
+                            "literal": "'percent'"
+                        },
+                        {
+                            "literal": "'none'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "textposition",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "\"top left\""
+                        },
+                        {
+                            "literal": "\"top center\""
+                        },
+                        {
+                            "literal": "\"top right\""
+                        },
+                        {
+                            "literal": "\"middle left\""
+                        },
+                        {
+                            "literal": "\"middle center\""
+                        },
+                        {
+                            "literal": "\"middle right\""
+                        },
+                        {
+                            "literal": "\"bottom left\""
+                        },
+                        {
+                            "literal": "\"bottom center\""
+                        },
+                        {
+                            "literal": "\"bottom right\""
+                        },
+                        {
+                            "literal": "\"inside\""
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "fill",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'none'"
+                        },
+                        {
+                            "literal": "'tozeroy'"
+                        },
+                        {
+                            "literal": "'tozerox'"
+                        },
+                        {
+                            "literal": "'tonexty'"
+                        },
+                        {
+                            "literal": "'tonextx'"
+                        },
+                        {
+                            "literal": "'toself'"
+                        },
+                        {
+                            "literal": "'tonext'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "fillcolor",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "legendgroup",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "name",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "stackgroup",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "connectgaps",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "visible",
+                "type": {
+                    "types": [
+                        {
+                            "name": "boolean"
+                        },
+                        {
+                            "literal": "'legendonly'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "transforms",
+                "type": {
+                    "elementType": {
+                        "name": "DataTransform"
+                    }
+                }
+            },
+            {
+                "name": "orientation",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'v'"
+                        },
+                        {
+                            "literal": "'h'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "width",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "elementType": {
+                                "name": "number"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "boxmean",
+                "type": {
+                    "types": [
+                        {
+                            "name": "boolean"
+                        },
+                        {
+                            "literal": "'sd'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "colorscale",
+                "type": {
+                    "types": [
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "name": "Array<[number, string]>"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "zsmooth",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'fast'"
+                        },
+                        {
+                            "literal": "'best'"
+                        },
+                        {
+                            "literal": "false"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "ygap",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "xgap",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "transpose",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "autobinx",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "xbins",
+                "type": {
+                    "nestedTypes": [
+                        {
+                            "types": [
+                                {
+                                    "name": "number"
+                                },
+                                {
+                                    "name": "string"
+                                }
+                            ]
+                        },
+                        {
+                            "types": [
+                                {
+                                    "name": "number"
+                                },
+                                {
+                                    "name": "string"
+                                }
+                            ]
+                        },
+                        {
+                            "types": [
+                                {
+                                    "name": "number"
+                                },
+                                {
+                                    "name": "string"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "values",
+                "type": {
+                    "elementType": {
+                        "name": "Datum"
+                    }
+                }
+            },
+            {
+                "name": "labels",
+                "type": {
+                    "elementType": {
+                        "name": "Datum"
+                    }
+                }
+            },
+            {
+                "name": "hole",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "rotation",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "theta",
+                "type": {
+                    "elementType": {
+                        "name": "Datum"
+                    }
+                }
+            },
+            {
+                "name": "r",
+                "type": {
+                    "elementType": {
+                        "name": "Datum"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "TransformStyle",
+        "props": [
+            {
+                "name": "target",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "elementType": {
+                                "name": "number"
+                            }
+                        },
+                        {
+                            "elementType": {
+                                "name": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "value",
+                "type": {
+                    "name": "Partial<PlotData>"
+                }
+            }
+        ]
+    },
+    {
+        "name": "TransformAggregation",
+        "props": [
+            {
+                "name": "target",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "func",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'count'"
+                        },
+                        {
+                            "literal": "'sum'"
+                        },
+                        {
+                            "literal": "'avg'"
+                        },
+                        {
+                            "literal": "'median'"
+                        },
+                        {
+                            "literal": "'mode'"
+                        },
+                        {
+                            "literal": "'rms'"
+                        },
+                        {
+                            "literal": "'stddev'"
+                        },
+                        {
+                            "literal": "'min'"
+                        },
+                        {
+                            "literal": "'max'"
+                        },
+                        {
+                            "literal": "'first'"
+                        },
+                        {
+                            "literal": "'last'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "funcmode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'sample'"
+                        },
+                        {
+                            "literal": "'population'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "enabled",
+                "type": {
+                    "name": "boolean"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Transform",
+        "props": [
+            {
+                "name": "type",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'aggregate'"
+                        },
+                        {
+                            "literal": "'filter'"
+                        },
+                        {
+                            "literal": "'groupby'"
+                        },
+                        {
+                            "literal": "'sort'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "enabled",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "target",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "elementType": {
+                                "name": "number"
+                            }
+                        },
+                        {
+                            "elementType": {
+                                "name": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "operation",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "aggregations",
+                "type": {
+                    "elementType": {
+                        "name": "TransformAggregation"
+                    }
+                }
+            },
+            {
+                "name": "preservegaps",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "groups",
+                "type": {
+                    "types": [
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "elementType": {
+                                "name": "number"
+                            }
+                        },
+                        {
+                            "elementType": {
+                                "name": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "nameformat",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "styles",
+                "type": {
+                    "elementType": {
+                        "name": "TransformStyle"
+                    }
+                }
+            },
+            {
+                "name": "value",
+                "type": {
+                    "name": "any"
+                }
+            },
+            {
+                "name": "order",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'ascending'"
+                        },
+                        {
+                            "literal": "'descending'"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "ColorBar",
+        "props": [
+            {
+                "name": "thicknessmode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'fraction'"
+                        },
+                        {
+                            "literal": "'pixels'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "thickness",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "lenmode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'fraction'"
+                        },
+                        {
+                            "literal": "'pixels'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "len",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "x",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "xanchor",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'left'"
+                        },
+                        {
+                            "literal": "'center'"
+                        },
+                        {
+                            "literal": "'right'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "xpad",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "y",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "yanchor",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'top'"
+                        },
+                        {
+                            "literal": "'middle'"
+                        },
+                        {
+                            "literal": "'bottom'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "ypad",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "outlinecolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "outlinewidth",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "bordercolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "borderwidth",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "bgcolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "tickmode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'auto'"
+                        },
+                        {
+                            "literal": "'linear'"
+                        },
+                        {
+                            "literal": "'array'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "nticks",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "tick0",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "name": "string"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "dtick",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "name": "string"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "tickvals",
+                "type": {
+                    "types": [
+                        {
+                            "elementType": {
+                                "name": "Datum"
+                            }
+                        },
+                        {
+                            "elementType": {
+                                "elementType": {
+                                    "name": "Datum"
+                                }
+                            }
+                        },
+                        {
+                            "elementType": {
+                                "elementType": {
+                                    "elementType": {
+                                        "name": "Datum"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "TypedArray"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "ticktext",
+                "type": {
+                    "types": [
+                        {
+                            "elementType": {
+                                "name": "Datum"
+                            }
+                        },
+                        {
+                            "elementType": {
+                                "elementType": {
+                                    "name": "Datum"
+                                }
+                            }
+                        },
+                        {
+                            "elementType": {
+                                "elementType": {
+                                    "elementType": {
+                                        "name": "Datum"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "TypedArray"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "ticks",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'outside'"
+                        },
+                        {
+                            "literal": "'inside'"
+                        },
+                        {
+                            "literal": "''"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "ticklen",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "tickwidth",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "tickcolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "showticklabels",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "tickfont",
+                "type": {
+                    "name": "Font"
+                }
+            },
+            {
+                "name": "tickangle",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "tickformat",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "tickformatstops",
+                "type": {
+                    "nestedTypes": [
+                        {
+                            "elementType": {
+                                "name": "any"
+                            }
+                        },
+                        {
+                            "name": "string"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "tickprefix",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "showtickprefix",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'all'"
+                        },
+                        {
+                            "literal": "'first'"
+                        },
+                        {
+                            "literal": "'last'"
+                        },
+                        {
+                            "literal": "'none'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "ticksuffix",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "showticksuffix",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'all'"
+                        },
+                        {
+                            "literal": "'first'"
+                        },
+                        {
+                            "literal": "'last'"
+                        },
+                        {
+                            "literal": "'none'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "separatethousands",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "exponentformat",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'none'"
+                        },
+                        {
+                            "literal": "'e'"
+                        },
+                        {
+                            "literal": "'E'"
+                        },
+                        {
+                            "literal": "'power'"
+                        },
+                        {
+                            "literal": "'SI'"
+                        },
+                        {
+                            "literal": "'B'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "showexponent",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'all'"
+                        },
+                        {
+                            "literal": "'first'"
+                        },
+                        {
+                            "literal": "'last'"
+                        },
+                        {
+                            "literal": "'none'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "title",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "titlefont",
+                "type": {
+                    "name": "Font"
+                }
+            },
+            {
+                "name": "titleside",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'right'"
+                        },
+                        {
+                            "literal": "'top'"
+                        },
+                        {
+                            "literal": "'bottom'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "tickvalssrc",
+                "type": {
+                    "name": "any"
+                }
+            },
+            {
+                "name": "ticktextsrc",
+                "type": {
+                    "name": "any"
+                }
+            }
+        ]
+    },
+    {
+        "name": "PlotMarker",
+        "props": [
+            {
+                "name": "symbol",
+                "type": {
+                    "types": [
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "elementType": {
+                                "name": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "color",
+                "type": {
+                    "types": [
+                        {
+                            "name": "Color"
+                        },
+                        {
+                            "elementType": {
+                                "name": "Color"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "colors",
+                "type": {
+                    "elementType": {
+                        "name": "Color"
+                    }
+                }
+            },
+            {
+                "name": "colorscale",
+                "type": {
+                    "types": [
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "elementType": {
+                                "name": "string"
+                            }
+                        },
+                        {
+                            "name": "Array<Array<(string | number)>>"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "cauto",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "cmax",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "cmin",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "autocolorscale",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "reversescale",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "opacity",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "elementType": {
+                                "name": "number"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "size",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "elementType": {
+                                "name": "number"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "maxdisplayed",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "sizeref",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "sizemax",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "sizemin",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "sizemode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'diameter'"
+                        },
+                        {
+                            "literal": "'area'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "showscale",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "line",
+                "type": {
+                    "name": "Partial<ScatterMarkerLine>"
+                }
+            },
+            {
+                "name": "width",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "colorbar",
+                "type": {
+                    "name": "Partial<ColorBar>"
+                }
+            },
+            {
+                "name": "gradient",
+                "type": {
+                    "nestedTypes": [
+                        {
+                            "types": [
+                                {
+                                    "literal": "'radial'"
+                                },
+                                {
+                                    "literal": "'horizontal'"
+                                },
+                                {
+                                    "literal": "'vertical'"
+                                },
+                                {
+                                    "literal": "'none'"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Color"
+                        },
+                        {
+                            "name": "any"
+                        },
+                        {
+                            "name": "any"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "ScatterMarkerLine",
+        "props": [
+            {
+                "name": "width",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "elementType": {
+                                "name": "number"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "color",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "colorscale",
+                "type": {
+                    "types": [
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "elementType": {
+                                "name": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "cauto",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "cmax",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "cmin",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "autocolorscale",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "reversescale",
+                "type": {
+                    "name": "boolean"
+                }
+            }
+        ]
+    },
+    {
+        "name": "ScatterLine",
+        "props": [
+            {
+                "name": "color",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "width",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "dash",
+                "type": {
+                    "name": "Dash"
+                }
+            },
+            {
+                "name": "shape",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'linear'"
+                        },
+                        {
+                            "literal": "'spline'"
+                        },
+                        {
+                            "literal": "'hv'"
+                        },
+                        {
+                            "literal": "'vh'"
+                        },
+                        {
+                            "literal": "'hvh'"
+                        },
+                        {
+                            "literal": "'vhv'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "smoothing",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "simplify",
+                "type": {
+                    "name": "boolean"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Font",
+        "props": [
+            {
+                "name": "family",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "size",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "color",
+                "type": {
+                    "name": "Color"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Edits",
+        "props": [
+            {
+                "name": "annotationPosition",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "annotationTail",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "annotationText",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "axisTitleText",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "colorbarPosition",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "colorbarTitleText",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "legendPosition",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "legendText",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "shapePosition",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "titleText",
+                "type": {
+                    "name": "boolean"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Config",
+        "props": [
+            {
+                "name": "toImageButtonOptions",
+                "type": {
+                    "name": "Partial<{\n\t\tfilename: string;\n\t\tscale: number;\n\t\tformat: 'png' | 'svg' | 'jpeg' | 'webp';\n\t\theight: number;\n\t\twidth: number;\n\t}>"
+                }
+            },
+            {
+                "name": "staticPlot",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "editable",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "edits",
+                "type": {
+                    "name": "Partial<Edits>"
+                }
+            },
+            {
+                "name": "autosizable",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "queueLength",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "fillFrame",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "frameMargins",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "scrollZoom",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "doubleClick",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'reset+autosize'"
+                        },
+                        {
+                            "literal": "'reset'"
+                        },
+                        {
+                            "literal": "'autosize'"
+                        },
+                        {
+                            "literal": "false"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "showTips",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "showAxisDragHandles",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "showAxisRangeEntryBoxes",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "showLink",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "sendData",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "linkText",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "showSources",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "displayModeBar",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'hover'"
+                        },
+                        {
+                            "name": "boolean"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "modeBarButtonsToRemove",
+                "type": {
+                    "elementType": {
+                        "name": "ModeBarDefaultButtons"
+                    }
+                }
+            },
+            {
+                "name": "modeBarButtonsToAdd",
+                "type": {
+                    "types": [
+                        {
+                            "elementType": {
+                                "name": "ModeBarDefaultButtons"
+                            }
+                        },
+                        {
+                            "elementType": {
+                                "name": "ModeBarButton"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "modeBarButtons",
+                "type": {
+                    "types": [
+                        {
+                            "elementType": {
+                                "elementType": {
+                                    "name": "ModeBarDefaultButtons"
+                                }
+                            }
+                        },
+                        {
+                            "elementType": {
+                                "elementType": {
+                                    "name": "ModeBarButton"
+                                }
+                            }
+                        },
+                        {
+                            "literal": "false"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "displaylogo",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "plotGlPixelRatio",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "setBackground",
+                "type": {
+                    "parameters": [],
+                    "returnType": {
+                        "types": [
+                            {
+                                "name": "string"
+                            },
+                            {
+                                "literal": "'opaque'"
+                            },
+                            {
+                                "literal": "'transparent'"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "topojsonURL",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "mapboxAccessToken",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "logging",
+                "type": {
+                    "types": [
+                        {
+                            "name": "boolean"
+                        },
+                        {
+                            "literal": "0"
+                        },
+                        {
+                            "literal": "1"
+                        },
+                        {
+                            "literal": "2"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "globalTransforms",
+                "type": {
+                    "elementType": {
+                        "name": "any"
+                    }
+                }
+            },
+            {
+                "name": "locale",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "responsive",
+                "type": {
+                    "name": "boolean"
+                }
+            }
+        ]
+    },
+    {
+        "name": "RangeSlider",
+        "props": [
+            {
+                "name": "visible",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "thickness",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "range",
+                "type": {
+                    "tupleTypes": [
+                        {
+                            "name": "Datum"
+                        },
+                        {
+                            "name": "Datum"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "borderwidth",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "bordercolor",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "bgcolor",
+                "type": {
+                    "name": "string"
+                }
+            }
+        ]
+    },
+    {
+        "name": "RangeSelectorButton",
+        "props": [
+            {
+                "name": "step",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'second'"
+                        },
+                        {
+                            "literal": "'minute'"
+                        },
+                        {
+                            "literal": "'hour'"
+                        },
+                        {
+                            "literal": "'day'"
+                        },
+                        {
+                            "literal": "'month'"
+                        },
+                        {
+                            "literal": "'year'"
+                        },
+                        {
+                            "literal": "'all'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "stepmode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'backward'"
+                        },
+                        {
+                            "literal": "'todate'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "count",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "label",
+                "type": {
+                    "name": "string"
+                }
+            }
+        ]
+    },
+    {
+        "name": "RangeSelector",
+        "props": [
+            {
+                "name": "buttons",
+                "type": {
+                    "name": "Array<Partial<RangeSelectorButton>>"
+                }
+            },
+            {
+                "name": "visible",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "x",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "xanchor",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'auto'"
+                        },
+                        {
+                            "literal": "'left'"
+                        },
+                        {
+                            "literal": "'center'"
+                        },
+                        {
+                            "literal": "'right'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "y",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "yanchor",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'auto'"
+                        },
+                        {
+                            "literal": "'top'"
+                        },
+                        {
+                            "literal": "'middle'"
+                        },
+                        {
+                            "literal": "'bottom'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "activecolor",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "borderwidth",
+                "type": {
+                    "name": "number"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Camera",
+        "props": [
+            {
+                "name": "up",
+                "type": {
+                    "name": "Partial<Point>"
+                }
+            },
+            {
+                "name": "center",
+                "type": {
+                    "name": "Partial<Point>"
+                }
+            },
+            {
+                "name": "eye",
+                "type": {
+                    "name": "Partial<Point>"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Label",
+        "props": [
+            {
+                "name": "bgcolor",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "bordercolor",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "font",
+                "type": {
+                    "name": "Partial<Font>"
+                }
+            }
+        ]
+    },
+    {
+        "name": "HoverLabel",
+        "props": [
+            {
+                "name": "align",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "\"left\""
+                        },
+                        {
+                            "literal": "\"right\""
+                        },
+                        {
+                            "literal": "\"auto\""
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "namelength",
+                "type": {
+                    "name": "number"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Annotations",
+        "props": [
+            {
+                "name": "visible",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "text",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "textangle",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "width",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "height",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "opacity",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "align",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'left'"
+                        },
+                        {
+                            "literal": "'center'"
+                        },
+                        {
+                            "literal": "'right'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "valign",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'top'"
+                        },
+                        {
+                            "literal": "'middle'"
+                        },
+                        {
+                            "literal": "'bottom'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "borderpad",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "borderwidth",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "showarrow",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "arrowcolor",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "arrowhead",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "startarrowhead",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "arrowside",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'end'"
+                        },
+                        {
+                            "literal": "'start'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "arrowsize",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "startarrowsize",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "arrowwidth",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "standoff",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "startstandoff",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "ax",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "ay",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "axref",
+                "type": {
+                    "literal": "'pixel'"
+                }
+            },
+            {
+                "name": "ayref",
+                "type": {
+                    "literal": "'pixel'"
+                }
+            },
+            {
+                "name": "xref",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'paper'"
+                        },
+                        {
+                            "literal": "'x'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "x",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "name": "string"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "xanchor",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'auto'"
+                        },
+                        {
+                            "literal": "'left'"
+                        },
+                        {
+                            "literal": "'center'"
+                        },
+                        {
+                            "literal": "'right'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "xshift",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "yref",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'paper'"
+                        },
+                        {
+                            "literal": "'y'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "y",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "name": "string"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "yanchor",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'auto'"
+                        },
+                        {
+                            "literal": "'top'"
+                        },
+                        {
+                            "literal": "'middle'"
+                        },
+                        {
+                            "literal": "'bottom'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "yshift",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "clicktoshow",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "false"
+                        },
+                        {
+                            "literal": "'onoff'"
+                        },
+                        {
+                            "literal": "'onout'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "xclick",
+                "type": {
+                    "name": "any"
+                }
+            },
+            {
+                "name": "yclick",
+                "type": {
+                    "name": "any"
+                }
+            },
+            {
+                "name": "hovertext",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "hoverlabel",
+                "type": {
+                    "name": "Partial<HoverLabel>"
+                }
+            },
+            {
+                "name": "captureevents",
+                "type": {
+                    "name": "boolean"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Image",
+        "props": [
+            {
+                "name": "visible",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "source",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "layer",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'above'"
+                        },
+                        {
+                            "literal": "'below'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "sizex",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "sizey",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "sizing",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'fill'"
+                        },
+                        {
+                            "literal": "'contain'"
+                        },
+                        {
+                            "literal": "'stretch'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "opacity",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "x",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "name": "string"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "y",
+                "type": {
+                    "types": [
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "name": "string"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "xanchor",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'left'"
+                        },
+                        {
+                            "literal": "'center'"
+                        },
+                        {
+                            "literal": "'right'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "yanchor",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'top'"
+                        },
+                        {
+                            "literal": "'middle'"
+                        },
+                        {
+                            "literal": "'bottom'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "xref",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'paper'"
+                        },
+                        {
+                            "literal": "'x'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "yref",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'paper'"
+                        },
+                        {
+                            "literal": "'y'"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "Scene",
+        "props": [
+            {
+                "name": "bgcolor",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "camera",
+                "type": {
+                    "name": "Partial<Camera>"
+                }
+            },
+            {
+                "name": "domain",
+                "type": {
+                    "name": "Partial<Domain>"
+                }
+            },
+            {
+                "name": "aspectmode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'auto'"
+                        },
+                        {
+                            "literal": "'cube'"
+                        },
+                        {
+                            "literal": "'data'"
+                        },
+                        {
+                            "literal": "'manual'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "aspectratio",
+                "type": {
+                    "name": "Partial<Point>"
+                }
+            },
+            {
+                "name": "xaxis",
+                "type": {
+                    "name": "Partial<SceneAxis>"
+                }
+            },
+            {
+                "name": "yaxis",
+                "type": {
+                    "name": "Partial<SceneAxis>"
+                }
+            },
+            {
+                "name": "zaxis",
+                "type": {
+                    "name": "Partial<SceneAxis>"
+                }
+            },
+            {
+                "name": "dragmode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'orbit'"
+                        },
+                        {
+                            "literal": "'turntable'"
+                        },
+                        {
+                            "literal": "'zoom'"
+                        },
+                        {
+                            "literal": "'pan'"
+                        },
+                        {
+                            "literal": "false"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "hovermode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'closest'"
+                        },
+                        {
+                            "literal": "false"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "annotations",
+                "type": {
+                    "types": [
+                        {
+                            "name": "Partial<Annotations>"
+                        },
+                        {
+                            "name": "Array<Partial<Annotations>>"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "captureevents",
+                "type": {
+                    "name": "boolean"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Domain",
+        "props": [
+            {
+                "name": "x",
+                "type": {
+                    "elementType": {
+                        "name": "number"
+                    }
+                }
+            },
+            {
+                "name": "y",
+                "type": {
+                    "elementType": {
+                        "name": "number"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Frame",
+        "props": [
+            {
+                "name": "group",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "name",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "traces",
+                "type": {
+                    "elementType": {
+                        "name": "number"
+                    }
+                }
+            },
+            {
+                "name": "baseframe",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "data",
+                "type": {
+                    "elementType": {
+                        "name": "Data"
+                    }
+                }
+            },
+            {
+                "name": "layout",
+                "type": {
+                    "name": "Partial<Layout>"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Transition",
+        "props": [
+            {
+                "name": "duration",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "easing",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'linear'"
+                        },
+                        {
+                            "literal": "'quad'"
+                        },
+                        {
+                            "literal": "'cubic'"
+                        },
+                        {
+                            "literal": "'sin'"
+                        },
+                        {
+                            "literal": "'exp'"
+                        },
+                        {
+                            "literal": "'circle'"
+                        },
+                        {
+                            "literal": "'elastic'"
+                        },
+                        {
+                            "literal": "'back'"
+                        },
+                        {
+                            "literal": "'bounce'"
+                        },
+                        {
+                            "literal": "'linear-in'"
+                        },
+                        {
+                            "literal": "'quad-in'"
+                        },
+                        {
+                            "literal": "'cubic-in'"
+                        },
+                        {
+                            "literal": "'sin-in'"
+                        },
+                        {
+                            "literal": "'exp-in'"
+                        },
+                        {
+                            "literal": "'circle-in'"
+                        },
+                        {
+                            "literal": "'elastic-in'"
+                        },
+                        {
+                            "literal": "'back-in'"
+                        },
+                        {
+                            "literal": "'bounce-in'"
+                        },
+                        {
+                            "literal": "'linear-out'"
+                        },
+                        {
+                            "literal": "'quad-out'"
+                        },
+                        {
+                            "literal": "'cubic-out'"
+                        },
+                        {
+                            "literal": "'sin-out'"
+                        },
+                        {
+                            "literal": "'exp-out'"
+                        },
+                        {
+                            "literal": "'circle-out'"
+                        },
+                        {
+                            "literal": "'elastic-out'"
+                        },
+                        {
+                            "literal": "'back-out'"
+                        },
+                        {
+                            "literal": "'bounce-out'"
+                        },
+                        {
+                            "literal": "'linear-in-out'"
+                        },
+                        {
+                            "literal": "'quad-in-out'"
+                        },
+                        {
+                            "literal": "'cubic-in-out'"
+                        },
+                        {
+                            "literal": "'sin-in-out'"
+                        },
+                        {
+                            "literal": "'exp-in-out'"
+                        },
+                        {
+                            "literal": "'circle-in-out'"
+                        },
+                        {
+                            "literal": "'elastic-in-out'"
+                        },
+                        {
+                            "literal": "'back-in-out'"
+                        },
+                        {
+                            "literal": "'bounce-in-out'"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "SliderStep",
+        "props": [
+            {
+                "name": "visible",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "method",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'animate'"
+                        },
+                        {
+                            "literal": "'relayout'"
+                        },
+                        {
+                            "literal": "'restyle'"
+                        },
+                        {
+                            "literal": "'skip'"
+                        },
+                        {
+                            "literal": "'update'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "args",
+                "type": {
+                    "elementType": {
+                        "name": "any"
+                    }
+                }
+            },
+            {
+                "name": "label",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "value",
+                "type": {
+                    "name": "string"
+                }
+            },
+            {
+                "name": "execute",
+                "type": {
+                    "name": "boolean"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Padding",
+        "props": [
+            {
+                "name": "t",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "r",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "b",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "l",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "editType",
+                "type": {
+                    "literal": "'arraydraw'"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Slider",
+        "props": [
+            {
+                "name": "visible",
+                "type": {
+                    "name": "boolean"
+                }
+            },
+            {
+                "name": "active",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "steps",
+                "type": {
+                    "name": "Array<Partial<SliderStep>>"
+                }
+            },
+            {
+                "name": "lenmode",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'fraction'"
+                        },
+                        {
+                            "literal": "'pixels'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "len",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "x",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "y",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "pad",
+                "type": {
+                    "name": "Partial<Padding>"
+                }
+            },
+            {
+                "name": "xanchor",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'auto'"
+                        },
+                        {
+                            "literal": "'left'"
+                        },
+                        {
+                            "literal": "'center'"
+                        },
+                        {
+                            "literal": "'right'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "yanchor",
+                "type": {
+                    "types": [
+                        {
+                            "literal": "'auto'"
+                        },
+                        {
+                            "literal": "'top'"
+                        },
+                        {
+                            "literal": "'middle'"
+                        },
+                        {
+                            "literal": "'bottom'"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "transition",
+                "type": {
+                    "name": "Transition"
+                }
+            },
+            {
+                "name": "currentvalue",
+                "type": {
+                    "nestedTypes": [
+                        {
+                            "name": "boolean"
+                        },
+                        {
+                            "types": [
+                                {
+                                    "literal": "'left'"
+                                },
+                                {
+                                    "literal": "'center'"
+                                },
+                                {
+                                    "literal": "'right'"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "number"
+                        },
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "name": "string"
+                        },
+                        {
+                            "name": "Partial<Font>"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "font",
+                "type": {
+                    "name": "Font"
+                }
+            },
+            {
+                "name": "activebgcolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "bgcolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "bordercolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "borderwidth",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "ticklen",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "tickcolor",
+                "type": {
+                    "name": "Color"
+                }
+            },
+            {
+                "name": "tickwidth",
+                "type": {
+                    "name": "number"
+                }
+            },
+            {
+                "name": "minorticklen",
+                "type": {
+                    "name": "number"
+                }
+            }
+        ]
+    }
+]
