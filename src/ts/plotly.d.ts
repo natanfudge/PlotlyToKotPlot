@@ -19,8 +19,7 @@
 export as namespace Plotly;
 
 export interface StaticPlots {
-	//TODO: undo changes (  ORIGINAL = resize(root: Root): void;  )
-	resize(root: Root, str : String, func : () => String, union : Number | Point): PlotData;
+	resize(root: Root): void;
 }
 
 export const Plots: StaticPlots;
