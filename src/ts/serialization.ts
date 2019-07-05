@@ -1,48 +1,36 @@
 import * as ts from "typescript";
-import * as fs from "fs";
-import { Interface, Signature, PropertySignature, MethodSignature, KotPlotType, UnionType, LiteralType, ReferenceType, TupleType, FunctionType, ArrayType, TypeLiteral, Parameter } from "./types";
+import {
+    Interface,
+    Signature,
+    PropertySignature,
+    FunctionSignature,
+    KotPlotType,
+    UnionType,
+    LiteralType,
+    ReferenceType,
+    TupleType,
+    FunctionType,
+    ArrayType,
+    TypeLiteral,
+    Parameter,
+    TypeAlias, Constant
+} from "./types";
+import {getProgram} from "./root";
 
 //TODO: add documentation of members
 
 /** Generate documentation for all classes in a set of .ts files */
-
-let file = "src/ts/plotly.d.ts";
-// Build a program using the set of root file names in fileNames
-let program = ts.createProgram([file], {
-    target: ts.ScriptTarget.ES5,
-    module: ts.ModuleKind.CommonJS
-});
+let checker = getProgram().getTypeChecker();
 
 
-let checker = program.getTypeChecker();
-
-let sourceFiles = program.getSourceFiles();
-
-let targetSourceFile = sourceFiles.filter((sourceFile) => sourceFile.fileName === file)[0];
-// let children = targetSourceFile.getChildren()
-let output: Interface[] = targetSourceFile.getChildren()[0].getChildren()
-    .filter((node) => ts.isInterfaceDeclaration(node))
-    .map((node) => {
-        // let interfaceNode =
-        // let symbol = checker.getSymbolAtLocation(interfaceNode.name);
-        return serializeInterface(node as ts.InterfaceDeclaration)
-    });
-
-
-// print out the doc
-fs.writeFileSync("src/ts/plotlyTypes.json", JSON.stringify(output, undefined, 4));
-
-
-function getDocumentation(node: ts.InterfaceDeclaration | ts.MethodSignature | ts.PropertySignature): string {
+function getDocumentation(node: ts.InterfaceDeclaration | ts.MethodSignature | ts.PropertySignature | ts.FunctionDeclaration): string {
     let symbol = checker.getSymbolAtLocation(node.name);
     return ts.displayPartsToString(symbol.getDocumentationComment(checker))
 }
 
 
 /** Serialize a class symbol information */
-function serializeInterface(interfaceNode: ts.InterfaceDeclaration): Interface {
-    // x : ts.isTypeElement
-    // let x : ts.MethodSignature
+export function serializeInterface(interfaceNode: ts.InterfaceDeclaration): Interface {
     let props = interfaceNode.members.map((member) =>
         serializeSignature(member)
     );
@@ -68,13 +56,13 @@ function serializeSignature(member: ts.TypeElement): Signature {
 
 }
 
-function serializeMethodSignature(methodSignature: ts.MethodSignature): MethodSignature {
+function serializeMethodSignature(methodSignature: ts.MethodSignature): FunctionSignature {
     return {
         name: methodSignature.name.getText(),
         returnType: getReturnType(methodSignature),
         parameters: methodSignature.parameters.map((param) => serializeParameter(param)),
         documentation: getDocumentation(methodSignature),
-        signatureType:"MethodSignature"
+        signatureType: "FunctionSignature"
     }
 }
 
@@ -84,7 +72,7 @@ function serializePropertySignature(propertySignature: ts.PropertySignature): Pr
         name: propertySignature.name.getText(),
         type: serializeTypeOfNode(propertySignature),
         documentation: getDocumentation(propertySignature),
-        signatureType:"PropertySignature"
+        signatureType: "PropertySignature"
     }
 
 }
@@ -137,29 +125,27 @@ function serializeTypeNode(nodeTypeAsNode: ts.TypeNode): KotPlotType {
 function serializeTypeOfNode(node: ts.Node): KotPlotType {
     // For some reason sometimes the type is a node and in those cases we use the type as a node
     let nodeTypeAsNode = getTypeNode(node);
-    // let symbol =
-    // let type = checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!)
     return serializeTypeNode(nodeTypeAsNode)
 }
 
 function serializeUnionType(typeNode: ts.UnionTypeNode): UnionType {
     return {
         types: typeNode.types.map((node) => serializeTypeNode(node)),
-        kotPlotTypeType:"UnionType"
+        kotPlotTypeType: "UnionType"
     }
 }
 
 function serializeLiteralType(typeNode: ts.LiteralTypeNode): LiteralType {
     return {
-        literal: (typeNode.literal as ts.StringLiteral).getText(),
-        kotPlotTypeType:"LiteralType"
+        literal: (typeNode.literal as ts.StringLiteral).getText().replace(/'/g, "").replace(/"/g, ""),
+        kotPlotTypeType: "LiteralType"
     }
 }
 
 function serializeReferenceType(typeNode: ts.TypeReferenceNode): ReferenceType {
     return {
         name: typeNode.getText(),
-        kotPlotTypeType:"ReferenceType"
+        kotPlotTypeType: "ReferenceType"
     }
 }
 
@@ -167,7 +153,7 @@ function serializeReferenceType(typeNode: ts.TypeReferenceNode): ReferenceType {
 function serializeTupleType(typeNode: ts.TupleTypeNode): TupleType {
     return {
         tupleTypes: typeNode.elementTypes.map((typeNode) => serializeTypeNode(typeNode)),
-        kotPlotTypeType:"TupleType"
+        kotPlotTypeType: "TupleType"
     }
 }
 
@@ -177,28 +163,28 @@ function serializeFunctionType(typeNode: ts.FunctionTypeNode): FunctionType {
         // name: typeNode.name.getText(),
         parameters: typeNode.parameters.map((param) => serializeParameter(param)),
         returnType: getReturnType(typeNode),
-        kotPlotTypeType:"FunctionType"
+        kotPlotTypeType: "FunctionType"
     }
 }
 
 function serializeKeywordType(typenode: ts.KeywordTypeNode): ReferenceType {
     return {
         name: typenode.getText(),
-        kotPlotTypeType:"ReferenceType"
+        kotPlotTypeType: "ReferenceType"
     }
 }
 
 function serializeArrayType(typenode: ts.ArrayTypeNode): ArrayType {
     return {
         elementType: serializeTypeNode(typenode.elementType),
-        kotPlotTypeType:"ArrayType"
+        kotPlotTypeType: "ArrayType"
     }
 }
 
 function serializeTypeLiteral(typenode: ts.TypeLiteralNode): TypeLiteral {
     return {
         nestedProperties: typenode.members.map((member) => serializePropertySignature(member as ts.PropertySignature)/* serializeTypeOfNode(member)*/),
-        kotPlotTypeType:"TypeLiteral"
+        kotPlotTypeType: "TypeLiteral"
     }
 }
 
@@ -209,11 +195,33 @@ function serializeParameter(parameter: ts.ParameterDeclaration): Parameter {
     }
 }
 
-function getReturnType(typeNode: ts.FunctionTypeNode | ts.MethodSignature): KotPlotType {
+function getReturnType(typeNode: ts.FunctionTypeNode | ts.MethodSignature | ts.FunctionDeclaration): KotPlotType {
     let returnTypeNode = typeNode.getChildren().filter((child) => ts.isTypeNode(child))[0] as ts.TypeNode;
     return serializeTypeNode(returnTypeNode)
 }
 
 
+export function serializeTypeAlias(typeAlias: ts.TypeAliasDeclaration): TypeAlias {
+    return {
+        name : typeAlias.name.getText(),
+        type : serializeTypeNode(typeAlias.type)
+    }
+}
 
+export function serializeConstant(variableStatement: ts.VariableStatement): Constant {
+    return{
+        name: variableStatement.declarationList.declarations[0].name.getText(),
+        type: serializeTypeNode(variableStatement.declarationList.declarations[0].type)
+    }
 
+}
+
+export function serializeFunction(functionDeclaration: ts.FunctionDeclaration): FunctionSignature {
+    return {
+        name: functionDeclaration.name.getText(),
+        returnType: getReturnType(functionDeclaration),
+        parameters: functionDeclaration.parameters.map((param) => serializeParameter(param)),
+        documentation: getDocumentation(functionDeclaration),
+        signatureType: "FunctionSignature"
+    }
+}

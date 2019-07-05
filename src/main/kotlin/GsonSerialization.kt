@@ -7,7 +7,7 @@ fun createGson() : Gson {
     val signatureTypeFactory = RuntimeTypeAdapterFactory
         .of(Signature::class.java, "signatureType")
         .registerSubtype(PropertySignature::class.java)
-        .registerSubtype(MethodSignature::class.java)
+        .registerSubtype(FunctionSignature::class.java)
 
     val kotPlotTypeTypeFactory = RuntimeTypeAdapterFactory
         .of(KotPlotType::class.java, "kotPlotTypeType")

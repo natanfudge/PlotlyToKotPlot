@@ -803,15 +803,15 @@
                         "type": {
                             "types": [
                                 {
-                                    "literal": "'plotly_click'",
+                                    "literal": "plotly_click",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_hover'",
+                                    "literal": "plotly_hover",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_unhover'",
+                                    "literal": "plotly_unhover",
                                     "kotPlotTypeType": "LiteralType"
                                 }
                             ],
@@ -853,11 +853,11 @@
                         "type": {
                             "types": [
                                 {
-                                    "literal": "'plotly_selecting'",
+                                    "literal": "plotly_selecting",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_selected'",
+                                    "literal": "plotly_selected",
                                     "kotPlotTypeType": "LiteralType"
                                 }
                             ],
@@ -897,7 +897,7 @@
                     {
                         "name": "event",
                         "type": {
-                            "literal": "'plotly_restyle'",
+                            "literal": "plotly_restyle",
                             "kotPlotTypeType": "LiteralType"
                         }
                     },
@@ -934,7 +934,7 @@
                     {
                         "name": "event",
                         "type": {
-                            "literal": "'plotly_relayout'",
+                            "literal": "plotly_relayout",
                             "kotPlotTypeType": "LiteralType"
                         }
                     },
@@ -971,7 +971,7 @@
                     {
                         "name": "event",
                         "type": {
-                            "literal": "'plotly_clickannotation'",
+                            "literal": "plotly_clickannotation",
                             "kotPlotTypeType": "LiteralType"
                         }
                     },
@@ -1008,7 +1008,7 @@
                     {
                         "name": "event",
                         "type": {
-                            "literal": "'plotly_animatingframe'",
+                            "literal": "plotly_animatingframe",
                             "kotPlotTypeType": "LiteralType"
                         }
                     },
@@ -1047,11 +1047,11 @@
                         "type": {
                             "types": [
                                 {
-                                    "literal": "'plotly_legendclick'",
+                                    "literal": "plotly_legendclick",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_legenddoubleclick'",
+                                    "literal": "plotly_legenddoubleclick",
                                     "kotPlotTypeType": "LiteralType"
                                 }
                             ],
@@ -1091,7 +1091,7 @@
                     {
                         "name": "event",
                         "type": {
-                            "literal": "'plotly_sliderchange'",
+                            "literal": "plotly_sliderchange",
                             "kotPlotTypeType": "LiteralType"
                         }
                     },
@@ -1128,7 +1128,7 @@
                     {
                         "name": "event",
                         "type": {
-                            "literal": "'plotly_sliderend'",
+                            "literal": "plotly_sliderend",
                             "kotPlotTypeType": "LiteralType"
                         }
                     },
@@ -1165,7 +1165,7 @@
                     {
                         "name": "event",
                         "type": {
-                            "literal": "'plotly_sliderstart'",
+                            "literal": "plotly_sliderstart",
                             "kotPlotTypeType": "LiteralType"
                         }
                     },
@@ -1202,7 +1202,7 @@
                     {
                         "name": "event",
                         "type": {
-                            "literal": "'plotly_event'",
+                            "literal": "plotly_event",
                             "kotPlotTypeType": "LiteralType"
                         }
                     },
@@ -1239,7 +1239,7 @@
                     {
                         "name": "event",
                         "type": {
-                            "literal": "'plotly_beforeplot'",
+                            "literal": "plotly_beforeplot",
                             "kotPlotTypeType": "LiteralType"
                         }
                     },
@@ -1278,51 +1278,51 @@
                         "type": {
                             "types": [
                                 {
-                                    "literal": "'plotly_afterexport'",
+                                    "literal": "plotly_afterexport",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_afterplot'",
+                                    "literal": "plotly_afterplot",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_animated'",
+                                    "literal": "plotly_animated",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_animationinterrupted'",
+                                    "literal": "plotly_animationinterrupted",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_autosize'",
+                                    "literal": "plotly_autosize",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_beforeexport'",
+                                    "literal": "plotly_beforeexport",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_deselect'",
+                                    "literal": "plotly_deselect",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_doubleclick'",
+                                    "literal": "plotly_doubleclick",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_framework'",
+                                    "literal": "plotly_framework",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_redraw'",
+                                    "literal": "plotly_redraw",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_transitioning'",
+                                    "literal": "plotly_transitioning",
                                     "kotPlotTypeType": "LiteralType"
                                 },
                                 {
-                                    "literal": "'plotly_transitioninterrupted'",
+                                    "literal": "plotly_transitioninterrupted",
                                     "kotPlotTypeType": "LiteralType"
                                 }
                             ],
@@ -1376,19 +1376,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'jpeg'",
+                            "literal": "jpeg",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'png'",
+                            "literal": "png",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'webp'",
+                            "literal": "webp",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'svg'",
+                            "literal": "svg",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -1426,19 +1426,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'jpeg'",
+                            "literal": "jpeg",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'png'",
+                            "literal": "png",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'webp'",
+                            "literal": "webp",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'svg'",
+                            "literal": "svg",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -1755,15 +1755,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'closest'",
+                            "literal": "closest",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'x'",
+                            "literal": "x",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y'",
+                            "literal": "y",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
@@ -1952,11 +1952,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'clockwise'",
+                            "literal": "clockwise",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'counterclockwise'",
+                            "literal": "counterclockwise",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -1970,27 +1970,27 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'zoom'",
+                            "literal": "zoom",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'pan'",
+                            "literal": "pan",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'select'",
+                            "literal": "select",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'lasso'",
+                            "literal": "lasso",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'orbit'",
+                            "literal": "orbit",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'turntable'",
+                            "literal": "turntable",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2085,19 +2085,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "\"stack\"",
+                            "literal": "stack",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"group\"",
+                            "literal": "group",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"overlay\"",
+                            "literal": "overlay",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"relative\"",
+                            "literal": "relative",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2135,15 +2135,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'grouped'",
+                            "literal": "grouped",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'normal'",
+                            "literal": "normal",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'reversed'",
+                            "literal": "reversed",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2184,11 +2184,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'v'",
+                            "literal": "v",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'h'",
+                            "literal": "h",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2211,19 +2211,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'auto'",
+                            "literal": "auto",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'left'",
+                            "literal": "left",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'center'",
+                            "literal": "center",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'right'",
+                            "literal": "right",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2237,19 +2237,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'auto'",
+                            "literal": "auto",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'top'",
+                            "literal": "top",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'middle'",
+                            "literal": "middle",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bottom'",
+                            "literal": "bottom",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2322,7 +2322,7 @@
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'reversed'",
+                            "literal": "reversed",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2336,15 +2336,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'normal'",
+                            "literal": "normal",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'tozero'",
+                            "literal": "tozero",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'nonnegative'",
+                            "literal": "nonnegative",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2370,15 +2370,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'auto'",
+                            "literal": "auto",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'linear'",
+                            "literal": "linear",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'array'",
+                            "literal": "array",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2461,15 +2461,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'outside'",
+                            "literal": "outside",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'inside'",
+                            "literal": "inside",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "''",
+                            "literal": "",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2487,7 +2487,7 @@
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'ticks'",
+                            "literal": "ticks",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
@@ -2495,11 +2495,11 @@
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'all'",
+                            "literal": "all",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'allticks'",
+                            "literal": "allticks",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2576,19 +2576,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'trace'",
+                            "literal": "trace",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'category ascending'",
+                            "literal": "category ascending",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'category descending'",
+                            "literal": "category descending",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'array'",
+                            "literal": "array",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2641,19 +2641,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'all'",
+                            "literal": "all",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'first'",
+                            "literal": "first",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'last'",
+                            "literal": "last",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'none'",
+                            "literal": "none",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2676,19 +2676,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'all'",
+                            "literal": "all",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'first'",
+                            "literal": "first",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'last'",
+                            "literal": "last",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'none'",
+                            "literal": "none",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2702,19 +2702,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'all'",
+                            "literal": "all",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'first'",
+                            "literal": "first",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'last'",
+                            "literal": "last",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'none'",
+                            "literal": "none",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2728,27 +2728,27 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'none'",
+                            "literal": "none",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'e'",
+                            "literal": "e",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'E'",
+                            "literal": "E",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'power'",
+                            "literal": "power",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'SI'",
+                            "literal": "SI",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'B'",
+                            "literal": "B",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2912,11 +2912,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'range'",
+                            "literal": "range",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'domain'",
+                            "literal": "domain",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2930,27 +2930,27 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'left'",
+                            "literal": "left",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'center'",
+                            "literal": "center",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'right'",
+                            "literal": "right",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'top'",
+                            "literal": "top",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'middle'",
+                            "literal": "middle",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bottom'",
+                            "literal": "bottom",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -2982,7 +2982,7 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'free'",
+                            "literal": "free",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
@@ -3000,19 +3000,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'top'",
+                            "literal": "top",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bottom'",
+                            "literal": "bottom",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'left'",
+                            "literal": "left",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'right'",
+                            "literal": "right",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -3026,7 +3026,7 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'free'",
+                            "literal": "free",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
@@ -3044,11 +3044,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'above traces'",
+                            "literal": "above traces",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'below traces'",
+                            "literal": "below traces",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -3200,11 +3200,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'below'",
+                            "literal": "below",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'above'",
+                            "literal": "above",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -3218,19 +3218,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'rect'",
+                            "literal": "rect",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'circle'",
+                            "literal": "circle",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'line'",
+                            "literal": "line",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'path'",
+                            "literal": "path",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -3253,11 +3253,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'x'",
+                            "literal": "x",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'paper'",
+                            "literal": "paper",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -3271,11 +3271,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'paper'",
+                            "literal": "paper",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y'",
+                            "literal": "y",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -3589,79 +3589,79 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'bar'",
+                            "literal": "bar",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'box'",
+                            "literal": "box",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'candlestick'",
+                            "literal": "candlestick",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'choropleth'",
+                            "literal": "choropleth",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'contour'",
+                            "literal": "contour",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'heatmap'",
+                            "literal": "heatmap",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'histogram'",
+                            "literal": "histogram",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'mesh3d'",
+                            "literal": "mesh3d",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'ohlc'",
+                            "literal": "ohlc",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'parcoords'",
+                            "literal": "parcoords",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'pie'",
+                            "literal": "pie",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'pointcloud'",
+                            "literal": "pointcloud",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'scatter'",
+                            "literal": "scatter",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'scatter3d'",
+                            "literal": "scatter3d",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'scattergeo'",
+                            "literal": "scattergeo",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'scattergl'",
+                            "literal": "scattergl",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'scatterpolar'",
+                            "literal": "scatterpolar",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'scatterternary'",
+                            "literal": "scatterternary",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'surface'",
+                            "literal": "surface",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -3883,27 +3883,27 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'linear'",
+                            "literal": "linear",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'spline'",
+                            "literal": "spline",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'hv'",
+                            "literal": "hv",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'vh'",
+                            "literal": "vh",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'hvh'",
+                            "literal": "hvh",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'vhv'",
+                            "literal": "vhv",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -4052,11 +4052,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'diameter'",
+                            "literal": "diameter",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'area'",
+                            "literal": "area",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -4097,35 +4097,35 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'lines'",
+                            "literal": "lines",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'markers'",
+                            "literal": "markers",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'text'",
+                            "literal": "text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'lines+markers'",
+                            "literal": "lines+markers",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'text+markers'",
+                            "literal": "text+markers",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'text+lines'",
+                            "literal": "text+lines",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'text+lines+markers'",
+                            "literal": "text+lines+markers",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'none'",
+                            "literal": "none",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -4139,11 +4139,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'points'",
+                            "literal": "points",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'fills'",
+                            "literal": "fills",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -4157,139 +4157,139 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'all'",
+                            "literal": "all",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'name'",
+                            "literal": "name",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'none'",
+                            "literal": "none",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'skip'",
+                            "literal": "skip",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'text'",
+                            "literal": "text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'x'",
+                            "literal": "x",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'x+text'",
+                            "literal": "x+text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'x+name'",
+                            "literal": "x+name",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'x+y'",
+                            "literal": "x+y",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'x+y+text'",
+                            "literal": "x+y+text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'x+y+name'",
+                            "literal": "x+y+name",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'x+y+z'",
+                            "literal": "x+y+z",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'x+y+z+text'",
+                            "literal": "x+y+z+text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'x+y+z+name'",
+                            "literal": "x+y+z+name",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y+name'",
+                            "literal": "y+name",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y+x'",
+                            "literal": "y+x",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y+text'",
+                            "literal": "y+text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y+x+text'",
+                            "literal": "y+x+text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y+x+name'",
+                            "literal": "y+x+name",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y+z'",
+                            "literal": "y+z",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y+z+text'",
+                            "literal": "y+z+text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y+z+name'",
+                            "literal": "y+z+name",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y+x+z'",
+                            "literal": "y+x+z",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y+x+z+text'",
+                            "literal": "y+x+z+text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y+x+z+name'",
+                            "literal": "y+x+z+name",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'z+x'",
+                            "literal": "z+x",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'z+x+text'",
+                            "literal": "z+x+text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'z+x+name'",
+                            "literal": "z+x+name",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'z+y+x'",
+                            "literal": "z+y+x",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'z+y+x+text'",
+                            "literal": "z+y+x+text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'z+y+x+name'",
+                            "literal": "z+y+x+name",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'z+x+y'",
+                            "literal": "z+x+y",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'z+x+y+text'",
+                            "literal": "z+x+y+text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'z+x+y+name'",
+                            "literal": "z+x+y+name",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -4333,63 +4333,63 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'label'",
+                            "literal": "label",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'label+text'",
+                            "literal": "label+text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'label+value'",
+                            "literal": "label+value",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'label+percent'",
+                            "literal": "label+percent",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'label+text+value'",
+                            "literal": "label+text+value",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'label+text+percent'",
+                            "literal": "label+text+percent",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'label+value+percent'",
+                            "literal": "label+value+percent",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'text'",
+                            "literal": "text",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'text+value'",
+                            "literal": "text+value",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'text+percent'",
+                            "literal": "text+percent",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'text+value+percent'",
+                            "literal": "text+value+percent",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'value'",
+                            "literal": "value",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'value+percent'",
+                            "literal": "value+percent",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'percent'",
+                            "literal": "percent",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'none'",
+                            "literal": "none",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -4403,43 +4403,43 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "\"top left\"",
+                            "literal": "top left",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"top center\"",
+                            "literal": "top center",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"top right\"",
+                            "literal": "top right",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"middle left\"",
+                            "literal": "middle left",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"middle center\"",
+                            "literal": "middle center",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"middle right\"",
+                            "literal": "middle right",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"bottom left\"",
+                            "literal": "bottom left",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"bottom center\"",
+                            "literal": "bottom center",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"bottom right\"",
+                            "literal": "bottom right",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"inside\"",
+                            "literal": "inside",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -4453,31 +4453,31 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'none'",
+                            "literal": "none",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'tozeroy'",
+                            "literal": "tozeroy",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'tozerox'",
+                            "literal": "tozerox",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'tonexty'",
+                            "literal": "tonexty",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'tonextx'",
+                            "literal": "tonextx",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'toself'",
+                            "literal": "toself",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'tonext'",
+                            "literal": "tonext",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -4540,7 +4540,7 @@
                             "kotPlotTypeType": "ReferenceType"
                         },
                         {
-                            "literal": "'legendonly'",
+                            "literal": "legendonly",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -4566,11 +4566,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'v'",
+                            "literal": "v",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'h'",
+                            "literal": "h",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -4609,7 +4609,7 @@
                             "kotPlotTypeType": "ReferenceType"
                         },
                         {
-                            "literal": "'sd'",
+                            "literal": "sd",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -4641,11 +4641,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'fast'",
+                            "literal": "fast",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'best'",
+                            "literal": "best",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
@@ -4891,47 +4891,47 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'count'",
+                            "literal": "count",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'sum'",
+                            "literal": "sum",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'avg'",
+                            "literal": "avg",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'median'",
+                            "literal": "median",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'mode'",
+                            "literal": "mode",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'rms'",
+                            "literal": "rms",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'stddev'",
+                            "literal": "stddev",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'min'",
+                            "literal": "min",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'max'",
+                            "literal": "max",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'first'",
+                            "literal": "first",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'last'",
+                            "literal": "last",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -4945,11 +4945,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'sample'",
+                            "literal": "sample",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'population'",
+                            "literal": "population",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -4978,19 +4978,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'aggregate'",
+                            "literal": "aggregate",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'filter'",
+                            "literal": "filter",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'groupby'",
+                            "literal": "groupby",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'sort'",
+                            "literal": "sort",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -5133,11 +5133,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'ascending'",
+                            "literal": "ascending",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'descending'",
+                            "literal": "descending",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -5157,11 +5157,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'fraction'",
+                            "literal": "fraction",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'pixels'",
+                            "literal": "pixels",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -5184,11 +5184,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'fraction'",
+                            "literal": "fraction",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'pixels'",
+                            "literal": "pixels",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -5220,15 +5220,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'left'",
+                            "literal": "left",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'center'",
+                            "literal": "center",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'right'",
+                            "literal": "right",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -5260,15 +5260,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'top'",
+                            "literal": "top",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'middle'",
+                            "literal": "middle",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bottom'",
+                            "literal": "bottom",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -5336,15 +5336,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'auto'",
+                            "literal": "auto",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'linear'",
+                            "literal": "linear",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'array'",
+                            "literal": "array",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -5491,15 +5491,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'outside'",
+                            "literal": "outside",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'inside'",
+                            "literal": "inside",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "''",
+                            "literal": "",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -5616,19 +5616,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'all'",
+                            "literal": "all",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'first'",
+                            "literal": "first",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'last'",
+                            "literal": "last",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'none'",
+                            "literal": "none",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -5651,19 +5651,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'all'",
+                            "literal": "all",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'first'",
+                            "literal": "first",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'last'",
+                            "literal": "last",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'none'",
+                            "literal": "none",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -5686,27 +5686,27 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'none'",
+                            "literal": "none",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'e'",
+                            "literal": "e",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'E'",
+                            "literal": "E",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'power'",
+                            "literal": "power",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'SI'",
+                            "literal": "SI",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'B'",
+                            "literal": "B",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -5720,19 +5720,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'all'",
+                            "literal": "all",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'first'",
+                            "literal": "first",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'last'",
+                            "literal": "last",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'none'",
+                            "literal": "none",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -5764,15 +5764,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'right'",
+                            "literal": "right",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'top'",
+                            "literal": "top",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bottom'",
+                            "literal": "bottom",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -6012,11 +6012,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'diameter'",
+                            "literal": "diameter",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'area'",
+                            "literal": "area",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -6070,19 +6070,19 @@
                             "type": {
                                 "types": [
                                     {
-                                        "literal": "'radial'",
+                                        "literal": "radial",
                                         "kotPlotTypeType": "LiteralType"
                                     },
                                     {
-                                        "literal": "'horizontal'",
+                                        "literal": "horizontal",
                                         "kotPlotTypeType": "LiteralType"
                                     },
                                     {
-                                        "literal": "'vertical'",
+                                        "literal": "vertical",
                                         "kotPlotTypeType": "LiteralType"
                                     },
                                     {
-                                        "literal": "'none'",
+                                        "literal": "none",
                                         "kotPlotTypeType": "LiteralType"
                                     }
                                 ],
@@ -6264,27 +6264,27 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'linear'",
+                            "literal": "linear",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'spline'",
+                            "literal": "spline",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'hv'",
+                            "literal": "hv",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'vh'",
+                            "literal": "vh",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'hvh'",
+                            "literal": "hvh",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'vhv'",
+                            "literal": "vhv",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -6532,15 +6532,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'reset+autosize'",
+                            "literal": "reset+autosize",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'reset'",
+                            "literal": "reset",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'autosize'",
+                            "literal": "autosize",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
@@ -6621,7 +6621,7 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'hover'",
+                            "literal": "hover",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
@@ -6733,11 +6733,11 @@
                                 "kotPlotTypeType": "ReferenceType"
                             },
                             {
-                                "literal": "'opaque'",
+                                "literal": "opaque",
                                 "kotPlotTypeType": "LiteralType"
                             },
                             {
-                                "literal": "'transparent'",
+                                "literal": "transparent",
                                 "kotPlotTypeType": "LiteralType"
                             }
                         ],
@@ -6902,31 +6902,31 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'second'",
+                            "literal": "second",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'minute'",
+                            "literal": "minute",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'hour'",
+                            "literal": "hour",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'day'",
+                            "literal": "day",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'month'",
+                            "literal": "month",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'year'",
+                            "literal": "year",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'all'",
+                            "literal": "all",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -6940,11 +6940,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'backward'",
+                            "literal": "backward",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'todate'",
+                            "literal": "todate",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7009,19 +7009,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'auto'",
+                            "literal": "auto",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'left'",
+                            "literal": "left",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'center'",
+                            "literal": "center",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'right'",
+                            "literal": "right",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7044,19 +7044,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'auto'",
+                            "literal": "auto",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'top'",
+                            "literal": "top",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'middle'",
+                            "literal": "middle",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bottom'",
+                            "literal": "bottom",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7160,15 +7160,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "\"left\"",
+                            "literal": "left",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"right\"",
+                            "literal": "right",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "\"auto\"",
+                            "literal": "auto",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7251,15 +7251,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'left'",
+                            "literal": "left",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'center'",
+                            "literal": "center",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'right'",
+                            "literal": "right",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7273,15 +7273,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'top'",
+                            "literal": "top",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'middle'",
+                            "literal": "middle",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bottom'",
+                            "literal": "bottom",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7349,11 +7349,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'end'",
+                            "literal": "end",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'start'",
+                            "literal": "start",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7428,7 +7428,7 @@
             {
                 "name": "axref",
                 "type": {
-                    "literal": "'pixel'",
+                    "literal": "pixel",
                     "kotPlotTypeType": "LiteralType"
                 },
                 "documentation": "Indicates in what terms the tail of the annotation (ax,ay)\nis specified. If `pixel`, `ax` is a relative offset in pixels\nfrom `x`. If set to an x axis id (e.g. *x* or *x2*), `ax` is\nspecified in the same terms as that axis. This is useful\nfor trendline annotations which should continue to indicate\nthe correct trend when zoomed.",
@@ -7437,7 +7437,7 @@
             {
                 "name": "ayref",
                 "type": {
-                    "literal": "'pixel'",
+                    "literal": "pixel",
                     "kotPlotTypeType": "LiteralType"
                 },
                 "documentation": "Indicates in what terms the tail of the annotation (ax,ay)\nis specified. If `pixel`, `ay` is a relative offset in pixels\nfrom `y`. If set to a y axis id (e.g. *y* or *y2*), `ay` is\nspecified in the same terms as that axis. This is useful\nfor trendline annotations which should continue to indicate\nthe correct trend when zoomed.",
@@ -7448,11 +7448,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'paper'",
+                            "literal": "paper",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'x'",
+                            "literal": "x",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7484,19 +7484,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'auto'",
+                            "literal": "auto",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'left'",
+                            "literal": "left",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'center'",
+                            "literal": "center",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'right'",
+                            "literal": "right",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7519,11 +7519,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'paper'",
+                            "literal": "paper",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y'",
+                            "literal": "y",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7555,19 +7555,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'auto'",
+                            "literal": "auto",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'top'",
+                            "literal": "top",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'middle'",
+                            "literal": "middle",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bottom'",
+                            "literal": "bottom",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7594,11 +7594,11 @@
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'onoff'",
+                            "literal": "onoff",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'onout'",
+                            "literal": "onout",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7681,11 +7681,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'above'",
+                            "literal": "above",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'below'",
+                            "literal": "below",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7717,15 +7717,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'fill'",
+                            "literal": "fill",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'contain'",
+                            "literal": "contain",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'stretch'",
+                            "literal": "stretch",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7784,15 +7784,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'left'",
+                            "literal": "left",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'center'",
+                            "literal": "center",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'right'",
+                            "literal": "right",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7806,15 +7806,15 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'top'",
+                            "literal": "top",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'middle'",
+                            "literal": "middle",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bottom'",
+                            "literal": "bottom",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7828,11 +7828,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'paper'",
+                            "literal": "paper",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'x'",
+                            "literal": "x",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7846,11 +7846,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'paper'",
+                            "literal": "paper",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'y'",
+                            "literal": "y",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7897,19 +7897,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'auto'",
+                            "literal": "auto",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'cube'",
+                            "literal": "cube",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'data'",
+                            "literal": "data",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'manual'",
+                            "literal": "manual",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -7959,19 +7959,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'orbit'",
+                            "literal": "orbit",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'turntable'",
+                            "literal": "turntable",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'zoom'",
+                            "literal": "zoom",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'pan'",
+                            "literal": "pan",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
@@ -7989,7 +7989,7 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'closest'",
+                            "literal": "closest",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
@@ -8145,147 +8145,147 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'linear'",
+                            "literal": "linear",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'quad'",
+                            "literal": "quad",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'cubic'",
+                            "literal": "cubic",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'sin'",
+                            "literal": "sin",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'exp'",
+                            "literal": "exp",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'circle'",
+                            "literal": "circle",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'elastic'",
+                            "literal": "elastic",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'back'",
+                            "literal": "back",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bounce'",
+                            "literal": "bounce",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'linear-in'",
+                            "literal": "linear-in",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'quad-in'",
+                            "literal": "quad-in",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'cubic-in'",
+                            "literal": "cubic-in",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'sin-in'",
+                            "literal": "sin-in",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'exp-in'",
+                            "literal": "exp-in",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'circle-in'",
+                            "literal": "circle-in",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'elastic-in'",
+                            "literal": "elastic-in",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'back-in'",
+                            "literal": "back-in",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bounce-in'",
+                            "literal": "bounce-in",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'linear-out'",
+                            "literal": "linear-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'quad-out'",
+                            "literal": "quad-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'cubic-out'",
+                            "literal": "cubic-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'sin-out'",
+                            "literal": "sin-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'exp-out'",
+                            "literal": "exp-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'circle-out'",
+                            "literal": "circle-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'elastic-out'",
+                            "literal": "elastic-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'back-out'",
+                            "literal": "back-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bounce-out'",
+                            "literal": "bounce-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'linear-in-out'",
+                            "literal": "linear-in-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'quad-in-out'",
+                            "literal": "quad-in-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'cubic-in-out'",
+                            "literal": "cubic-in-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'sin-in-out'",
+                            "literal": "sin-in-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'exp-in-out'",
+                            "literal": "exp-in-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'circle-in-out'",
+                            "literal": "circle-in-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'elastic-in-out'",
+                            "literal": "elastic-in-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'back-in-out'",
+                            "literal": "back-in-out",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bounce-in-out'",
+                            "literal": "bounce-in-out",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -8314,23 +8314,23 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'animate'",
+                            "literal": "animate",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'relayout'",
+                            "literal": "relayout",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'restyle'",
+                            "literal": "restyle",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'skip'",
+                            "literal": "skip",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'update'",
+                            "literal": "update",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -8423,7 +8423,7 @@
             {
                 "name": "editType",
                 "type": {
-                    "literal": "'arraydraw'",
+                    "literal": "arraydraw",
                     "kotPlotTypeType": "LiteralType"
                 },
                 "documentation": "",
@@ -8467,11 +8467,11 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'fraction'",
+                            "literal": "fraction",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'pixels'",
+                            "literal": "pixels",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -8521,19 +8521,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'auto'",
+                            "literal": "auto",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'left'",
+                            "literal": "left",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'center'",
+                            "literal": "center",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'right'",
+                            "literal": "right",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -8547,19 +8547,19 @@
                 "type": {
                     "types": [
                         {
-                            "literal": "'auto'",
+                            "literal": "auto",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'top'",
+                            "literal": "top",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'middle'",
+                            "literal": "middle",
                             "kotPlotTypeType": "LiteralType"
                         },
                         {
-                            "literal": "'bottom'",
+                            "literal": "bottom",
                             "kotPlotTypeType": "LiteralType"
                         }
                     ],
@@ -8595,15 +8595,15 @@
                             "type": {
                                 "types": [
                                     {
-                                        "literal": "'left'",
+                                        "literal": "left",
                                         "kotPlotTypeType": "LiteralType"
                                     },
                                     {
-                                        "literal": "'center'",
+                                        "literal": "center",
                                         "kotPlotTypeType": "LiteralType"
                                     },
                                     {
-                                        "literal": "'right'",
+                                        "literal": "right",
                                         "kotPlotTypeType": "LiteralType"
                                     }
                                 ],

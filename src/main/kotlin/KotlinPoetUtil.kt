@@ -5,13 +5,21 @@ fun file(packageName: String, fileName: String, init: FileSpec.Builder.() -> Uni
     FileSpec.builder(packageName, fileName).apply(init).build()
 
 
-fun FileSpec.Builder.classType(className: String, init: TypeSpec.Builder.() -> Unit): TypeSpec =
+fun classType(className: String, init: TypeSpec.Builder.() -> Unit): TypeSpec =
     TypeSpec.classBuilder(className).apply(init).build()
+
+fun TypeSpec.Builder.addClass(className: String, init: TypeSpec.Builder.() -> Unit){
+    addType(classType(className, init))
+}
+
+fun FileSpec.Builder.addClass(className: String, init: TypeSpec.Builder.() -> Unit){
+    addType(classType(className, init))
+}
 
 fun TypeSpec.Builder.classType(className: String, init: TypeSpec.Builder.() -> Unit): TypeSpec =
     TypeSpec.classBuilder(className).apply(init).build()
 
-fun TypeSpec.Builder.constructor(init: FunSpec.Builder.() -> Unit): FunSpec =
+fun constructor(init: FunSpec.Builder.() -> Unit): FunSpec =
     FunSpec.constructorBuilder().apply(init).build()
 
 fun TypeSpec.Builder.property(
@@ -22,13 +30,17 @@ fun TypeSpec.Builder.property(
 ): PropertySpec =
     PropertySpec.builder(name, type, *modifiers).apply(init).build()
 
-fun TypeSpec.Builder.property(
+fun TypeSpec.Builder.addProperty(
     name: String,
     type: TypeName,
     vararg modifiers: KModifier,
     init: PropertySpec.Builder.() -> Unit = {}
-): PropertySpec =
-    PropertySpec.builder(name, type, *modifiers).apply(init).build()
+){
+    addProperty(PropertySpec.builder(name, type, *modifiers).apply(init).build())
+}
+
+
+//fun TypeSpec.Builder.addProperty()
 
 
 fun TypeSpec.Builder.function(functionName: String, init: FunSpec.Builder.() -> Unit): FunSpec =
@@ -40,3 +52,15 @@ fun TypeSpec.Builder.parameter(
     vararg modifiers: KModifier,
     init: ParameterSpec.Builder.() -> Unit = {}
 ): ParameterSpec = ParameterSpec.builder(name, type, *modifiers).apply(init).build()
+
+fun TypeSpec.Builder.addObject(name: String, init : TypeSpec.Builder.() -> Unit = {}){
+    addType(TypeSpec.objectBuilder(name).apply(init).build())
+}
+
+fun TypeSpec.Builder.addEnum(name: String, init: TypeSpec.Builder.() -> Unit){
+    addType(TypeSpec.enumBuilder(name).apply(init).build())
+}
+
+fun TypeSpec.Builder.primaryConstructor(init: FunSpec.Builder.() -> Unit){
+    primaryConstructor(FunSpec.constructorBuilder().apply(init).build())
+}
