@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import * as fs from "fs";
-import { Interface, Signature, Property, Method, KotPlotType, UnionType, LiteralType, ReferenceType, TupleType, FunctionType, ArrayType, TypeLiteral, Parameter } from "./types";
+import { Interface, Signature, PropertySignature, MethodSignature, KotPlotType, UnionType, LiteralType, ReferenceType, TupleType, FunctionType, ArrayType, TypeLiteral, Parameter } from "./types";
 
 //TODO: add documentation of members
 
@@ -68,23 +68,23 @@ function serializeSignature(member: ts.TypeElement): Signature {
 
 }
 
-function serializeMethodSignature(methodSignature: ts.MethodSignature): Method {
+function serializeMethodSignature(methodSignature: ts.MethodSignature): MethodSignature {
     return {
         name: methodSignature.name.getText(),
         returnType: getReturnType(methodSignature),
         parameters: methodSignature.parameters.map((param) => serializeParameter(param)),
         documentation: getDocumentation(methodSignature),
-        signatureType:"Method"
+        signatureType:"MethodSignature"
     }
 }
 
-function serializePropertySignature(propertySignature: ts.PropertySignature): Property {
+function serializePropertySignature(propertySignature: ts.PropertySignature): PropertySignature {
 
     return {
         name: propertySignature.name.getText(),
         type: serializeTypeOfNode(propertySignature),
         documentation: getDocumentation(propertySignature),
-        signatureType:"Property"
+        signatureType:"PropertySignature"
     }
 
 }
@@ -197,7 +197,7 @@ function serializeArrayType(typenode: ts.ArrayTypeNode): ArrayType {
 
 function serializeTypeLiteral(typenode: ts.TypeLiteralNode): TypeLiteral {
     return {
-        nestedTypes: typenode.members.map((member) => serializeTypeOfNode(member)),
+        nestedProperties: typenode.members.map((member) => serializePropertySignature(member as ts.PropertySignature)/* serializeTypeOfNode(member)*/),
         kotPlotTypeType:"TypeLiteral"
     }
 }

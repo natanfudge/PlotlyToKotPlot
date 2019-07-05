@@ -12,12 +12,12 @@ export interface Signature {
   signatureType : string
 }
 
-export interface Property extends Signature {
+export interface PropertySignature extends Signature {
   name: string
   type: KotPlotType
 }
 
-export interface Method extends Signature {
+export interface MethodSignature extends Signature {
   name: string
   returnType: KotPlotType
   parameters: Parameter[]
@@ -57,7 +57,7 @@ export interface ArrayType extends KotPlotType {
 }
 
 export interface TypeLiteral extends KotPlotType {
-  nestedTypes: KotPlotType[]
+  nestedProperties: PropertySignature[]
 }
 
 //--------------------------------//
@@ -67,3 +67,4 @@ export interface Parameter {
   type: KotPlotType
 }
 //---------------------------------//
+//-------
