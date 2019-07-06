@@ -13,7 +13,7 @@ data class DeclarationFile(
 //--------- TYPE ALIAS ---------------//
 data class TypeAlias(
     val name: String,
-    val types: KotPlotType
+    val type: KotPlotType
 )
 
 //-----------------------------------//
@@ -48,7 +48,13 @@ class FunctionSignature(
 //----------------------------------//
 //-------- TYPE --------------------//
 sealed class KotPlotType {
-    abstract fun getName(builder: TypeSpec.Builder): TypeName
+    /**
+     * @param knownName Sometimes we already know the name, and we just want to create the type with that name.
+     */
+    abstract fun getNameAndCreate(
+        converter: JsonToKotPlot,
+        knownName: String? = null
+    ): TypeName
 }
 
 /**
@@ -58,8 +64,11 @@ data class LiteralType(val literal: String) : KotPlotType() {
 
     //TODO fix upper/ lower casing
     //TODO serialize properly
-    override fun getName(builder: TypeSpec.Builder): TypeName =
-        getLiteralName().also { builder.addObject(it) }.toClassName()
+    override fun getNameAndCreate(
+        converter: JsonToKotPlot,
+        knownName: String?
+    ): TypeName =
+        getLiteralName().also { converter.addObject(it) }.toClassName()
 
 
     //TODO: should actually return an enum
@@ -75,13 +84,15 @@ enum class closestOrxOryOrfalse {
 //TODO: make this work for stuff like "x+y" etc
 fun String.toTitleCase() = if (this.isEmpty()) this else this[0].toUpperCase() + this.substring(1)
 
+fun String.toCamelCase() = if (this.isEmpty()) this else this[0].toLowerCase() + this.substring(1)
+
 /**
  * Create an enum type of all the literals and return its name
  */
-fun Iterable<LiteralType>.getName(builder: TypeSpec.Builder): TypeName =
+fun Iterable<LiteralType>.getNameAndCreate(converter: JsonToKotPlot): TypeName =
     this.joinToString("Or") { it.getLiteralName() }.also {
-        builder.addEnum(it) {
-            for (literalType in this@getName) {
+        converter.addEnum(it) {
+            for (literalType in this@getNameAndCreate) {
                 addEnumConstant(literalType.getLiteralName())
             }
         }
@@ -100,7 +111,10 @@ fun TypeName.getRepresentativeName(): String = when {
 
 
 data class UnionType(val types: List<KotPlotType>) : KotPlotType() {
-    override fun getName(builder: TypeSpec.Builder): TypeName {
+    override fun getNameAndCreate(
+        converter: JsonToKotPlot,
+        knownName: String?
+    ): TypeName {
 
         val literals = types.filterIsInstance<LiteralType>()
         val references = types.filter { it !is LiteralType }
@@ -110,44 +124,47 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType() {
         //TODO: and return a sealed class that is the objects or the classes.
         //TODO: but if we get only literals, we return an enum class.
 
-        // If there are actual types in the union type the only way to handle it would be a sealed class where
+        // If there are actual type in the union type the only way to handle it would be a sealed class where
         // each reference is a subclass of the sealed class and then all the literals are also a enum as a subclass.
         if (references.isNotEmpty()) {
             val typeNames = mutableListOf<String>()
 
             val sealedClassName = references.joinToString { reference ->
-                reference.getName(builder).getRepresentativeName().also { typeNames.add(it) }
+                reference.getNameAndCreate(converter).getRepresentativeName().also { typeNames.add(it) }
             }
 
             //TODO: think about adding the subclasses as an inner class of the sealed class
 
             // Add sealed class
-            builder.addClass(className = sealedClassName) {
+            converter.addClass(className = knownName?: sealedClassName) {
                 addModifiers(KModifier.SEALED)
             }
 
             // Add subclasses of sealed class
             for (typeName in typeNames) {
-                builder.addClass(className = typeName) {
+                converter.addClass(className = typeName) {
                     superclass(sealedClassName.toClassName())
                 }
             }
 
             return sealedClassName.toClassName()
         } else {
-            return literals.getName(builder)
+            return literals.getNameAndCreate(converter)
         }
 
 
         //TODO: handle duplication of union type
-        //TODO: handle serialization of union/sealed types
+        //TODO: handle serialization of union/sealed type
 
 
     }
 }
 
 data class ReferenceType(val name: String) : KotPlotType() {
-    override fun getName(builder: TypeSpec.Builder): TypeName =
+    override fun getNameAndCreate(
+        converter: JsonToKotPlot,
+        knownName: String?
+    ): TypeName =
         if (name.startsWith("Partial<")) {
             name.removePrefix("Partial<").removeSuffix(">").toClassName().copy(nullable = true)
         } else {
@@ -156,27 +173,39 @@ data class ReferenceType(val name: String) : KotPlotType() {
 }
 
 data class FunctionType(val parameters: List<Parameter>, val returnType: KotPlotType) : KotPlotType() {
-    override fun getName(builder: TypeSpec.Builder): TypeName =
+    override fun getNameAndCreate(
+        converter: JsonToKotPlot,
+        knownName: String?
+    ): TypeName =
         LambdaTypeName.get(
             receiver = null,
-            parameters = this.parameters.map { builder.getParameterSpec(it) },
-            returnType = returnType.getName(builder)
+            parameters = this.parameters.map { converter.getParameterSpec(it) },
+            returnType = returnType.getNameAndCreate(converter)
         )
+
+//    val shit :TypeSpec.Builder
+//    val crap = shit.get
 
 }
 
 //TODO: make this into a proper data class with "first", "second" etc as properties
 data class TupleType(val tupleTypes: List<KotPlotType>) : KotPlotType() {
-    override fun getName(builder: TypeSpec.Builder): TypeName {
-        val typeNames = this.tupleTypes.map { it.getName(builder) }
+    override fun getNameAndCreate(
+        converter: JsonToKotPlot,
+        knownName: String?
+    ): TypeName {
+        val typeNames = this.tupleTypes.map { it.getNameAndCreate(converter) }
 
         return "Tuple".toClassName().parameterizedBy(*typeNames.toTypedArray())
     }
 }
 
 data class ArrayType(val elementType: KotPlotType) : KotPlotType() {
-    override fun getName(builder: TypeSpec.Builder): TypeName =
-        "List".toClassName().parameterizedBy(elementType.getName(builder))
+    override fun getNameAndCreate(
+        converter: JsonToKotPlot,
+        knownName: String?
+    ): TypeName =
+        "List".toClassName().parameterizedBy(elementType.getNameAndCreate(converter))
 }
 
 //TODO: change this to something that better describes type literals
@@ -187,16 +216,47 @@ var typeLiteralCount = 1
  * E.g. { thing : "value", otherThing : {...} }
  */
 data class TypeLiteral(val nestedProperties: List<PropertySignature>) : KotPlotType() {
-    override fun getName(builder: TypeSpec.Builder): TypeName {
+    override fun getNameAndCreate(
+        converter: JsonToKotPlot,
+        knownName: String?
+    ): TypeName {
         val typeLiteralName = "TypeLiteralNum${typeLiteralCount++}"
-        builder.addClass(className = typeLiteralName) {
-            addSignatures(nestedProperties)
+        converter.addClass(className = knownName?: typeLiteralName) {
+//            this.addsig
+            converter.addSignatures(nestedProperties,typeBuilder = this)
 //            for (property in nestedProperties) {
 //                addPropertySignature(property)
 //            }
         }
         return typeLiteralName.toClassName()
     }
+}
+
+data class IntersectionType(val types: List<KotPlotType>) : KotPlotType() {
+    override fun getNameAndCreate(
+        converter: JsonToKotPlot,
+        knownName: String?
+    ): TypeName {
+        val typeNames = mutableListOf<String>()
+        return types.joinToString { type ->
+            type.getNameAndCreate(converter).getRepresentativeName().also { typeNames.add(it) }
+        }.also { intersectionTypeName ->
+            converter.addDataClass(
+                className = knownName ?: intersectionTypeName,
+                documentation = "",
+                //TODO: consider inlining the generated classes in this case
+                signatures = typeNames.map { typeName ->
+                    PropertySignature(
+                        name = typeName.toLowerCase(),
+                        type = ReferenceType(typeName),
+                        documentation = ""
+                    )
+                })
+
+        }.toClassName()
+
+    }
+
 }
 
 //--------------------------------//

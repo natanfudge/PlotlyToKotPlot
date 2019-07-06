@@ -12,8 +12,8 @@ fun TypeSpec.Builder.addClass(className: String, init: TypeSpec.Builder.() -> Un
     addType(classType(className, init))
 }
 
-fun FileSpec.Builder.addClass(className: String, init: TypeSpec.Builder.() -> Unit){
-    addType(classType(className, init))
+fun JsonToKotPlot.addClass(className: String, init: TypeSpec.Builder.() -> Unit){
+    fileBuilder.addType(classType(className, init))
 }
 
 fun TypeSpec.Builder.classType(className: String, init: TypeSpec.Builder.() -> Unit): TypeSpec =
@@ -46,19 +46,19 @@ fun TypeSpec.Builder.addProperty(
 fun TypeSpec.Builder.function(functionName: String, init: FunSpec.Builder.() -> Unit): FunSpec =
     FunSpec.builder(functionName).apply(init).build()
 
-fun TypeSpec.Builder.parameter(
+fun parameter(
     name: String,
     type: TypeName,
     vararg modifiers: KModifier,
     init: ParameterSpec.Builder.() -> Unit = {}
 ): ParameterSpec = ParameterSpec.builder(name, type, *modifiers).apply(init).build()
 
-fun TypeSpec.Builder.addObject(name: String, init : TypeSpec.Builder.() -> Unit = {}){
-    addType(TypeSpec.objectBuilder(name).apply(init).build())
+fun JsonToKotPlot.addObject(name: String, init : TypeSpec.Builder.() -> Unit = {}){
+    fileBuilder.addType(TypeSpec.objectBuilder(name).apply(init).build())
 }
 
-fun TypeSpec.Builder.addEnum(name: String, init: TypeSpec.Builder.() -> Unit){
-    addType(TypeSpec.enumBuilder(name).apply(init).build())
+fun JsonToKotPlot.addEnum(name: String, init: TypeSpec.Builder.() -> Unit){
+    fileBuilder.addType(TypeSpec.enumBuilder(name).apply(init).build())
 }
 
 fun TypeSpec.Builder.primaryConstructor(init: FunSpec.Builder.() -> Unit){

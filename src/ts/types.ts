@@ -83,6 +83,10 @@ export interface TypeLiteral extends KotPlotType {
     nestedProperties: PropertySignature[]
 }
 
+export interface IntersectionType extends KotPlotType{
+    types : KotPlotType[]
+}
+
 //--------------------------------//
 //------- PARAMETER --------------//
 export interface Parameter {
