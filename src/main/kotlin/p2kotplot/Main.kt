@@ -1,5 +1,6 @@
-import com.squareup.kotlinpoet.*
-import kotlinx.serialization.Serializable
+package p2kotplot
+
+import p2kotplot.types.DeclarationFile
 import java.io.File
 
 

@@ -1,6 +1,10 @@
+package p2kotplot
+
 import com.squareup.kotlinpoet.*
 import kotlinx.serialization.Serializable
+import p2kotplot.types.*
 import java.io.File
+
 
 const val PackageName = ""
 fun String.toClassName() = ClassName(packageName = PackageName, simpleName = this)
@@ -61,16 +65,6 @@ class JsonToKotPlot(declarationFile: DeclarationFile) {
         }
     }
 
-//    fun TypeSpec.Builder.addDataClass(className: String, signatures: List<Signature>, documentation: String) {
-//        addClass(className = className) {
-//            if (signatures.filterIsInstance<PropertySignature>().isNotEmpty()) {
-//                addModifiers(KModifier.DATA)
-//                addSignatures(signatures,typeBuilder = this)
-//            }
-//            addAnnotation(Serializable::class)
-//            addKdoc(documentation)
-//        }
-//    }
 
     fun addSignatures(signatures: List<Signature>, typeBuilder:TypeSpec.Builder) {
         typeBuilder.primaryConstructor {
@@ -81,8 +75,6 @@ class JsonToKotPlot(declarationFile: DeclarationFile) {
                 }
             }
 
-//        addKdoc(signatures.getKDoc())
-
         }
 
     }
@@ -91,10 +83,6 @@ class JsonToKotPlot(declarationFile: DeclarationFile) {
         return this.joinToString("\n") {
             "[${it.name}]: ${it.documentation}"
         }
-
-//    return """
-//        ${this.map {it.name}}
-//    """.trimIndent()
     }
 
     fun TypeSpec.Builder.addMethodSignature(signature: FunctionSignature) {
@@ -119,19 +107,6 @@ class JsonToKotPlot(declarationFile: DeclarationFile) {
         signature: PropertySignature,
         funspecBuilder: FunSpec.Builder
     ) {
-//    funspecBuilder
-//        .addParameter("greeting", signature.type.getNameAndCreate(builder = this))
-////        .build()
-//
-//    val helloWorld = TypeSpec.classBuilder("HelloWorld")
-//        .primaryConstructor(flux)
-//        .addProperty(
-//            PropertySpec.builder("greeting", String::class)
-//                .initializer("greeting")
-//                .addModifiers(KModifier.PRIVATE)
-//                .build()
-//        )
-//        .build()
 
         //TODO: change from adding properties to adding primary constructor properties
         funspecBuilder.addParameter(
@@ -147,14 +122,8 @@ class JsonToKotPlot(declarationFile: DeclarationFile) {
             initializer(signature.name)
             addKdoc(signature.documentation)
         }
-
-
-//    {
-//        addKdoc(signature.documentation)
-//    })
     }
 
-//fun TypeSpec.Builder.addProperties
 
 
 }
