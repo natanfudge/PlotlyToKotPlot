@@ -3,7 +3,7 @@ package p2kotplot
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory
-import p2kotplot.plotlytypes.*
+import p2kotplot.types.*
 import kotlin.reflect.KClass
 
 fun createGson() : Gson {

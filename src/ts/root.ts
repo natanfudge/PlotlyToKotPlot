@@ -11,9 +11,10 @@ import {
 } from "./types";
 import * as fs from "fs";
 
-let file = "src/ts/data/plotly.d.ts";
+let inFile = "src/ts/data/test.d.ts";
+let outFile = "src/ts/data/plotlyTypes.json";
 // Build a program using the set of root file names in fileNames
-let program = ts.createProgram([file], {
+let program = ts.createProgram([inFile], {
     target: ts.ScriptTarget.ES5,
     module: ts.ModuleKind.CommonJS
 });
@@ -21,7 +22,7 @@ let program = ts.createProgram([file], {
 
 let sourceFiles = program.getSourceFiles();
 
-let targetSourceFile = sourceFiles.filter((sourceFile) => sourceFile.fileName === file)[0];
+let targetSourceFile = sourceFiles.filter((sourceFile) => sourceFile.fileName === inFile)[0];
 
 let checker = program.getTypeChecker();
 
@@ -58,7 +59,7 @@ let output : DeclarationFile = {
 
 
 // print out the doc
-fs.writeFileSync("src/ts/data/plotlyTypes.json", JSON.stringify(output, undefined, 4));
+fs.writeFileSync(outFile, JSON.stringify(output, undefined, 4));
 
 
 function getDocumentation(node: ts.InterfaceDeclaration | ts.MethodSignature | ts.PropertySignature | ts.FunctionDeclaration): string {
@@ -257,6 +258,13 @@ function serializeParameter(parameter: ts.ParameterDeclaration): Parameter {
 
 function getReturnType(typeNode: ts.FunctionTypeNode | ts.MethodSignature | ts.FunctionDeclaration): KotPlotType {
     let returnTypeNode = typeNode.getChildren().filter((child) => ts.isTypeNode(child))[0] as ts.TypeNode;
+    if(returnTypeNode === undefined){
+        let returning : ReferenceType = {
+            kotPlotTypeType : "ReferenceType",
+            name : ""
+        };
+        return returning
+    }
     return serializeTypeNode(returnTypeNode)
 }
 

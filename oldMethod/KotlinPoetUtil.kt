@@ -13,9 +13,9 @@ import com.squareup.kotlinpoet.*
 //    addType(classType(className, init))
 //}
 
-//inline fun JsonToKotPlot.addClass(className: String, init: TypeSpec.Builder.() -> Unit){
-//    file.addType(TypeSpec.classBuilder(className).apply(init).build())
-//}
+inline fun JsonToKotPlot.addClass(className: String, init: TypeSpec.Builder.() -> Unit){
+    fileBuilder.addType(TypeSpec.classBuilder(className).apply(init).build())
+}
 
 //inline fun TypeSpec.Builder.classType(className: String, init: TypeSpec.Builder.() -> Unit): TypeSpec =
 //    TypeSpec.classBuilder(className).apply(init).build()
@@ -54,13 +54,13 @@ inline fun parameter(
     init: ParameterSpec.Builder.() -> Unit = {}
 ): ParameterSpec = ParameterSpec.builder(name, type, *modifiers).apply(init).build()
 
-//inline fun JsonToKotPlot.addObject(name: String, init : TypeSpec.Builder.() -> Unit = {}){
-//    file.addType(TypeSpec.objectBuilder(name).apply(init).build())
-//}
-//
-//inline fun JsonToKotPlot.addEnum(name: String, init: TypeSpec.Builder.() -> Unit){
-//    file.addType(TypeSpec.enumBuilder(name).apply(init).build())
-//}
+inline fun JsonToKotPlot.addObject(name: String, init : TypeSpec.Builder.() -> Unit = {}){
+    fileBuilder.addType(TypeSpec.objectBuilder(name).apply(init).build())
+}
+
+inline fun JsonToKotPlot.addEnum(name: String, init: TypeSpec.Builder.() -> Unit){
+    fileBuilder.addType(TypeSpec.enumBuilder(name).apply(init).build())
+}
 
 inline fun TypeSpec.Builder.primaryConstructor(init: FunSpec.Builder.() -> Unit){
     primaryConstructor(FunSpec.constructorBuilder().apply(init).build())

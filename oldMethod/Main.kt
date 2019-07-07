@@ -1,6 +1,6 @@
 package p2kotplot
 
-import p2kotplot.plotlytypes.DeclarationFile
+import p2kotplot.types.DeclarationFile
 import java.io.File
 
 
@@ -16,14 +16,7 @@ fun main() {
     val deserialized = plotlyTypes.parseTo<DeclarationFile>()
 
 
-    val api = JsonToAST(
-        interfaceTypeData = deserialized.interfaces,
-        typeAliasData = deserialized.typeAliases,
-        functions = deserialized.functions
-    ).getApi()
-
-    print(api)
-    val x = 2
+    JsonToKotPlot(deserialized)
 
 
 }
