@@ -2,6 +2,8 @@ package p2kotplot.plotlytypes
 
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.TypeName
+import p2kotplot.TypeContext
+
 //import p2kotplot.JsonToKotPlot
 //import p2kotplot.addClass
 //import p2kotplot.toClassName

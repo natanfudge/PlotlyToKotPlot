@@ -22,7 +22,11 @@ fun main() {
         functions = deserialized.functions
     ).getApi()
 
-    print(api)
+//    print(api)
+
+    AstToKotPlot(api)
+
+//    print(api)
     val x = 2
 
 

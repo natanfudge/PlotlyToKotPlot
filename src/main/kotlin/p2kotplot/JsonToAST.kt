@@ -11,7 +11,8 @@ class JsonToAST(
 ) {
     //TODO: handle type alias aswell
     fun findType(name: String): Interface {
-        return interfaceTypeData.find { it.name == name } ?: throw InvalidStateException("Could not find class with name $name")
+        return interfaceTypeData.find { it.name == name }
+            ?: throw InvalidStateException("Could not find class with name $name")
     }
 
     fun getApi() = functions.map { it.getApi() }
@@ -26,7 +27,7 @@ class JsonToAST(
 //    }
     //TODO union functions are emitted later I think
 
-    private fun FunctionSignature.getApi(): Api {
+    private fun FunctionSignature.getApi(): DslBuilderGroup {
         val apiParameters = mutableListOf<ApiParameter>()
         val builderFunctions = mutableListOf<BuilderFunction>()
         val applyStatements = mutableListOf<String>()
@@ -41,34 +42,28 @@ class JsonToAST(
             arrays = builderArrays
         )
 
-        val apiFunction = ApiFunction(
+        val apiFunction = DslBuilderFunction(
             name = this.name,
             documentation = this.documentation,
             builderClassName = this.builderName(),
             parameters = apiParameters
         )
 
-        for (parameter in this.parameters) {
-            parameter.type.emit(
-                TypeContext(
-                    data = this@JsonToAST,
-                    apiFunction = ApiFunction(
-                        name = this.name,
-                        documentation = this.documentation,
-                        builderClassName = this.builderName(),
-                        parameters = apiParameters
-                    ),
-                    builderClass = builderClass,
-                    typeParameterName = parameter.name
+        return passTypeContext(data = this@JsonToAST, builderFunctionName = this.name) {
+            for (parameter in this@getApi.parameters) {
+                parameter.type.emit(
+                    createTypeContext(typeParameterName = parameter.name)
                 )
-            )
+            }
         }
 
-        return Api(
-            name = this.name,
-            builderClass = builderClass,
-            apiFunction = apiFunction
-        )
+
+
+//        return DslBuilderGroup(
+//            name = this.name,
+//            builderClass = builderClass,
+//            dslBuilder = apiFunction
+//        )
     }
 
     private fun FunctionSignature.builderName() = name.toTitleCase() + "Builder"

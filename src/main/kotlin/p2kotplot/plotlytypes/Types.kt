@@ -2,9 +2,7 @@ package p2kotplot.plotlytypes
 
 import com.squareup.kotlinpoet.*
 //import p2kotplot.JsonToKotPlot
-import p2kotplot.ApiFunction
-import p2kotplot.BuilderClass
-import p2kotplot.JsonToAST
+import p2kotplot.TypeContext
 
 //-------- TOP LEVEL ----------------//
 data class DeclarationFile(
@@ -55,14 +53,7 @@ class FunctionSignature(
 //                       )
 
 
-data class TypeContext(
-    val data: JsonToAST,
-    val apiFunction: ApiFunction,
-    val builderClass: BuilderClass,
-    val typeParameterName: String
-){
 
-}
 
 //----------------------------------//
 //-------- TYPE --------------------//

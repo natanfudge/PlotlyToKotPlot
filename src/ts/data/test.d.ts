@@ -1,4 +1,4 @@
-export function doMagic(powder : MagicPowder)
+export function doMagic(amount: number, powder : MagicPowder)
 
 export interface MagicPowder{
     powderName : string

@@ -3,66 +3,73 @@ package p2kotplot.plotlytypes
 import p2kotplot.*
 import sun.plugin.dom.exception.InvalidStateException
 
-private fun String.builderName() = this.toTitleCase() + "Builder"
+fun String.builderName() = this.toTitleCase() + "Builder"
 
 data class ReferenceType(val name: String) : KotPlotType {
     override fun emit(context: TypeContext) =
         when (this.name) {
-            "number", "string" -> emitValueType(context, this.name.toTitleCase())
+            "number", "string" -> emitValueType(context)
             else -> emitReferenceType(context)
         }
 
 
-    private fun emitValueType(context: TypeContext, kotlinName: String) {
-        context.apiFunction.parameters.add(
-            ApiParameter(name = context.typeParameterName, type = kotlinName)
+    private fun emitValueType(context: TypeContext) {
+        context.addValueParameter(
+            ApiParameter(name = context.typeParameterName, type = this.name.toTitleCase())
         )
 
-        context.builderClass.buildFunction.applyStatements
-            .add("if($kotlinName != null) jsonMap[\"$kotlinName\"] = JsonLiteral($kotlinName)")
+        val paramName = context.typeParameterName
+
+        context.addBuildFunctionStatement("if($paramName != null) jsonMap[\"$paramName\"] = JsonLiteral($paramName)")
     }
 
     private fun emitReferenceType(context: TypeContext) {
         val params = mutableListOf<ApiParameter>()
-        context.builderClass.builderFunctions.add(
+        context.addBuilderFunction(
             BuilderFunction(
                 name = context.typeParameterName,
-                type = BuilderFunctionType.Object,
+                type = DslBuilderType.Object,
                 params = params
             )
         )
 
 
-        val typeDeclaration = context.data.findType(this.name)
-//        val apiParameters = mutableListOf<ApiParameter>()
-        val builderFunctions = mutableListOf<BuilderFunction>()
-        val applyStatements = mutableListOf<String>()
-        val builderArrays = mutableListOf<String>()
+        val typeDeclaration = context.findType(this.name)
 
-//        val builderClass =
-
-        for (prop in typeDeclaration.props) {
-            if (prop !is PropertySignature) throw InvalidStateException("Did not expect to find an interface with methods")
-            prop.type.emit(
-                context.copy(
-                    apiFunction = ApiFunction(
-                        name = this.name,
-                        documentation = typeDeclaration.documentation,
-                        parameters = params,
-                        builderClassName = context.typeParameterName.builderName()
-                    ),
-                    builderClass = BuilderClass(
-                        name = context.typeParameterName.builderName(),
-                        builderFunctions = builderFunctions,
-                        buildFunction = BuildFunction(
-                            applyStatements
-                        ),
-                        arrays = builderArrays
-                    ),
-                    typeParameterName = prop.name
+        context.passOn(builderFunctionName = this.name) {
+            for (prop in typeDeclaration.props) {
+                if (prop !is PropertySignature) throw InvalidStateException("Did not expect to find an interface with methods")
+                prop.type.emit(
+                    createTypeContext(
+                        typeParameterName = context.typeParameterName
+                    )
                 )
-            )
+            }
         }
+//        for (prop in typeDeclaration.props) {
+//            if (prop !is PropertySignature) throw InvalidStateException("Did not expect to find an interface with methods")
+//            prop.type.emit(
+//                context.copy(
+//                    dslBuilderFunction = DslBuilder(
+//                        name = this.name,
+//                        documentation = typeDeclaration.documentation,
+//                        parameters = params,
+//                        builderClassName = context.typeParameterName.builderName()
+//                    ),
+//                    builderClass = BuilderClass(
+//                        name = context.typeParameterName.builderName(),
+//                        builderFunctions = builderFunctions,
+//                        buildFunction = BuildFunction(
+//                            applyStatements
+//                        ),
+//                        arrays = builderArrays
+//                    ),
+//                    typeParameterName = prop.name
+//                )
+//            )
+//        }
+
+//        context.builderClass.buildFunction.applyStatements.add()
     }
 
 

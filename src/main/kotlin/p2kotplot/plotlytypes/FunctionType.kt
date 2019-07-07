@@ -2,6 +2,8 @@ package p2kotplot.plotlytypes
 
 import com.squareup.kotlinpoet.LambdaTypeName
 import com.squareup.kotlinpoet.TypeName
+import p2kotplot.TypeContext
+
 //import p2kotplot.JsonToKotPlot
 
 data class FunctionType(val parameters: List<Parameter>, val returnType: KotPlotType) : KotPlotType {

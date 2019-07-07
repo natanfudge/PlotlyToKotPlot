@@ -1,5 +1,7 @@
 package p2kotplot.plotlytypes
 
+import p2kotplot.TypeContext
+
 //import p2kotplot.addObject
 //import com.squareup.kotlinpoet.TypeName
 //import p2kotplot.JsonToKotPlot

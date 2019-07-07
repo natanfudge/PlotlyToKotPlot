@@ -9,6 +9,13 @@
             },
             "parameters": [
                 {
+                    "name": "amount",
+                    "type": {
+                        "name": "number",
+                        "kotPlotTypeType": "ReferenceType"
+                    }
+                },
+                {
                     "name": "powder",
                     "type": {
                         "name": "MagicPowder",

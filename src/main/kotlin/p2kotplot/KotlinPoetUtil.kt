@@ -13,9 +13,9 @@ import com.squareup.kotlinpoet.*
 //    addType(classType(className, init))
 //}
 
-//inline fun JsonToKotPlot.addClass(className: String, init: TypeSpec.Builder.() -> Unit){
-//    file.addType(TypeSpec.classBuilder(className).apply(init).build())
-//}
+inline fun AstToKotPlot.addClass(className: String, init: TypeSpec.Builder.() -> Unit) {
+    file.addType(TypeSpec.classBuilder(className).apply(init).build())
+}
 
 //inline fun TypeSpec.Builder.classType(className: String, init: TypeSpec.Builder.() -> Unit): TypeSpec =
 //    TypeSpec.classBuilder(className).apply(init).build()
@@ -34,10 +34,9 @@ import com.squareup.kotlinpoet.*
 inline fun TypeSpec.Builder.addProperty(
     name: String,
     type: TypeName,
-    vararg modifiers: KModifier,
     init: PropertySpec.Builder.() -> Unit = {}
-){
-    addProperty(PropertySpec.builder(name, type, *modifiers).apply(init).build())
+) {
+    addProperty(PropertySpec.builder(name, type).apply(init).build())
 }
 
 
@@ -46,6 +45,13 @@ inline fun TypeSpec.Builder.addProperty(
 
 //inline fun TypeSpec.Builder.function(functionName: String, init: FunSpec.Builder.() -> Unit): FunSpec =
 //    FunSpec.builder(functionName).apply(init).build()
+inline fun FunSpec.Builder.addParameter(
+    name: String,
+    type: TypeName,
+    vararg modifiers: KModifier, init: ParameterSpec.Builder.() -> Unit
+) {
+    addParameter(ParameterSpec.builder(name, type, *modifiers).apply(init).build())
+}
 
 inline fun parameter(
     name: String,
@@ -62,6 +68,15 @@ inline fun parameter(
 //    file.addType(TypeSpec.enumBuilder(name).apply(init).build())
 //}
 
-inline fun TypeSpec.Builder.primaryConstructor(init: FunSpec.Builder.() -> Unit){
+
+inline fun TypeSpec.Builder.addFunction(name: String, init: FunSpec.Builder.() -> Unit) {
+    addFunction(FunSpec.builder(name).apply(init).build())
+}
+
+inline fun AstToKotPlot.addFunction(name: String, init: FunSpec.Builder.() -> Unit) {
+    file.addFunction(FunSpec.builder(name).apply(init).build())
+}
+
+inline fun TypeSpec.Builder.primaryConstructor(init: FunSpec.Builder.() -> Unit) {
     primaryConstructor(FunSpec.constructorBuilder().apply(init).build())
 }
