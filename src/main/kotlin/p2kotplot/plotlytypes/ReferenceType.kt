@@ -1,51 +1,43 @@
 package p2kotplot.plotlytypes
 
-import p2kotplot.*
+import p2kotplot.ast.MutableBuilderTree
 import sun.plugin.dom.exception.InvalidStateException
 
-fun String.builderName() = this.toTitleCase() + "Builder"
+fun String.builderClassName() = this.toTitleCase() + "Builder"
 
 data class ReferenceType(val name: String) : KotPlotType {
-    override fun emit(context: TypeContext) =
+    override fun emit(tree: MutableBuilderTree, builderName: String) =
         when (this.name) {
-            "number", "string" -> emitValueType(context)
-            else -> emitReferenceType(context)
+            "number", "string" -> emitValueType(tree,builderName)
+            else -> emitReferenceType(tree,builderName)
         }
 
 
-    private fun emitValueType(context: TypeContext) {
-        context.addValueParameter(
-            ApiParameter(name = context.typeParameterName, type = this.name.toTitleCase())
-        )
-
-        val paramName = context.typeParameterName
-
-        context.addBuildFunctionStatement("if($paramName != null) jsonMap[\"$paramName\"] = JsonLiteral($paramName)")
+    private fun emitValueType(tree: MutableBuilderTree, builderName: String) {
+        tree.addPrimitiveParameter(type = name.toTitleCase() , name = builderName)
     }
 
-    private fun emitReferenceType(context: TypeContext) {
-        val params = mutableListOf<ApiParameter>()
-        context.addBuilderFunction(
-            BuilderFunction(
-                name = context.typeParameterName,
-                type = DslBuilderType.Object,
-                params = params
-            )
-        )
-
-
-        val typeDeclaration = context.findType(this.name)
-
-        context.passOn(builderFunctionName = this.name) {
+    private fun emitReferenceType(tree: MutableBuilderTree, builderName: String) {
+        val typeDeclaration = tree.findType(this.name)
+        tree.addReferenceBuilder(builderName) {
             for (prop in typeDeclaration.props) {
                 if (prop !is PropertySignature) throw InvalidStateException("Did not expect to find an interface with methods")
-                prop.type.emit(
-                    createTypeContext(
-                        typeParameterName = context.typeParameterName
-                    )
-                )
+                prop.type.emit(this,prop.name)
             }
         }
+//        val params = mutableListOf<ApiParameter>()
+//        context.addBuilderFunction(
+//            BuilderFunction(
+//                name = context.typeParameterName,
+//                type = DslBuilderType.Object,
+//                params = params
+//            )
+//        )
+
+
+//        context.passOn(builderFunctionName = this.name) {
+//
+//        }
 //        for (prop in typeDeclaration.props) {
 //            if (prop !is PropertySignature) throw InvalidStateException("Did not expect to find an interface with methods")
 //            prop.type.emit(

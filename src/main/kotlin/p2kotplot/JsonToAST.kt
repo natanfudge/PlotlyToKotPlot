@@ -1,7 +1,7 @@
 package p2kotplot
 
+import p2kotplot.ast.*
 import p2kotplot.plotlytypes.*
-import sun.plugin.dom.exception.InvalidStateException
 
 
 class JsonToAST(
@@ -9,11 +9,11 @@ class JsonToAST(
     private val typeAliasData: List<TypeAlias>,
     private val functions: List<FunctionSignature>
 ) {
-    //TODO: handle type alias aswell
-    fun findType(name: String): Interface {
-        return interfaceTypeData.find { it.name == name }
-            ?: throw InvalidStateException("Could not find class with name $name")
-    }
+//    //TODO: handle type alias aswell
+//    fun findType(name: String): Interface {
+//        return interfaceTypeData.find { it.name == name }
+//            ?: throw InvalidStateException("Could not find class with name $name")
+//    }
 
     fun getApi() = functions.map { it.getApi() }
 
@@ -27,35 +27,45 @@ class JsonToAST(
 //    }
     //TODO union functions are emitted later I think
 
-    private fun FunctionSignature.getApi(): DslBuilderGroup {
-        val apiParameters = mutableListOf<ApiParameter>()
-        val builderFunctions = mutableListOf<BuilderFunction>()
-        val applyStatements = mutableListOf<String>()
-        val builderArrays = mutableListOf<String>()
+    private fun FunctionSignature.getApi(): Builder {
+//        val apiParameters = mutableListOf<ApiParameter>()
+//        val builderFunctions = mutableListOf<BuilderFunction>()
+//        val applyStatements = mutableListOf<String>()
+//        val builderArrays = mutableListOf<String>()
+//
+//        val builderClass = BuilderClass(
+//            name = this.builderName(),
+//            builderFunctions = builderFunctions,
+//            buildFunction = BuildFunction(
+//                applyStatements
+//            ),
+//            arrays = builderArrays
+//        )
+//
+//        val apiFunction = DslBuilderFunction(
+//            name = this.name,
+//            documentation = this.documentation,
+//            builderClassName = this.builderName(),
+//            parameters = apiParameters
+//        )
+//
+//        return passTypeContext(data = this@JsonToAST, builderFunctionName = this.name) {
+//            for (parameter in this@getApi.parameters) {
+//                parameter.type.emit(
+//                    createTypeContext(typeParameterName = parameter.name)
+//                )
+//            }
+//        }
 
-        val builderClass = BuilderClass(
-            name = this.builderName(),
-            builderFunctions = builderFunctions,
-            buildFunction = BuildFunction(
-                applyStatements
-            ),
-            arrays = builderArrays
-        )
-
-        val apiFunction = DslBuilderFunction(
-            name = this.name,
-            documentation = this.documentation,
-            builderClassName = this.builderName(),
-            parameters = apiParameters
-        )
-
-        return passTypeContext(data = this@JsonToAST, builderFunctionName = this.name) {
-            for (parameter in this@getApi.parameters) {
-                parameter.type.emit(
-                    createTypeContext(typeParameterName = parameter.name)
-                )
+        return MutableBuilderTree(
+            data = TypeData(interfaceTypeData, typeAliasData),
+            builderName = this.name,
+            wrappedBuilder = createEmptyBuilder(this.name, BuilderType.Root)
+        ).also {
+            for (parameter in this.parameters) {
+                parameter.type.emit(it,parameter.name)
             }
-        }
+        } .extractFinishedBuilderAtTheEndOfProcessing()
 
 
 

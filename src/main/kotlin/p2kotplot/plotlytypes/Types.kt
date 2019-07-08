@@ -2,7 +2,7 @@ package p2kotplot.plotlytypes
 
 import com.squareup.kotlinpoet.*
 //import p2kotplot.JsonToKotPlot
-import p2kotplot.TypeContext
+import p2kotplot.ast.MutableBuilderTree
 
 //-------- TOP LEVEL ----------------//
 data class DeclarationFile(
@@ -59,7 +59,7 @@ class FunctionSignature(
 //-------- TYPE --------------------//
 interface KotPlotType {
 
-    fun emit(context: TypeContext)
+    fun emit(tree: MutableBuilderTree, builderName: String)
 
 //    /**
 //     * @param knownName Sometimes we already know the name, and we just want to create the type with that name.

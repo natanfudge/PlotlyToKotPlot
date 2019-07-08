@@ -1,17 +1,16 @@
 package p2kotplot.plotlytypes
 
-import com.squareup.kotlinpoet.KModifier
-import com.squareup.kotlinpoet.TypeName
-import p2kotplot.TypeContext
+import p2kotplot.ast.MutableBuilderTree
 
 //import p2kotplot.JsonToKotPlot
 //import p2kotplot.addClass
 //import p2kotplot.toClassName
 
 data class UnionType(val types: List<KotPlotType>) : KotPlotType {
-    override fun emit(context: TypeContext) {
+    override fun emit(tree: MutableBuilderTree, builderName: String) {
         TODO("not implemented")
     }
+
 //    override fun getNameAndCreate(
 //        converter: JsonToKotPlot,
 //        knownName: String?

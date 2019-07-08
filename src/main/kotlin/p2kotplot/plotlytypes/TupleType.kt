@@ -1,14 +1,13 @@
 package p2kotplot.plotlytypes
 
-import com.squareup.kotlinpoet.TypeName
-import p2kotplot.TypeContext
+import p2kotplot.ast.MutableBuilderTree
 
 //import p2kotplot.JsonToKotPlot
 //import p2kotplot.toClassName
 
 //TODO: make this into a proper data class with "first", "second" etc as properties
 data class TupleType(val tupleTypes: List<KotPlotType>) : KotPlotType {
-    override fun emit(context: TypeContext) {
+    override fun emit(context: MutableBuilderTree, builderName: String) {
         TODO("not implemented")
     }
 //    override fun getNameAndCreate(
