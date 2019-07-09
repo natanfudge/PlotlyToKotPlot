@@ -4,7 +4,7 @@ import p2kotplot.ast.*
 import p2kotplot.plotlytypes.*
 
 
-class JsonToAST(
+class JsonToFBR(
     private val interfaceTypeData: List<Interface>,
     private val typeAliasData: List<TypeAlias>,
     private val functions: List<FunctionSignature>
@@ -15,7 +15,7 @@ class JsonToAST(
 //            ?: throw InvalidStateException("Could not find class with name $name")
 //    }
 
-    fun getApi() = functions.map { it.getApi() }
+//    fun getApi() = getApi()
 
 
 //    init {
@@ -27,7 +27,7 @@ class JsonToAST(
 //    }
     //TODO union functions are emitted later I think
 
-    private fun FunctionSignature.getApi(): Builder {
+    fun getApi(): FlatBuilderRepresentation {
 //        val apiParameters = mutableListOf<ApiParameter>()
 //        val builderFunctions = mutableListOf<BuilderFunction>()
 //        val applyStatements = mutableListOf<String>()
@@ -57,16 +57,41 @@ class JsonToAST(
 //            }
 //        }
 
-        return MutableBuilderTree(
-            data = TypeData(interfaceTypeData, typeAliasData),
-            builderName = this.name,
-            wrappedBuilder = createEmptyBuilder(this.name, BuilderType.Root)
-        ).also {
-            for (parameter in this.parameters) {
-                parameter.type.emit(it,parameter.name)
-            }
-        } .extractFinishedBuilderAtTheEndOfProcessing()
 
+        return FlatBuilderRepresentation(
+            builderClasses = mutableListOf(),
+            builderFunctions = mutableListOf(),
+            parameters = mutableListOf()
+        ).also {
+            for (function in functions) {
+                it.addBuilderFunction(
+                    name = function.name, inClass = null,
+                    /* type = BuilderFunctionsType.Root,*/
+                    builderNameOfConstructedType = function.name.toBuilderName()
+                )
+                it.addBuilderClass(name = function.name.toBuilderName())
+                for (parameter in function.parameters) {
+                    parameter.type.add(
+                        builder = it,
+                        typeData = TypeData(interfaceTypeData, typeAliasData),
+                        builderClassIn = function.name.toBuilderName(),
+                        nameAsParameter = parameter.name,
+                        functionAppearsIn = function.name
+                    )
+                }
+            }
+
+        }
+
+//        return MutableBuilderTree(
+//            data = TypeData(interfaceTypeData, typeAliasData),
+//            builderName = this.name,
+//            wrappedBuilder = createEmptyBuilder(this.name, BuilderType.Root)
+//        ).also {
+//            for (parameter in this.parameters) {
+//                parameter.type.add(it,parameter.name)
+//            }
+//        } .extractFinishedBuilderAtTheEndOfProcessing()
 
 
 //        return DslBuilderGroup(
@@ -76,7 +101,6 @@ class JsonToAST(
 //        )
     }
 
-    private fun FunctionSignature.builderName() = name.toTitleCase() + "Builder"
 }
 
 /*

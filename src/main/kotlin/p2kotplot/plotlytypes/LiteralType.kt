@@ -1,6 +1,7 @@
 package p2kotplot.plotlytypes
 
-import p2kotplot.ast.MutableBuilderTree
+import p2kotplot.ast.FlatBuilderRepresentation
+import p2kotplot.ast.TypeData
 
 //import p2kotplot.addObject
 //import com.squareup.kotlinpoet.TypeName
@@ -15,8 +16,14 @@ import p2kotplot.ast.MutableBuilderTree
  * E.g. "thing1"
  */
 data class LiteralType(val literal: String) : KotPlotType {
-    override fun emit(context: MutableBuilderTree, builderName: String) {
-        TODO("not implemented")
+    override fun add(
+        builder: FlatBuilderRepresentation,
+        typeData: TypeData,
+        builderClassIn: String?,
+        parameterName: String,
+        functionAppearsIn: String
+    ) {
+
     }
 
 

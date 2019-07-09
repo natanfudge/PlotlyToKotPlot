@@ -14,15 +14,20 @@ interface Mage {
 	name : string
 }
 
+//type Mage = string | number
 
-
-
-
-
-
-
-
+/**
+    val arrayThing ...
+    fun addOneOfMage(
  */
+ */
+
+
+
+
+
+
+
 // =>
 /*
 	Layer 0 (layers are not represented at memory):

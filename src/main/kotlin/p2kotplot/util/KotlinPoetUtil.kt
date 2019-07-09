@@ -1,6 +1,7 @@
-package p2kotplot
+package p2kotplot.util
 
 import com.squareup.kotlinpoet.*
+import p2kotplot.AstToKotPlot
 
 //fun file(packageName: String, fileName: String, init: FileSpec.Builder.() -> Unit): FileSpec =
 //    FileSpec.builder(packageName, fileName).apply(init).build()
@@ -9,7 +10,7 @@ import com.squareup.kotlinpoet.*
 //fun classType(className: String, init: TypeSpec.Builder.() -> Unit): TypeSpec =
 
 
-//inline fun TypeSpec.Builder.p2kotplot.addClass(className: String, init: TypeSpec.Builder.() -> Unit){
+//inline fun TypeSpec.Builder.p2kotplot.util.addClass(className: String, init: TypeSpec.Builder.() -> Unit){
 //    addType(classType(className, init))
 //}
 
@@ -40,7 +41,7 @@ inline fun TypeSpec.Builder.addProperty(
 }
 
 
-//fun TypeSpec.Builder.p2kotplot.addProperty()
+//fun TypeSpec.Builder.p2kotplot.util.addProperty()
 
 
 //inline fun TypeSpec.Builder.function(functionName: String, init: FunSpec.Builder.() -> Unit): FunSpec =

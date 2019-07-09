@@ -1,4 +1,4 @@
-package p2kotplot
+package p2kotplot.util
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

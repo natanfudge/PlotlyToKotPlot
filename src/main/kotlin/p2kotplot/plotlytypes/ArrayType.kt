@@ -1,22 +1,40 @@
 package p2kotplot.plotlytypes
 
-import p2kotplot.ast.MutableBuilderTree
-import sun.plugin.dom.exception.InvalidStateException
+import p2kotplot.ast.BuilderFunctionsType
+import p2kotplot.ast.FlatBuilderRepresentation
+import p2kotplot.ast.TypeData
 
 //import p2kotplot.JsonToKotPlot
 //import p2kotplot.toClassName
+private const val OneOfArrayMarker = "[ONE_OF_ARRAY_MARKER]"
+fun String.isBuilderFunctionNameForOneOfArray() = this.startsWith(OneOfArrayMarker)
+fun String.getArrayBuilderFunctionOriginalName() = this.removePrefix(OneOfArrayMarker)
 
 data class ArrayType(val elementType: KotPlotType) : KotPlotType {
-    override fun emit(tree: MutableBuilderTree, builderName: String) {
-        if(elementType !is ReferenceType) throw InvalidStateException("Did not expect an array with a non-reference element type.")
-
-        //TODO: 'inline' the reference into the current builder function, i.e.
-        // instead of : '(init: AddOneOfPowderBuilder.() -> Unit = {})'
-        // we have: '(num1 : Int, str1 : String, init: AddOneOfPowderBuilder.() -> Unit = {})'
-//        val typeDeclaration = tree.findType(elementType.name)
-        tree.addArrayBuilder(builderName,arrayGenericType = elementType.name){
-            elementType.emit(this, builderName = builderName)
-        }
+    private fun String.toBuilderFunctionName() = OneOfArrayMarker + this
+    //TODO: investigate if [BuilderFunction.type] is necessary
+    override fun add(
+        builder: FlatBuilderRepresentation,
+        typeData: TypeData,
+        builderClassIn: String?,
+        nameAsParameter: String,
+        functionAppearsIn: String
+    ) {
+//        builder.addBuilderClass(name = name.toBuilderName())
+//            builder.addBuilderFunction(
+//                name = nameAsParameter.toBuilderFunctionName(),
+//                inClass = builderClassIn,
+//                type = BuilderFunctionsType.Array
+//            )
+//            for (prop in typeData.findTypeProps(name)) {
+                elementType.add(
+                    builder = builder,
+                    typeData = typeData,
+                    builderClassIn = builderClassIn,
+                    functionAppearsIn = nameAsParameter.toBuilderFunctionName(),
+                    nameAsParameter = nameAsParameter.toBuilderFunctionName()
+                )
+//            }
     }
 
 //    override fun getNameAndCreate(

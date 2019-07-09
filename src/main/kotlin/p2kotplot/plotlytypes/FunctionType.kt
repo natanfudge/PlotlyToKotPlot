@@ -1,13 +1,11 @@
 package p2kotplot.plotlytypes
 
-import p2kotplot.ast.MutableBuilderTree
+import p2kotplot.ast.FlatBuilderRepresentation
 
 //import p2kotplot.JsonToKotPlot
 
 data class FunctionType(val parameters: List<Parameter>, val returnType: KotPlotType) : KotPlotType {
-    override fun emit(tree: MutableBuilderTree, builderName: String) {
-//        TODO("not implemented")
-    }
+
 
 
 //    override fun getNameAndCreate(

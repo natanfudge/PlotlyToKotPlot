@@ -18,7 +18,17 @@
                 {
                     "name": "powder",
                     "type": {
-                        "name": "Foo",
+                        "elementType": {
+                            "name": "MagicPowder",
+                            "kotPlotTypeType": "ReferenceType"
+                        },
+                        "kotPlotTypeType": "ArrayType"
+                    }
+                },
+                {
+                    "name": "mage",
+                    "type": {
+                        "name": "Mage",
                         "kotPlotTypeType": "ReferenceType"
                     }
                 }
@@ -27,61 +37,55 @@
             "signatureType": "FunctionSignature"
         }
     ],
-    "interfaces": [],
-    "typeAliases": [
+    "interfaces": [
         {
-            "name": "Foo",
-            "type": {
-                "types": [
-                    {
-                        "nestedProperties": [
-                            {
-                                "name": "obj1key1",
-                                "type": {
-                                    "name": "string",
-                                    "kotPlotTypeType": "ReferenceType"
-                                },
-                                "documentation": "",
-                                "signatureType": "PropertySignature"
-                            },
-                            {
-                                "name": "obj1key2",
-                                "type": {
-                                    "name": "number",
-                                    "kotPlotTypeType": "ReferenceType"
-                                },
-                                "documentation": "",
-                                "signatureType": "PropertySignature"
-                            }
-                        ],
-                        "kotPlotTypeType": "TypeLiteral"
+            "name": "MagicPowder",
+            "props": [
+                {
+                    "name": "powderName",
+                    "type": {
+                        "name": "string",
+                        "kotPlotTypeType": "ReferenceType"
                     },
-                    {
-                        "nestedProperties": [
-                            {
-                                "name": "obj2key1",
-                                "type": {
-                                    "name": "string",
-                                    "kotPlotTypeType": "ReferenceType"
-                                },
-                                "documentation": "",
-                                "signatureType": "PropertySignature"
-                            },
-                            {
-                                "name": "obj2key2",
-                                "type": {
-                                    "name": "number",
-                                    "kotPlotTypeType": "ReferenceType"
-                                },
-                                "documentation": "",
-                                "signatureType": "PropertySignature"
-                            }
-                        ],
-                        "kotPlotTypeType": "TypeLiteral"
-                    }
-                ],
-                "kotPlotTypeType": "IntersectionType"
-            }
+                    "documentation": "",
+                    "signatureType": "PropertySignature"
+                },
+                {
+                    "name": "powderWeight",
+                    "type": {
+                        "name": "number",
+                        "kotPlotTypeType": "ReferenceType"
+                    },
+                    "documentation": "",
+                    "signatureType": "PropertySignature"
+                }
+            ],
+            "documentation": "class powderBuilder"
+        },
+        {
+            "name": "Mage",
+            "props": [
+                {
+                    "name": "age",
+                    "type": {
+                        "name": "number",
+                        "kotPlotTypeType": "ReferenceType"
+                    },
+                    "documentation": "",
+                    "signatureType": "PropertySignature"
+                },
+                {
+                    "name": "name",
+                    "type": {
+                        "name": "string",
+                        "kotPlotTypeType": "ReferenceType"
+                    },
+                    "documentation": "",
+                    "signatureType": "PropertySignature"
+                }
+            ],
+            "documentation": ""
         }
-    ]
+    ],
+    "typeAliases": []
 }

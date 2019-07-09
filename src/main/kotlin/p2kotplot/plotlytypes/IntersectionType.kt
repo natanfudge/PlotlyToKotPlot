@@ -1,6 +1,6 @@
 package p2kotplot.plotlytypes
 
-import p2kotplot.ast.MutableBuilderTree
+import p2kotplot.ast.FlatBuilderRepresentation
 
 
 /*
@@ -14,12 +14,7 @@ import p2kotplot.ast.MutableBuilderTree
  */
 
 data class IntersectionType(val types: List<KotPlotType>) : KotPlotType {
-    override fun emit(tree: MutableBuilderTree, builderName: String) {
-        types.forEachIndexed { i, type ->
-            type.emit(tree, "intersectionPart${i+1}")
-        }
 
-    }
 
 //    override fun getNameAndCreate(
 //        converter: JsonToKotPlot,

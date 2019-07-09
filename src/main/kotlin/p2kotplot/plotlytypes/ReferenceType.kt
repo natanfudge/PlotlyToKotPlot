@@ -1,29 +1,58 @@
 package p2kotplot.plotlytypes
 
-import p2kotplot.ast.MutableBuilderTree
-import sun.plugin.dom.exception.InvalidStateException
+import p2kotplot.ast.BuilderFunctionsType
+import p2kotplot.ast.FlatBuilderRepresentation
+import p2kotplot.ast.TypeData
+import p2kotplot.ast.toBuilderName
 
-fun String.builderClassName() = this.toTitleCase() + "Builder"
 
 data class ReferenceType(val name: String) : KotPlotType {
-    override fun emit(tree: MutableBuilderTree, builderName: String) =
-        when (this.name) {
-            "number", "string" -> emitValueType(tree,builderName)
-            else -> emitReferenceType(tree,builderName)
+    override fun add(
+        builder: FlatBuilderRepresentation,
+        typeData: TypeData,
+        builderClassIn: String?,
+        nameAsParameter: String,
+        functionAppearsIn: String
+    ) {
+        fun emitValueType() {
+            builder.addParameter(
+                name = nameAsParameter,
+                type = this.name,
+                belongsToFunction = functionAppearsIn,
+                paramInConstructorOfClass = builderClassIn
+            )
         }
 
-
-    private fun emitValueType(tree: MutableBuilderTree, builderName: String) {
-        tree.addPrimitiveParameter(type = name.toTitleCase() , name = builderName)
-    }
-
-    private fun emitReferenceType(tree: MutableBuilderTree, builderName: String) {
-        val typeDeclaration = tree.findType(this.name)
-        tree.addReferenceBuilder(builderName) {
-            for (prop in typeDeclaration.props) {
-                if (prop !is PropertySignature) throw InvalidStateException("Did not expect to find an interface with methods")
-                prop.type.emit(this, prop.name)
+        fun emitReferenceType() {
+            builder.addBuilderClass(name = name.toBuilderName())
+            builder.addBuilderFunction(
+                name = nameAsParameter,
+                inClass = builderClassIn,
+//                type = BuilderFunctionsType.Reference,
+                builderNameOfConstructedType = name.toBuilderName()
+            )
+            for (prop in typeData.findTypeProps(name)) {
+                prop.type.add(
+                    builder = builder,
+                    builderClassIn = name.toBuilderName(),
+                    typeData = typeData,
+                    functionAppearsIn = nameAsParameter,
+                    nameAsParameter = prop.name
+                )
             }
         }
+
+        when (this.name) {
+            "number", "string" -> emitValueType()
+            else -> emitReferenceType()
+        }
+
+
     }
+
+
 }
+
+
+
+
