@@ -1,6 +1,7 @@
 package p2kotplot.plotlytypes
 
 import p2kotplot.ast.MutableBuilderTree
+import sun.plugin.dom.exception.InvalidStateException
 
 //import p2kotplot.JsonToKotPlot
 //import p2kotplot.addClass
@@ -13,8 +14,12 @@ var typeLiteralCount = 1
  * E.g. { thing : "value", otherThing : {...} }
  */
 data class TypeLiteral(val nestedProperties: List<PropertySignature>) : KotPlotType {
-    override fun emit(context: MutableBuilderTree, builderName: String) {
-        TODO("not implemented")
+    override fun emit(tree: MutableBuilderTree, builderName: String) {
+        tree.addReferenceBuilder(builderName) {
+            for (prop in nestedProperties) {
+                prop.type.emit(this, prop.name)
+            }
+        }
     }
 
 //    override fun getNameAndCreate(

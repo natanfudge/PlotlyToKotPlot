@@ -2,12 +2,23 @@ package p2kotplot.plotlytypes
 
 import p2kotplot.ast.MutableBuilderTree
 
-//import p2kotplot.JsonToKotPlot
-//import p2kotplot.toClassName
+
+/*
+ * type Foo = ErrorOptions & {
+	type: 'constant' | 'percent',
+	value: number,
+	valueminus?: number
+};
+*
+ * }
+ */
 
 data class IntersectionType(val types: List<KotPlotType>) : KotPlotType {
-    override fun emit(context: MutableBuilderTree, builderName: String) {
-        TODO("not implemented")
+    override fun emit(tree: MutableBuilderTree, builderName: String) {
+        types.forEachIndexed { i, type ->
+            type.emit(tree, "intersectionPart${i+1}")
+        }
+
     }
 
 //    override fun getNameAndCreate(

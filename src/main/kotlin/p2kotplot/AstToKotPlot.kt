@@ -8,6 +8,7 @@ import kotlinx.serialization.json.JsonObject
 import p2kotplot.ast.BuildStatementType
 import p2kotplot.ast.Builder
 import p2kotplot.ast.BuilderType
+import p2kotplot.plotlytypes.toCamelCase
 
 const val PackageName = ""
 const val InitFunctionName = "init"
@@ -37,6 +38,7 @@ private fun TypeSpec.Builder.privateValsPrimaryConstructor(parameters: List<Para
 
 }
 
+const val SingularOfArrayPrefix = "addOneOf"
 
 class AstToKotPlot(private val builderList: List<Builder>) {
     val file: FileSpec.Builder = FileSpec.builder(PackageName, "PlotlyTypes")
@@ -96,6 +98,20 @@ class AstToKotPlot(private val builderList: List<Builder>) {
 
         addBuilderClass(builder)
     }
+
+    private fun TypeSpec.Builder.addJsonArrayFields(builder: Builder) {
+        for (jsonArrayField in builder.builderClass.jsonArrayFields) {
+            addProperty(
+                name = jsonArrayField.arrayName,
+                type = "MutableList".toClassName().parameterizedBy(JsonElement::class.asTypeName())
+            ) {
+                initializer("mutableListOf()")
+
+                addModifiers(KModifier.PRIVATE)
+            }
+        }
+    }
+
     //TODO: add @dslmarker
 
     private fun FunSpec.Builder.addBuilderFunction(builder: Builder) {
@@ -110,7 +126,7 @@ class AstToKotPlot(private val builderList: List<Builder>) {
         addParameter(
             name = InitFunctionName,
             type = LambdaTypeName.get(receiver = builder.builderClass.name.toClassName(), returnType = UNIT)
-        ){
+        ) {
             defaultValue("{}")
         }
 
@@ -121,10 +137,13 @@ class AstToKotPlot(private val builderList: List<Builder>) {
             "(" + builder.builderFunctions[0].parameters.joinToString(", ") { "\"${it.name}\" to JsonLiteral(${it.name})" } + ")"
         when (builder.builderType) {
             //TODO: remove apply(init) when not neccasiry
-            BuilderType.Root -> addStatement("val jsonObject = ${builder.builderClass.name}$builderConstructorParams.apply($InitFunctionName).$BuildFunctionName()")
+            BuilderType.Root -> {
+                addStatement("val jsonObject = ${builder.builderClass.name}$builderConstructorParams.apply($InitFunctionName).$BuildFunctionName()")
+                addStatement("print(jsonObject)")
+            }
 
             BuilderType.Reference -> addStatement("$JsonMapName[\"${builder.name()}\"] = ${builder.builderClass.name}$builderConstructorParams.apply($InitFunctionName).$BuildFunctionName()")
-            BuilderType.Array -> addStatement("${builder.name()}.add(${builder.builderFunctions[0].parameters[0].name})")
+            BuilderType.Array -> addStatement("${builder.name().removePrefix(SingularOfArrayPrefix).toCamelCase()}.add(${builder.builderClass.name}$builderConstructorParams.apply($InitFunctionName).$BuildFunctionName())")
         }
 
 
@@ -156,6 +175,8 @@ class AstToKotPlot(private val builderList: List<Builder>) {
             addSubBuilders(builder)
 //
             addBuildFunction(builder)
+
+            addJsonArrayFields(builder)
 
         }
     }

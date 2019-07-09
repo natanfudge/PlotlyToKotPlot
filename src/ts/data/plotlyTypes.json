@@ -18,7 +18,7 @@
                 {
                     "name": "powder",
                     "type": {
-                        "name": "MagicPowder",
+                        "name": "Foo",
                         "kotPlotTypeType": "ReferenceType"
                     }
                 }
@@ -27,40 +27,61 @@
             "signatureType": "FunctionSignature"
         }
     ],
-    "interfaces": [
+    "interfaces": [],
+    "typeAliases": [
         {
-            "name": "MagicPowder",
-            "props": [
-                {
-                    "name": "powderName",
-                    "type": {
-                        "name": "string",
-                        "kotPlotTypeType": "ReferenceType"
+            "name": "Foo",
+            "type": {
+                "types": [
+                    {
+                        "nestedProperties": [
+                            {
+                                "name": "obj1key1",
+                                "type": {
+                                    "name": "string",
+                                    "kotPlotTypeType": "ReferenceType"
+                                },
+                                "documentation": "",
+                                "signatureType": "PropertySignature"
+                            },
+                            {
+                                "name": "obj1key2",
+                                "type": {
+                                    "name": "number",
+                                    "kotPlotTypeType": "ReferenceType"
+                                },
+                                "documentation": "",
+                                "signatureType": "PropertySignature"
+                            }
+                        ],
+                        "kotPlotTypeType": "TypeLiteral"
                     },
-                    "documentation": "",
-                    "signatureType": "PropertySignature"
-                },
-                {
-                    "name": "powderWeight",
-                    "type": {
-                        "name": "number",
-                        "kotPlotTypeType": "ReferenceType"
-                    },
-                    "documentation": "",
-                    "signatureType": "PropertySignature"
-                },
-                {
-                    "name": "powderSpecialSkill",
-                    "type": {
-                        "name": "string",
-                        "kotPlotTypeType": "ReferenceType"
-                    },
-                    "documentation": "",
-                    "signatureType": "PropertySignature"
-                }
-            ],
-            "documentation": ""
+                    {
+                        "nestedProperties": [
+                            {
+                                "name": "obj2key1",
+                                "type": {
+                                    "name": "string",
+                                    "kotPlotTypeType": "ReferenceType"
+                                },
+                                "documentation": "",
+                                "signatureType": "PropertySignature"
+                            },
+                            {
+                                "name": "obj2key2",
+                                "type": {
+                                    "name": "number",
+                                    "kotPlotTypeType": "ReferenceType"
+                                },
+                                "documentation": "",
+                                "signatureType": "PropertySignature"
+                            }
+                        ],
+                        "kotPlotTypeType": "TypeLiteral"
+                    }
+                ],
+                "kotPlotTypeType": "IntersectionType"
+            }
         }
-    ],
-    "typeAliases": []
+    ]
 }
