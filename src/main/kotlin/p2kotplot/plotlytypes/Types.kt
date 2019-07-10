@@ -38,7 +38,8 @@ sealed class Signature(val name: String, val documentation: String)
 class PropertySignature(
     name: String,
     val type: KotPlotType,
-    documentation: String
+    documentation: String,
+    val optional: Boolean
 ) : Signature(name, documentation)
 
 class FunctionSignature(
@@ -54,13 +55,18 @@ class FunctionSignature(
 //                       )
 
 
-
-
 //----------------------------------//
 //-------- TYPE --------------------//
 interface KotPlotType {
 
-    fun add(builder : FlatBuilderRepresentation, typeData: TypeData, builderClassIn : String?, nameAsParameter : String, functionAppearsIn : String){
+    fun add(
+        builder: FlatBuilderRepresentation,
+        typeData: TypeData,
+        builderClassIn: String?,
+        nameAsParameter: String,
+        isOptional : Boolean,
+        functionAppearsIn: String
+    ) {
 
     }
 
@@ -103,7 +109,8 @@ fun TypeName.getRepresentativeName(): String = when {
 //------- PARAMETER --------------//
 data class Parameter(
     val name: String,
-    val type: KotPlotType
+    val type: KotPlotType,
+    val optional: Boolean
 )
 //---------------------------------//
 

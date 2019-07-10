@@ -1,6 +1,6 @@
 import {Font, Padding} from "./plotly";
 
-export function doMagic(amount: number, powder: MagicPowder[], mage : Mage)
+export function doMagic(amount: number, powder: MagicPowder[], mage ?: Mage)
 
 // type Foo = {
 //     obj1key1: string
@@ -15,7 +15,7 @@ export function doMagic(amount: number, powder: MagicPowder[], mage : Mage)
  */
 
 export interface MagicPowder {
-    powderName: string
+    powderName?: string
     powderWeight: number
     // maker : {
     //     testKey1 : number

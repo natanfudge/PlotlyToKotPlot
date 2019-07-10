@@ -18,6 +18,7 @@ data class ArrayType(val elementType: KotPlotType) : KotPlotType {
         typeData: TypeData,
         builderClassIn: String?,
         nameAsParameter: String,
+        isOptional: Boolean,
         functionAppearsIn: String
     ) {
 //        builder.addBuilderClass(name = name.toBuilderName())
@@ -32,7 +33,8 @@ data class ArrayType(val elementType: KotPlotType) : KotPlotType {
                     typeData = typeData,
                     builderClassIn = builderClassIn,
                     functionAppearsIn = nameAsParameter.toBuilderFunctionName(),
-                    nameAsParameter = nameAsParameter.toBuilderFunctionName()
+                    nameAsParameter = nameAsParameter.toBuilderFunctionName(),
+                    isOptional = false
                 )
 //            }
     }

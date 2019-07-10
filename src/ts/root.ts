@@ -18,8 +18,7 @@ let program = ts.createProgram([inFile], {
     target: ts.ScriptTarget.ES5,
     module: ts.ModuleKind.CommonJS
 });
-
-
+//TODO: support Partial<>
 let sourceFiles = program.getSourceFiles();
 
 let targetSourceFile = sourceFiles.filter((sourceFile) => sourceFile.fileName === inFile)[0];
@@ -114,9 +113,14 @@ function serializePropertySignature(propertySignature: ts.PropertySignature): Pr
         name: propertySignature.name.getText(),
         type: serializeTypeOfNode(propertySignature),
         documentation: getDocumentation(propertySignature),
-        signatureType: "PropertySignature"
+        signatureType: "PropertySignature",
+        optional: isOptional(propertySignature)
     }
 
+}
+
+function isOptional(node: ts.Node) : boolean{
+    return node.getChildren().find((child) => child.kind ==  ts.SyntaxKind.QuestionToken) != undefined
 }
 
 
@@ -252,7 +256,8 @@ function serializeParenthesizedType(typeNode : ts.ParenthesizedTypeNode) : KotPl
 function serializeParameter(parameter: ts.ParameterDeclaration): Parameter {
     return {
         name: parameter.name.getText(),
-        type: serializeTypeOfNode(parameter)
+        type: serializeTypeOfNode(parameter),
+        optional: isOptional(parameter)
     }
 }
 

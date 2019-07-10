@@ -1,6 +1,5 @@
 package p2kotplot.plotlytypes
 
-import p2kotplot.ast.BuilderFunctionsType
 import p2kotplot.ast.FlatBuilderRepresentation
 import p2kotplot.ast.TypeData
 import p2kotplot.ast.toBuilderName
@@ -21,6 +20,7 @@ data class TypeLiteral(val nestedProperties: List<PropertySignature>) : KotPlotT
         typeData: TypeData,
         builderClassIn: String?,
         nameAsParameter: String,
+        isOptional: Boolean,
         functionAppearsIn: String
     ) {
         // Type literals are anonymous so we give them an arbitrary name.
@@ -30,7 +30,8 @@ data class TypeLiteral(val nestedProperties: List<PropertySignature>) : KotPlotT
                 name = nameAsParameter,
                 inClass = builderClassIn,
 //                type = BuilderFunctionsType.Reference,
-                builderNameOfConstructedType = inventedTypeName.toBuilderName()
+                builderNameOfConstructedType = inventedTypeName.toBuilderName(),
+                isOptional = isOptional
             )
             for (prop in nestedProperties) {
                 prop.type.add(
@@ -38,7 +39,8 @@ data class TypeLiteral(val nestedProperties: List<PropertySignature>) : KotPlotT
                     builderClassIn = inventedTypeName.toBuilderName(),
                     typeData = typeData,
                     functionAppearsIn = nameAsParameter,
-                    nameAsParameter = prop.name
+                    nameAsParameter = prop.name,
+                    isOptional = prop.optional
                 )
             }
     }

@@ -1,6 +1,5 @@
 package p2kotplot.plotlytypes
 
-import p2kotplot.ast.BuilderFunctionsType
 import p2kotplot.ast.FlatBuilderRepresentation
 import p2kotplot.ast.TypeData
 import p2kotplot.ast.toBuilderName
@@ -12,14 +11,16 @@ data class ReferenceType(val name: String) : KotPlotType {
         typeData: TypeData,
         builderClassIn: String?,
         nameAsParameter: String,
+        isOptional: Boolean,
         functionAppearsIn: String
     ) {
         fun emitValueType() {
             builder.addParameter(
                 name = nameAsParameter,
-                type = this.name,
+                type = this.name.toTitleCase(),
                 belongsToFunction = functionAppearsIn,
-                paramInConstructorOfClass = builderClassIn
+                paramInConstructorOfClass = builderClassIn,
+                optional = isOptional
             )
         }
 
@@ -29,7 +30,8 @@ data class ReferenceType(val name: String) : KotPlotType {
                 name = nameAsParameter,
                 inClass = builderClassIn,
 //                type = BuilderFunctionsType.Reference,
-                builderNameOfConstructedType = name.toBuilderName()
+                builderNameOfConstructedType = name.toBuilderName(),
+                isOptional = isOptional
             )
             for (prop in typeData.findTypeProps(name)) {
                 prop.type.add(
@@ -37,7 +39,8 @@ data class ReferenceType(val name: String) : KotPlotType {
                     builderClassIn = name.toBuilderName(),
                     typeData = typeData,
                     functionAppearsIn = nameAsParameter,
-                    nameAsParameter = prop.name
+                    nameAsParameter = prop.name,
+                    isOptional = prop.optional
                 )
             }
         }

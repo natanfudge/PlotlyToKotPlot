@@ -16,15 +16,7 @@ import p2kotplot.ast.TypeData
  * E.g. "thing1"
  */
 data class LiteralType(val literal: String) : KotPlotType {
-    override fun add(
-        builder: FlatBuilderRepresentation,
-        typeData: TypeData,
-        builderClassIn: String?,
-        parameterName: String,
-        functionAppearsIn: String
-    ) {
 
-    }
 
 
     //TODO fix upper/ lower casing

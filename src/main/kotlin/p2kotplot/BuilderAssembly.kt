@@ -2,10 +2,12 @@ package p2kotplot
 
 import p2kotplot.ast.BuilderClass
 import p2kotplot.ast.BuilderFunction
+import p2kotplot.ast.BuilderParameter
 import p2kotplot.ast.PublicFlatBuilderRepresentation
 import p2kotplot.plotlytypes.getArrayBuilderFunctionOriginalName
 import p2kotplot.plotlytypes.isBuilderFunctionNameForOneOfArray
 import p2kotplot.plotlytypes.toTitleCase
+import sun.plugin.dom.exception.InvalidStateException
 
 data class BuilderClassComponents(
     val name: String,
@@ -19,36 +21,26 @@ data class BuilderFunctionComponents(
     val name: String,
     val parameters: List<ParameterComponents>,
     val body: String,
-    val builderNameOfConstructedType : String
+    val builderNameOfConstructedType: String,
+    val hasInitParam : Boolean
 )
 
 
 data class ParameterComponents(
     val name: String,
-    val type: String
+    val type: String,
+    val isOptional: Boolean
 )
 
 class BuilderAssembly(builder: PublicFlatBuilderRepresentation) {
-//    private val builderClasses = builder.builderClasses
+    private val builderClasses = builder.builderClasses
     private val builderFunctions = builder.builderFunctions
     private val parameters = builder.parameters
 
     fun assemble(builderClass: BuilderClass): BuilderClassComponents {
         val name = builderClass.name
 
-        val builderFunctions = builderClass.getBuilderFunctions().map { function ->
-            BuilderFunctionComponents(
-                name = function.getFinalName(),
-                parameters = function.getParameters().map {
-                    ParameterComponents(
-                        name = it.name,
-                        type = it.type
-                    )
-                },
-                body = function.getBody(),
-                builderNameOfConstructedType = function.builderNameOfConstructedType
-            )
-        }
+        val builderFunctions = builderClass.getBuilderFunctions().map { assemble(it) }
 
         val arrayFields =
             builderClass.getBuilderFunctions().filter { it.name.isBuilderFunctionNameForOneOfArray() }.map {
@@ -56,24 +48,41 @@ class BuilderAssembly(builder: PublicFlatBuilderRepresentation) {
             }
 
         val applyStatements = builderClass.getConstructorArguments().map {
-            "if(${it.name} != null) Map.add(${it.name})"
+            val nullCheck = if(it.optional) "if(${it.name} != null)" else ""
+            "$nullCheck $JsonMapName[\"${it.name}\"] = JsonLiteral(${it.name})"
         } + builderClass.getBuilderFunctions().filter {
             it.name.isBuilderFunctionNameForOneOfArray()
         }.map { builderFunction ->
             builderFunction.name.getArrayBuilderFunctionOriginalName().let {
-                "if($it.isNotEmpty()) Map.add($it)"
+                val isEmptyCheck = if(builderFunction.isOptional) "if($it.isNotEmpty())" else ""
+                "$isEmptyCheck $JsonMapName[\"$it\"] = JsonArray($it)"
             }
         }
 
         val constructorArguments = builderClass.getConstructorArguments().map {
-            ParameterComponents(
-                name = it.name,
-                type = it.type
-            )
+            it.toParameterComponents()
         }
 
         return BuilderClassComponents(name, builderFunctions, arrayFields, applyStatements, constructorArguments)
     }
+
+    private fun BuilderParameter. toParameterComponents(): ParameterComponents {
+        return ParameterComponents(
+            name = name,
+            type = type,
+            isOptional = optional
+        )
+    }
+
+    fun assemble(builderFunction: BuilderFunction) = BuilderFunctionComponents(
+        name = builderFunction.getFinalName(),
+        parameters = builderFunction.getParameters().map {
+            it.toParameterComponents()
+        },
+        body = builderFunction.getBody(),
+        builderNameOfConstructedType = builderFunction.builderNameOfConstructedType,
+        hasInitParam = builderFunction.builderClassUsedInFunctionHasBuilderFunctions()
+    )
 
     private fun BuilderClass.getConstructorArguments() = parameters.filter {
         it.paramInConstructorOfClass == name
@@ -91,15 +100,32 @@ class BuilderAssembly(builder: PublicFlatBuilderRepresentation) {
         SingularOfArrayFunctionPrefix + name.getArrayBuilderFunctionOriginalName().toTitleCase()
     } else name
 
+    private fun BuilderFunction.getBuilderClassUsedInFunction() = builderClasses.find {
+        it.name == this.builderNameOfConstructedType
+    } ?: throw InvalidStateException("Could not find class $inClass")
+
+    private fun BuilderFunction.builderClassUsedInFunctionHasBuilderFunctions() =
+        this.getBuilderClassUsedInFunction().getBuilderFunctions().isNotEmpty()
+
     private fun BuilderFunction.getBody(): String {
         val builderConstructorParams =
             "(" + this.getParameters().joinToString(", ") { it.name } + ")"
-        return if (this.name.isBuilderFunctionNameForOneOfArray()) {
-            val originalName = this.name.getArrayBuilderFunctionOriginalName()
-            "$originalName.add($builderNameOfConstructedType$builderConstructorParams.apply($InitFunctionName).$BuildFunctionName()"
-        } else {
-            "$JsonMapName[\"${this.name}\" = $builderNameOfConstructedType$builderConstructorParams.apply($InitFunctionName).$BuildFunctionName()"
-        }
+
+        // If the builder class used has no builder functions there is no need for an init function.
+        // This is also handled in the FBRToKotPlot side.
+        val applyCall = if (builderClassUsedInFunctionHasBuilderFunctions()) ".apply($InitFunctionName)" else ""
+
+        val objectConstruction =
+            "$builderNameOfConstructedType$builderConstructorParams$applyCall.$BuildFunctionName()"
+
+            return when {
+                this.name.isBuilderFunctionNameForOneOfArray() -> {
+                    val originalName = this.name.getArrayBuilderFunctionOriginalName()
+                    "$originalName.add($objectConstruction)"
+                }
+                this.inClass != null -> "$JsonMapName[\"${this.name}\"] = $objectConstruction"
+                else -> "val jsonObject = $objectConstruction;print(jsonObject.asIterable().joinToString(\"\\n\"))"
+            }
     }
 }
 

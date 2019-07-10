@@ -13,7 +13,8 @@
                     "type": {
                         "name": "number",
                         "kotPlotTypeType": "ReferenceType"
-                    }
+                    },
+                    "optional": false
                 },
                 {
                     "name": "powder",
@@ -23,14 +24,16 @@
                             "kotPlotTypeType": "ReferenceType"
                         },
                         "kotPlotTypeType": "ArrayType"
-                    }
+                    },
+                    "optional": false
                 },
                 {
                     "name": "mage",
                     "type": {
                         "name": "Mage",
                         "kotPlotTypeType": "ReferenceType"
-                    }
+                    },
+                    "optional": true
                 }
             ],
             "documentation": "",
@@ -48,7 +51,8 @@
                         "kotPlotTypeType": "ReferenceType"
                     },
                     "documentation": "",
-                    "signatureType": "PropertySignature"
+                    "signatureType": "PropertySignature",
+                    "optional": true
                 },
                 {
                     "name": "powderWeight",
@@ -57,7 +61,8 @@
                         "kotPlotTypeType": "ReferenceType"
                     },
                     "documentation": "",
-                    "signatureType": "PropertySignature"
+                    "signatureType": "PropertySignature",
+                    "optional": false
                 }
             ],
             "documentation": "class powderBuilder"
@@ -72,7 +77,8 @@
                         "kotPlotTypeType": "ReferenceType"
                     },
                     "documentation": "",
-                    "signatureType": "PropertySignature"
+                    "signatureType": "PropertySignature",
+                    "optional": false
                 },
                 {
                     "name": "name",
@@ -81,7 +87,8 @@
                         "kotPlotTypeType": "ReferenceType"
                     },
                     "documentation": "",
-                    "signatureType": "PropertySignature"
+                    "signatureType": "PropertySignature",
+                    "optional": false
                 }
             ],
             "documentation": ""

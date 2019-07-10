@@ -48,30 +48,30 @@ interface Mage {
 
  */
 
-
-fun doMagic(){
-    // val jsonObject = ...
-}
-
-class DoMagicBuilder(){
-    // val jsonMap =  ...
-
-//    fun powder()
-
-    // fun build() { ... }
-}
-
-class MageBuilder(){
-    // val jsonMap =  ...
-
-
-    // fun build() { ... }
-}
-
-
-class PowderBuilder(){
-    // val jsonMap =  ...
-
-
-    // fun build() { ... }
-}
+//
+//fun doMagic(){
+//    // val jsonObject = ...
+//}
+//
+//class DoMagicBuilder(){
+//    // val jsonMap =  ...
+//
+////    fun powder()
+//
+//    // fun build() { ... }
+//}
+//
+//class MageBuilder(){
+//    // val jsonMap =  ...
+//
+//
+//    // fun build() { ... }
+//}
+//
+//
+//class PowderBuilder(){
+//    // val jsonMap =  ...
+//
+//
+//    // fun build() { ... }
+//}

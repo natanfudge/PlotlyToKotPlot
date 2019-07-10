@@ -18,7 +18,8 @@ class TypeData(
                     is PropertySignature -> PropertySignature(
                         name = prop.name,
                         documentation = prop.documentation,
-                        type = prop.type.inlineFrom(typeAliasData)
+                        type = prop.type.inlineFrom(typeAliasData),
+                        optional = prop.optional
                     )
                     is FunctionSignature -> FunctionSignature(
                         name = prop.name,
@@ -26,7 +27,8 @@ class TypeData(
                         parameters = prop.parameters.map {
                             Parameter(
                                 name = it.name,
-                                type = it.type.inlineFrom(typeAliasData)
+                                type = it.type.inlineFrom(typeAliasData),
+                                optional = it.optional
                             )
                         },
                         returnType = prop.returnType.inlineFrom(typeAliasData)

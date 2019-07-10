@@ -39,6 +39,7 @@ export interface Signature {
 export interface PropertySignature extends Signature {
     name: string
     type: KotPlotType
+    optional: boolean
 }
 
 export interface FunctionSignature extends Signature {
@@ -92,5 +93,6 @@ export interface IntersectionType extends KotPlotType{
 export interface Parameter {
     name: string
     type: KotPlotType
+    optional: boolean
 }
 

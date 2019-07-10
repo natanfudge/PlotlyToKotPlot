@@ -67,7 +67,9 @@ class JsonToFBR(
                 it.addBuilderFunction(
                     name = function.name, inClass = null,
                     /* type = BuilderFunctionsType.Root,*/
-                    builderNameOfConstructedType = function.name.toBuilderName()
+                    builderNameOfConstructedType = function.name.toBuilderName(),
+                    // isOptional doesn't really mean anything in this case
+                    isOptional = true
                 )
                 it.addBuilderClass(name = function.name.toBuilderName())
                 for (parameter in function.parameters) {
@@ -76,7 +78,8 @@ class JsonToFBR(
                         typeData = TypeData(interfaceTypeData, typeAliasData),
                         builderClassIn = function.name.toBuilderName(),
                         nameAsParameter = parameter.name,
-                        functionAppearsIn = function.name
+                        functionAppearsIn = function.name,
+                        isOptional = parameter.optional
                     )
                 }
             }

@@ -7,6 +7,7 @@ data class BuilderClass(val name: String)
 data class BuilderFunction(
     val name: String,
     val inClass: String?,
+    val isOptional : Boolean,
 //    val type: BuilderFunctionsType,
     val builderNameOfConstructedType: String
 )
@@ -17,6 +18,7 @@ data class BuilderParameter(
      * This is always a primitive
      */
     val type: String,
+    val optional : Boolean,
     val belongsToFunction: String,
     val paramInConstructorOfClass: String?
 )
@@ -39,13 +41,14 @@ data class FlatBuilderRepresentation(
     fun addBuilderFunction(
         name: String,
         inClass: String?,
+        isOptional: Boolean,
 //        type: BuilderFunctionsType,
         builderNameOfConstructedType: String
-    ) = builderFunctions.add(BuilderFunction(name, inClass, /*type,*/ builderNameOfConstructedType))
+    ) = builderFunctions.add(BuilderFunction(name, inClass,isOptional, /*type,*/ builderNameOfConstructedType))
 
-    fun addParameter(name: String, type: String, belongsToFunction: String, paramInConstructorOfClass: String?) =
+    fun addParameter(name: String, type: String, optional: Boolean, belongsToFunction: String, paramInConstructorOfClass: String?) =
         parameters.addIfNotIn(
-            BuilderParameter(name, type, belongsToFunction, paramInConstructorOfClass)
+            BuilderParameter(name, type,optional, belongsToFunction, paramInConstructorOfClass)
         )
 
     override fun toString() =

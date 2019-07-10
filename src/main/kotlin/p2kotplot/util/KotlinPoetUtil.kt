@@ -2,6 +2,7 @@ package p2kotplot.util
 
 import com.squareup.kotlinpoet.*
 import p2kotplot.AstToKotPlot
+import java.sql.Types
 
 //fun file(packageName: String, fileName: String, init: FileSpec.Builder.() -> Unit): FileSpec =
 //    FileSpec.builder(packageName, fileName).apply(init).build()
@@ -16,6 +17,10 @@ import p2kotplot.AstToKotPlot
 
 inline fun AstToKotPlot.addClass(className: String, init: TypeSpec.Builder.() -> Unit) {
     file.addType(TypeSpec.classBuilder(className).apply(init).build())
+}
+
+inline fun AstToKotPlot.addAnnotationClass(name : String, init: TypeSpec.Builder.() -> Unit){
+    file.addType(TypeSpec.annotationBuilder(name).apply(init).build())
 }
 
 //inline fun TypeSpec.Builder.classType(className: String, init: TypeSpec.Builder.() -> Unit): TypeSpec =
