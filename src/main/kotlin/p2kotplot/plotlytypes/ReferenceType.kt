@@ -5,48 +5,58 @@ import p2kotplot.ast.TypeData
 import p2kotplot.ast.toBuilderName
 
 
-data class ReferenceType(val name: String) : KotPlotType {
+data class ReferenceType(val typeName: String) : KotPlotType {
+
     override fun add(
         builder: FlatBuilderRepresentation,
         typeData: TypeData,
         builderClassIn: String?,
         nameAsParameter: String,
         isOptional: Boolean,
-        functionAppearsIn: String
+        functionAppearsIn: String,
+        documentationAsParameter: String,
+
+        isPartial: Boolean
     ) {
         fun emitValueType() {
             builder.addParameter(
                 name = nameAsParameter,
-                type = this.name.toTitleCase(),
+                //TODO: this is completely wrong...
+                type = this.typeName.toTitleCase(),
                 belongsToFunction = functionAppearsIn,
                 paramInConstructorOfClass = builderClassIn,
-                optional = isOptional
+                optional = isOptional,
+                documentation = documentationAsParameter
             )
         }
 
+
+
         fun emitReferenceType() {
-            builder.addBuilderClass(name = name.toBuilderName())
+            var builderClassName = typeName.toBuilderName()
+            if(isPartial) builderClassName = "Partial$builderClassName"
+            builder.addBuilderClass(name = builderClassName)
             builder.addBuilderFunction(
                 name = nameAsParameter,
                 inClass = builderClassIn,
-//                type = BuilderFunctionsType.Reference,
-                builderNameOfConstructedType = name.toBuilderName(),
+                builderNameOfConstructedType = typeName.toBuilderName(),
                 isOptional = isOptional
             )
-            for (prop in typeData.findTypeProps(name)) {
+            for (prop in typeData.findTypeProps(typeName)) {
                 prop.type.add(
                     builder = builder,
-                    builderClassIn = name.toBuilderName(),
                     typeData = typeData,
-                    functionAppearsIn = nameAsParameter,
+                    builderClassIn = typeName.toBuilderName(),
                     nameAsParameter = prop.name,
-                    isOptional = prop.optional
+                    isOptional = isPartial || prop.optional,
+                    functionAppearsIn = nameAsParameter,
+                    documentationAsParameter = prop.documentation
                 )
             }
         }
 
-        when (this.name) {
-            "number", "string" -> emitValueType()
+        when (this.typeName.toLowerCase()) {
+            "number", "string", "any", "boolean" -> emitValueType()
             else -> emitReferenceType()
         }
 

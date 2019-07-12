@@ -46,7 +46,7 @@ class TypeData(
 
 
     private fun findTypeAliasOfReferenceType(type: ReferenceType, typeAliasData: List<TypeAlias>): KotPlotType {
-        val foundTypeAlias = typeAliasData.find { it.name == type.name } ?: return type
+        val foundTypeAlias = typeAliasData.find { it.name == type.typeName } ?: return type
         return foundTypeAlias.type
     }
 

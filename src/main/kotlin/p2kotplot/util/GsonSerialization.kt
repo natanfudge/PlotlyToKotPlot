@@ -22,6 +22,7 @@ fun createGson() : Gson {
         .registerSubtype(ArrayType::class.java)
         .registerSubtype(TypeLiteral::class.java)
         .registerSubtype(IntersectionType::class.java)
+        .registerSubtype(ParameterizedType::class.java)
 
     return  GsonBuilder().registerTypeAdapterFactory(signatureTypeFactory)
         .registerTypeAdapterFactory(kotPlotTypeTypeFactory)

@@ -3,31 +3,25 @@ package p2kotplot.plotlytypes
 import p2kotplot.ast.FlatBuilderRepresentation
 import p2kotplot.ast.TypeData
 
-//import p2kotplot.addObject
-//import com.squareup.kotlinpoet.TypeName
-//import p2kotplot.JsonToKotPlot
-//import p2kotplot.addEnum
-//import p2kotplot.toClassName
-
-
 
 
 /**
  * E.g. "thing1"
  */
 data class LiteralType(val literal: String) : KotPlotType {
+    override fun add(
+        builder: FlatBuilderRepresentation,
+        typeData: TypeData,
+        builderClassIn: String?,
+        nameAsParameter: String,
+        isOptional: Boolean,
+        functionAppearsIn: String,
+        documentationAsParameter: String,
+        isPartial: Boolean
+    ) {
+        //This is only called when it's not as a union type, i.e. interface x { thing : "literal" }, this (almost) never happens.
 
-
-
-    //TODO fix upper/ lower casing
-    //TODO serialize properly
-//    override fun getNameAndCreate(
-//        converter: JsonToKotPlot,
-//        knownName: String?
-//    ): TypeName =
-//        getLiteralName().also { converter.addObject(it) }.toClassName()
-//
-    fun getLiteralName(): String = literal.toTitleCase()
+    }
 
 }
 

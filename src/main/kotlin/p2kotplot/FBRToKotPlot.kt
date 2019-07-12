@@ -178,10 +178,11 @@ class AstToKotPlot(builder: PublicFlatBuilderRepresentation) {
             }
         }
 
+        addKdoc(functionComponents.documentation)
 
         addStatement(functionComponents.body)
     }
-
+//TODO: put parameter docs on the parameters instead of the functions
 
 }
 

@@ -39,6 +39,8 @@ export interface Signature {
 export interface PropertySignature extends Signature {
     name: string
     type: KotPlotType
+    // isPartial : boolean
+
     optional: boolean
 }
 
@@ -64,7 +66,7 @@ export interface UnionType extends KotPlotType {
 }
 
 export interface ReferenceType extends KotPlotType {
-    name: string
+    typeName: string
 }
 
 export interface FunctionType extends KotPlotType {
@@ -84,8 +86,13 @@ export interface TypeLiteral extends KotPlotType {
     nestedProperties: PropertySignature[]
 }
 
-export interface IntersectionType extends KotPlotType{
-    types : KotPlotType[]
+export interface IntersectionType extends KotPlotType {
+    types: KotPlotType[]
+}
+
+export interface ParameterizedType extends KotPlotType {
+    name: string,
+    typeArguments: KotPlotType[]
 }
 
 //--------------------------------//

@@ -1,6 +1,5 @@
 package p2kotplot.plotlytypes
 
-import p2kotplot.ast.BuilderFunctionsType
 import p2kotplot.ast.FlatBuilderRepresentation
 import p2kotplot.ast.TypeData
 
@@ -19,7 +18,9 @@ data class ArrayType(val elementType: KotPlotType) : KotPlotType {
         builderClassIn: String?,
         nameAsParameter: String,
         isOptional: Boolean,
-        functionAppearsIn: String
+        functionAppearsIn: String,
+        documentationAsParameter: String,
+        isPartial: Boolean
     ) {
 //        builder.addBuilderClass(name = name.toBuilderName())
 //            builder.addBuilderFunction(
@@ -32,9 +33,10 @@ data class ArrayType(val elementType: KotPlotType) : KotPlotType {
                     builder = builder,
                     typeData = typeData,
                     builderClassIn = builderClassIn,
-                    functionAppearsIn = nameAsParameter.toBuilderFunctionName(),
                     nameAsParameter = nameAsParameter.toBuilderFunctionName(),
-                    isOptional = false
+                    isOptional = false,
+                    functionAppearsIn = nameAsParameter.toBuilderFunctionName(),
+                    documentationAsParameter = documentationAsParameter
                 )
 //            }
     }

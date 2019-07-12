@@ -78,8 +78,10 @@ class JsonToFBR(
                         typeData = TypeData(interfaceTypeData, typeAliasData),
                         builderClassIn = function.name.toBuilderName(),
                         nameAsParameter = parameter.name,
+                        isOptional = parameter.optional,
                         functionAppearsIn = function.name,
-                        isOptional = parameter.optional
+                        documentationAsParameter = "",
+                        isPartial = false
                     )
                 }
             }

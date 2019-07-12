@@ -1,33 +1,27 @@
 package p2kotplot.plotlytypes
 
 import p2kotplot.ast.FlatBuilderRepresentation
+import p2kotplot.ast.TypeData
 
-//import p2kotplot.JsonToKotPlot
-//import p2kotplot.toClassName
-
-//TODO: make this into a proper data class with "first", "second" etc as properties
 data class TupleType(val tupleTypes: List<KotPlotType>) : KotPlotType {
-
-//    override fun getNameAndCreate(
-//        converter: JsonToKotPlot,
-//        knownName: String?
-//    ): TypeName {
-//        val typeNames = mutableListOf<String>()
-//
-//        val createdClassName = "TupleOf${tupleTypes.joinToString("And") { type ->
-//            type.getNameAndCreate(converter).getRepresentativeName().also { typeNames.add(it) }
-//        }}"
-//
-//
-//        converter.addDataClass(
-//            className = createdClassName, documentation = "",
-//            signatures = typeNames.mapIndexed { i, type ->
-//                PropertySignature(name = "property$i", documentation = "", type = ReferenceType(type))
-//            }
-//        )
-//
-//        return createdClassName.toClassName()
-//
-////        return "Tuple".toClassName().parameterizedBy(*typeNames.toTypedArray())
-//    }
+    override fun add(
+        builder: FlatBuilderRepresentation,
+        typeData: TypeData,
+        builderClassIn: String?,
+        nameAsParameter: String,
+        isOptional: Boolean,
+        functionAppearsIn: String,
+        documentationAsParameter: String,
+        isPartial: Boolean
+    ) {
+        ArrayType(elementType = ReferenceType("Any")).add(
+            builder,
+            typeData,
+            builderClassIn,
+            nameAsParameter,
+            isOptional,
+            functionAppearsIn,
+            documentationAsParameter
+        )
+    }
 }

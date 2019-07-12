@@ -2,10 +2,11 @@ package p2kotplot.plotlytypes
 
 import p2kotplot.ast.FlatBuilderRepresentation
 import p2kotplot.ast.TypeData
+import sun.plugin.dom.exception.InvalidStateException
 
 //import p2kotplot.JsonToKotPlot
 
-data class FunctionType(val parameters: List<Parameter>, val returnType: KotPlotType) : KotPlotType {
+data class ParameterizedType(val name: String, val typeArguments: List<KotPlotType>) : KotPlotType {
     override fun add(
         builder: FlatBuilderRepresentation,
         typeData: TypeData,
@@ -16,8 +17,32 @@ data class FunctionType(val parameters: List<Parameter>, val returnType: KotPlot
         documentationAsParameter: String,
         isPartial: Boolean
     ) {
-        // Can't be serialized easily
+        assert(typeArguments.size != 1) {"Only one type argument is expected"}
+        when (name) {
+            "Partial" -> typeArguments[0].add(
+                builder,
+                typeData,
+                builderClassIn,
+                nameAsParameter,
+                isOptional,
+                functionAppearsIn,
+                documentationAsParameter,
+                isPartial = true
+            )
+            "Array" -> ArrayType(typeArguments[0]).add(
+                builder,
+                typeData,
+                builderClassIn,
+                nameAsParameter,
+                isOptional,
+                functionAppearsIn,
+                documentationAsParameter,
+                isPartial
+            )
+            else -> throw InvalidStateException("Did not expect anything other than 'Array' or 'Partial'")
+        }
     }
+    //TODO: handle partial here
 
 
 //    override fun getNameAndCreate(
@@ -31,8 +56,6 @@ data class FunctionType(val parameters: List<Parameter>, val returnType: KotPlot
 //        )
 
 }
-
-
 
 
 //fun newPlot(root: Root, data: Data[], layout?: Partial<Layout>, config?: Partial<Config>): Promise<PlotlyHTMLElement>;

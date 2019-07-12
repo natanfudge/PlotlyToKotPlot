@@ -4,15 +4,20 @@ import {
     Constant,
     DeclarationFile,
     FunctionSignature, FunctionType,
-    Interface, IntersectionType, KotPlotType, LiteralType, Parameter,
+    Interface, IntersectionType, KotPlotType, LiteralType, Parameter, ParameterizedType,
     PropertySignature, ReferenceType,
     Signature, TupleType,
     TypeAlias, TypeLiteral, UnionType
 } from "./types";
 import * as fs from "fs";
+import {AssertionError} from "assert";
 
-let inFile = "src/ts/data/test.d.ts";
-let outFile = "src/ts/data/plotlyTypes.json";
+if(process.argv.length != 4) throw Error("Program needs to have exactly 2 arguments (arg1 = inFile, arg2 = outFile).");
+let inFile = process.argv[2];
+let outFile = process.argv[3];
+
+// let inFile = "src/ts/data/test.d.ts";
+// let outFile = "src/ts/data/plotlyTypes.json";
 // Build a program using the set of root file names in fileNames
 let program = ts.createProgram([inFile], {
     target: ts.ScriptTarget.ES5,
@@ -37,19 +42,19 @@ let typeAliases: TypeAlias[] = declarations
         return serializeTypeAlias(node as ts.TypeAliasDeclaration)
     });
 
-let constants : Constant[] = declarations
+let constants: Constant[] = declarations
     .filter((node) => ts.isVariableStatement(node))
     .map((node) => {
         return serializeConstant(node as ts.VariableStatement)
     });
 
-let functions : FunctionSignature[] = declarations
+let functions: FunctionSignature[] = declarations
     .filter((node) => ts.isFunctionDeclaration(node))
     .map((node) => {
         return serializeFunction(node as ts.FunctionDeclaration)
     });
 
-let output : DeclarationFile = {
+let output: DeclarationFile = {
     constants,
     functions,
     interfaces,
@@ -66,14 +71,29 @@ function getDocumentation(node: ts.InterfaceDeclaration | ts.MethodSignature | t
     return ts.displayPartsToString(symbol.getDocumentationComment(checker))
 }
 
+function getInterfaceNodeProps(interfaceNode: ts.InterfaceDeclaration) {
+    return interfaceNode.members.map((member) => serializeSignature(member))
+}
+
+function findInterfaceProps(name: string): Signature[] {
+    let interfaceNode = declarations.filter((node) => ts.isInterfaceDeclaration(node) && node.name.text === name);
+    if (interfaceNode.length !== 1) throw new Error("Expected to find exactly one interface");
+
+    return getInterfaceNodeProps(interfaceNode[0] as ts.InterfaceDeclaration)
+}
 
 /** Serialize a class symbol information */
 function serializeInterface(interfaceNode: ts.InterfaceDeclaration): Interface {
-    let props = interfaceNode.members.map((member) => {
-            member.parent = interfaceNode;
-            return serializeSignature(member);
-        }
-    );
+    let props = getInterfaceNodeProps(interfaceNode);
+
+    if (interfaceNode.heritageClauses !== undefined && interfaceNode.heritageClauses.length > 0) {
+        let superClass = interfaceNode.heritageClauses[0].types[0].getText();
+        let superClassProps = findInterfaceProps(superClass);
+        props = props.concat(superClassProps)
+    }
+
+
+    // let superClasses = interfaceNode.heritageClauses.map((clause) => clause.types[0]);
 
     return {
         name: interfaceNode.name.text,
@@ -107,6 +127,7 @@ function serializeMethodSignature(methodSignature: ts.MethodSignature): Function
     }
 }
 
+
 function serializePropertySignature(propertySignature: ts.PropertySignature): PropertySignature {
 
     return {
@@ -119,8 +140,9 @@ function serializePropertySignature(propertySignature: ts.PropertySignature): Pr
 
 }
 
-function isOptional(node: ts.Node) : boolean{
-    return node.getChildren().find((child) => child.kind ==  ts.SyntaxKind.QuestionToken) != undefined
+
+function isOptional(node: ts.Node): boolean {
+    return node.getChildren().find((child) => child.kind == ts.SyntaxKind.QuestionToken) != undefined
 }
 
 
@@ -145,6 +167,8 @@ function isKeyWordTypeNode(nodeTypeAsNode: ts.TypeNode): nodeTypeAsNode is ts.Ke
         nodeTypeAsNode.kind == ts.SyntaxKind.NeverKeyword
 }
 
+// function isPartialTypeNode(typeNode : ts.TypeNode)
+
 function serializeTypeNode(typeNode: ts.TypeNode): KotPlotType {
     if (ts.isUnionTypeNode(typeNode)) {
         return serializeUnionType(typeNode)
@@ -162,14 +186,14 @@ function serializeTypeNode(typeNode: ts.TypeNode): KotPlotType {
         return serializeArrayType(typeNode)
     } else if (ts.isTypeLiteralNode(typeNode)) {
         return serializeTypeLiteral(typeNode)
-    } else if (ts.isIntersectionTypeNode(typeNode)){
+    } else if (ts.isIntersectionTypeNode(typeNode)) {
         return serializeIntersectionType(typeNode)
-    } else if(ts.isParenthesizedTypeNode(typeNode)) {
+    } else if (ts.isParenthesizedTypeNode(typeNode)) {
         return serializeParenthesizedType(typeNode)
-    }else{
+    } else {
 
-            throw Error("node is of an unknown type: " + typeNode.getText() + " Type is : " + typeof typeNode)
-        }
+        throw Error("node is of an unknown type: " + typeNode.getText() + " Type is : " + typeof typeNode)
+    }
 
 
 }
@@ -180,7 +204,9 @@ function serializeTypeOfNode(node: ts.Node): KotPlotType {
     return serializeTypeNode(nodeTypeAsNode)
 }
 
-function serializeUnionType(typeNode: ts.UnionTypeNode): UnionType {
+
+function serializeUnionType(typeNode: ts.UnionTypeNode
+): UnionType {
     return {
         types: typeNode.types.map((node) => serializeTypeNode(node)),
         kotPlotTypeType: "UnionType"
@@ -194,11 +220,31 @@ function serializeLiteralType(typeNode: ts.LiteralTypeNode): LiteralType {
     }
 }
 
-function serializeReferenceType(typeNode: ts.TypeReferenceNode): ReferenceType {
-    return {
-        name: typeNode.getText(),
-        kotPlotTypeType: "ReferenceType"
+function serializeReferenceType(typeNode: ts.TypeReferenceNode): ReferenceType | ParameterizedType {
+    // let typeNode = getTypeNode(node);
+    // if(!ts.isTypeReferenceNode(typeNode)) return false;
+    // for(let child of typeNode.getChildren()){
+    //     // Partial types are a reference type that have a type as a child
+    //     if(ts.isTypeNode(child)) return true;
+    // }
+    // return false;
+
+
+    // let typeChildren = typeNode.getChildren().filter((child) => ts.isTypeNode(child));
+    // typeNode.typeArguments
+    if (typeNode.typeArguments === undefined || typeNode.typeArguments.length == 0) {
+        return {
+            typeName: typeNode.getText(),
+            kotPlotTypeType: "ReferenceType"
+        }
+    } else {
+        return {
+            name: (typeNode.typeName as ts.Identifier).escapedText.toString(),
+            kotPlotTypeType: "ParameterizedType",
+            typeArguments: typeNode.typeArguments.map((argument) => serializeTypeNode(argument))
+        }
     }
+
 }
 
 
@@ -221,7 +267,7 @@ function serializeFunctionType(typeNode: ts.FunctionTypeNode): FunctionType {
 
 function serializeKeywordType(typenode: ts.KeywordTypeNode): ReferenceType {
     return {
-        name: typenode.getText(),
+        typeName: typenode.getText(),
         kotPlotTypeType: "ReferenceType"
     }
 }
@@ -249,7 +295,7 @@ function serializeIntersectionType(typenode: ts.IntersectionTypeNode): Intersect
     }
 }
 
-function serializeParenthesizedType(typeNode : ts.ParenthesizedTypeNode) : KotPlotType{
+function serializeParenthesizedType(typeNode: ts.ParenthesizedTypeNode): KotPlotType {
     return serializeTypeNode(typeNode.type)
 }
 
@@ -263,10 +309,10 @@ function serializeParameter(parameter: ts.ParameterDeclaration): Parameter {
 
 function getReturnType(typeNode: ts.FunctionTypeNode | ts.MethodSignature | ts.FunctionDeclaration): KotPlotType {
     let returnTypeNode = typeNode.getChildren().filter((child) => ts.isTypeNode(child))[0] as ts.TypeNode;
-    if(returnTypeNode === undefined){
-        let returning : ReferenceType = {
-            kotPlotTypeType : "ReferenceType",
-            name : ""
+    if (returnTypeNode === undefined) {
+        let returning: ReferenceType = {
+            kotPlotTypeType: "ReferenceType",
+            typeName: ""
         };
         return returning
     }

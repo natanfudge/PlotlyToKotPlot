@@ -21,7 +21,9 @@ data class TypeLiteral(val nestedProperties: List<PropertySignature>) : KotPlotT
         builderClassIn: String?,
         nameAsParameter: String,
         isOptional: Boolean,
-        functionAppearsIn: String
+        functionAppearsIn: String,
+        documentationAsParameter: String,
+        isPartial: Boolean
     ) {
         // Type literals are anonymous so we give them an arbitrary name.
         val inventedTypeName = "TypeLiteralNum${typeLiteralCount++}"
@@ -36,11 +38,12 @@ data class TypeLiteral(val nestedProperties: List<PropertySignature>) : KotPlotT
             for (prop in nestedProperties) {
                 prop.type.add(
                     builder = builder,
-                    builderClassIn = inventedTypeName.toBuilderName(),
                     typeData = typeData,
-                    functionAppearsIn = nameAsParameter,
+                    builderClassIn = inventedTypeName.toBuilderName(),
                     nameAsParameter = prop.name,
-                    isOptional = prop.optional
+                    isOptional = prop.optional,
+                    functionAppearsIn = nameAsParameter,
+                    documentationAsParameter = prop.documentation
                 )
             }
     }

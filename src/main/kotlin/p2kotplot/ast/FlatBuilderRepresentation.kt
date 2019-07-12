@@ -7,7 +7,7 @@ data class BuilderClass(val name: String)
 data class BuilderFunction(
     val name: String,
     val inClass: String?,
-    val isOptional : Boolean,
+    val isOptional: Boolean,
 //    val type: BuilderFunctionsType,
     val builderNameOfConstructedType: String
 )
@@ -18,17 +18,13 @@ data class BuilderParameter(
      * This is always a primitive
      */
     val type: String,
-    val optional : Boolean,
+    val optional: Boolean,
     val belongsToFunction: String,
-    val paramInConstructorOfClass: String?
+    val paramInConstructorOfClass: String?,
+    val documentation: String
 )
 
-enum class BuilderFunctionsType {
-    Root,
-    Reference,
-    Array,
-    Union
-}
+
 
 fun String.toBuilderName() = toTitleCase() + "Builder"
 
@@ -44,12 +40,18 @@ data class FlatBuilderRepresentation(
         isOptional: Boolean,
 //        type: BuilderFunctionsType,
         builderNameOfConstructedType: String
-    ) = builderFunctions.add(BuilderFunction(name, inClass,isOptional, /*type,*/ builderNameOfConstructedType))
+    ) = builderFunctions.add(BuilderFunction(name, inClass, isOptional, /*type,*/ builderNameOfConstructedType))
 
-    fun addParameter(name: String, type: String, optional: Boolean, belongsToFunction: String, paramInConstructorOfClass: String?) =
-        parameters.addIfNotIn(
-            BuilderParameter(name, type,optional, belongsToFunction, paramInConstructorOfClass)
-        )
+    fun addParameter(
+        name: String,
+        type: String,
+        optional: Boolean,
+        belongsToFunction: String,
+        paramInConstructorOfClass: String?,
+        documentation: String
+    ) = parameters.addIfNotIn(
+        BuilderParameter(name, type, optional, belongsToFunction, paramInConstructorOfClass, documentation)
+    )
 
     override fun toString() =
         "FlatBuilderRepresentation(\nbuilderClasses = [\n\t" + builderClasses.joinToString(",\n\t") +

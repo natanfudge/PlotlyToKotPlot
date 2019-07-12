@@ -1,6 +1,8 @@
 package p2kotplot.plotlytypes
 
 import p2kotplot.ast.FlatBuilderRepresentation
+import p2kotplot.ast.TypeData
+import p2kotplot.ast.toBuilderName
 
 
 /*
@@ -14,30 +16,19 @@ import p2kotplot.ast.FlatBuilderRepresentation
  */
 
 data class IntersectionType(val types: List<KotPlotType>) : KotPlotType {
+    override fun add(
+        builder: FlatBuilderRepresentation,
+        typeData: TypeData,
+        builderClassIn: String?,
+        nameAsParameter: String,
+        isOptional: Boolean,
+        functionAppearsIn: String,
+        documentationAsParameter: String,
+        isPartial: Boolean
+    ) {
+        //   Handled manually because it's easier to do it manually...
 
+    }
 
-//    override fun getNameAndCreate(
-//        converter: JsonToKotPlot,
-//        knownName: String?
-//    ): TypeName {
-//        val typeNames = mutableListOf<String>()
-//        return types.joinToString { type ->
-//            type.getNameAndCreate(converter).getRepresentativeName().also { typeNames.add(it) }
-//        }.also { intersectionTypeName ->
-//            converter.addDataClass(
-//                className = knownName ?: intersectionTypeName,
-//                documentation = "",
-//                //TODO: consider inlining the generated classes in this case
-//                signatures = typeNames.map { typeName ->
-//                    PropertySignature(
-//                        name = typeName.toLowerCase(),
-//                        type = ReferenceType(typeName),
-//                        documentation = ""
-//                    )
-//                })
-//
-//        }.toClassName()
-//
-//    }
 
 }

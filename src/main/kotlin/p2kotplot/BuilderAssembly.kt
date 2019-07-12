@@ -15,14 +15,18 @@ data class BuilderClassComponents(
     val arrayFields: List<String>,
     val applyStatements: List<String>,
     val constructorArguments: List<ParameterComponents>
+
 )
+
+
 
 data class BuilderFunctionComponents(
     val name: String,
+    val documentation: String,
     val parameters: List<ParameterComponents>,
     val body: String,
     val builderNameOfConstructedType: String,
-    val hasInitParam : Boolean
+    val hasInitParam: Boolean
 )
 
 
@@ -48,13 +52,13 @@ class BuilderAssembly(builder: PublicFlatBuilderRepresentation) {
             }
 
         val applyStatements = builderClass.getConstructorArguments().map {
-            val nullCheck = if(it.optional) "if(${it.name} != null)" else ""
+            val nullCheck = if (it.optional) "if(${it.name} != null)" else ""
             "$nullCheck $JsonMapName[\"${it.name}\"] = JsonLiteral(${it.name})"
         } + builderClass.getBuilderFunctions().filter {
             it.name.isBuilderFunctionNameForOneOfArray()
         }.map { builderFunction ->
             builderFunction.name.getArrayBuilderFunctionOriginalName().let {
-                val isEmptyCheck = if(builderFunction.isOptional) "if($it.isNotEmpty())" else ""
+                val isEmptyCheck = if (builderFunction.isOptional) "if($it.isNotEmpty())" else ""
                 "$isEmptyCheck $JsonMapName[\"$it\"] = JsonArray($it)"
             }
         }
@@ -66,7 +70,8 @@ class BuilderAssembly(builder: PublicFlatBuilderRepresentation) {
         return BuilderClassComponents(name, builderFunctions, arrayFields, applyStatements, constructorArguments)
     }
 
-    private fun BuilderParameter. toParameterComponents(): ParameterComponents {
+
+    private fun BuilderParameter.toParameterComponents(): ParameterComponents {
         return ParameterComponents(
             name = name,
             type = type,
@@ -81,7 +86,10 @@ class BuilderAssembly(builder: PublicFlatBuilderRepresentation) {
         },
         body = builderFunction.getBody(),
         builderNameOfConstructedType = builderFunction.builderNameOfConstructedType,
-        hasInitParam = builderFunction.builderClassUsedInFunctionHasBuilderFunctions()
+        hasInitParam = builderFunction.builderClassUsedInFunctionHasBuilderFunctions(),
+
+        documentation = builderFunction.getParameters().filter { it.documentation != "" }
+            .joinToString("\n") { "@param " + it.name + " " + it.documentation }
     )
 
     private fun BuilderClass.getConstructorArguments() = parameters.filter {
@@ -118,14 +126,14 @@ class BuilderAssembly(builder: PublicFlatBuilderRepresentation) {
         val objectConstruction =
             "$builderNameOfConstructedType$builderConstructorParams$applyCall.$BuildFunctionName()"
 
-            return when {
-                this.name.isBuilderFunctionNameForOneOfArray() -> {
-                    val originalName = this.name.getArrayBuilderFunctionOriginalName()
-                    "$originalName.add($objectConstruction)"
-                }
-                this.inClass != null -> "$JsonMapName[\"${this.name}\"] = $objectConstruction"
-                else -> "val jsonObject = $objectConstruction;print(jsonObject.asIterable().joinToString(\"\\n\"))"
+        return when {
+            this.name.isBuilderFunctionNameForOneOfArray() -> {
+                val originalName = this.name.getArrayBuilderFunctionOriginalName()
+                "$originalName.add($objectConstruction)"
             }
+            this.inClass != null -> "$JsonMapName[\"${this.name}\"] = $objectConstruction"
+            else -> "val jsonObject = $objectConstruction;print(jsonObject.asIterable().joinToString(\"\\n\"))"
+        }
     }
 }
 

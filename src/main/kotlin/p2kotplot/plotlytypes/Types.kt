@@ -13,22 +13,13 @@ data class DeclarationFile(
     val functions: List<FunctionSignature>
 )
 
-//------------------------------------//
 //--------- TYPE ALIAS ---------------//
-data class TypeAlias(
-    val name: String,
-    val type: KotPlotType
-)
+data class TypeAlias(val name: String, val type: KotPlotType)
 
-//-----------------------------------//
 //---------- CONSTANT ---------------//
-data class Constant(
-    val name: String,
-    val type: KotPlotType
-)
-//-------- TOP LEVEL ----------------//
+data class Constant(val name: String, val type: KotPlotType)
 
-
+//-----------INTERFACE --------------//
 data class Interface(val name: String, val documentation: String, val props: List<Signature>)
 
 //----------------------------------//
@@ -64,8 +55,24 @@ interface KotPlotType {
         typeData: TypeData,
         builderClassIn: String?,
         nameAsParameter: String,
-        isOptional : Boolean,
-        functionAppearsIn: String
+        isOptional: Boolean,
+        functionAppearsIn: String,
+        documentationAsParameter: String,
+        /**
+         * In this case:
+         * ```
+         * interface Foo{
+         *  x : Partial<Bar>
+         * }
+         * interface Bar{
+         *  y : string
+         *   ...
+         *  }
+         *  ```
+         *  It is both used by `Foo` to tell `Bar` that It's partial, and used by `Bar` to tell y and other props that they are optional.
+         */
+
+        isPartial: Boolean = false
     ) {
 
     }
@@ -107,10 +114,6 @@ fun TypeName.getRepresentativeName(): String = when {
 
 //--------------------------------//
 //------- PARAMETER --------------//
-data class Parameter(
-    val name: String,
-    val type: KotPlotType,
-    val optional: Boolean
-)
+data class Parameter(val name: String, val type: KotPlotType, val optional: Boolean)
 //---------------------------------//
 
