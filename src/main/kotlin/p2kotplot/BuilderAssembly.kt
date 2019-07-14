@@ -3,6 +3,7 @@ package p2kotplot
 import p2kotplot.ast.BuilderClass
 import p2kotplot.ast.BuilderFunction
 import p2kotplot.ast.BuilderParameter
+import p2kotplot.ast.Enum
 import p2kotplot.ast.PublicFlatBuilderRepresentation
 import p2kotplot.plotlytypes.getArrayBuilderFunctionOriginalName
 import p2kotplot.plotlytypes.isBuilderFunctionNameForOneOfArray
@@ -70,15 +71,6 @@ class BuilderAssembly(builder: PublicFlatBuilderRepresentation) {
         return BuilderClassComponents(name, builderFunctions, arrayFields, applyStatements, constructorArguments)
     }
 
-
-    private fun BuilderParameter.toParameterComponents(): ParameterComponents {
-        return ParameterComponents(
-            name = name,
-            type = type,
-            isOptional = optional
-        )
-    }
-
     fun assemble(builderFunction: BuilderFunction) = BuilderFunctionComponents(
         name = builderFunction.getFinalName(),
         parameters = builderFunction.getParameters().map {
@@ -91,6 +83,18 @@ class BuilderAssembly(builder: PublicFlatBuilderRepresentation) {
         documentation = builderFunction.getParameters().filter { it.documentation != "" }
             .joinToString("\n") { "@param " + it.name + " " + it.documentation }
     )
+//    fun assemble(enum : Enum) =
+
+
+    private fun BuilderParameter.toParameterComponents(): ParameterComponents {
+        return ParameterComponents(
+            name = name,
+            type = type,
+            isOptional = optional
+        )
+    }
+
+
 
     private fun BuilderClass.getConstructorArguments() = parameters.filter {
         it.paramInConstructorOfClass == name
@@ -132,7 +136,7 @@ class BuilderAssembly(builder: PublicFlatBuilderRepresentation) {
                 "$originalName.add($objectConstruction)"
             }
             this.inClass != null -> "$JsonMapName[\"${this.name}\"] = $objectConstruction"
-            else -> "val jsonObject = $objectConstruction;print(jsonObject.asIterable().joinToString(\"\\n\"))"
+            else -> "return $objectConstruction"
         }
     }
 }

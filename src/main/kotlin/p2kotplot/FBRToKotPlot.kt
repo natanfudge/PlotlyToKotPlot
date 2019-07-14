@@ -6,6 +6,9 @@ import p2kotplot.ast.PublicFlatBuilderRepresentation
 import java.io.File
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import kotlinx.serialization.json.JsonObject
+import p2kotplot.ast.Enum
+import p2kotplot.plotlytypes.getArrayTypeElementName
+import p2kotplot.plotlytypes.hasArrayTypePrefix
 import p2kotplot.util.*
 
 const val PackageName = ""
@@ -17,7 +20,16 @@ const val DslMarkerAnnotationName = "Builder"
 
 fun String.toClassName() = ClassName(packageName = PackageName, simpleName = this)
 
+fun String.toTypeNameWithArrayCheck() : TypeName{
+    return if(this.hasArrayTypePrefix()){
+        "List".toClassName() .parameterizedBy(this.getArrayTypeElementName().toClassName())
+    }else toClassName()
+}
+
+
 //private data class Parameter(val name: String, val type: String)
+
+
 
 /**
  * creates:
@@ -29,12 +41,18 @@ private fun TypeSpec.Builder.privateValsPrimaryConstructor(parameters: List<Para
 //    }
     primaryConstructor {
         for (parameter in parameters) {
-            addParameter(name = parameter.name, type = parameter.type.toClassName().copy(nullable = parameter.isOptional))
+            addParameter(
+                name = parameter.name,
+                type = parameter.type.toTypeNameWithArrayCheck().copy(nullable = parameter.isOptional)
+            )
         }
     }
 
     for (parameter in parameters) {
-        this.addProperty(name = parameter.name, type = parameter.type.toClassName().copy(nullable = parameter.isOptional)) {
+        this.addProperty(
+            name = parameter.name,
+            type = parameter.type.toTypeNameWithArrayCheck().copy(nullable = parameter.isOptional)
+        ) {
             initializer(parameter.name)
             addModifiers(KModifier.PRIVATE)
         }
@@ -42,22 +60,19 @@ private fun TypeSpec.Builder.privateValsPrimaryConstructor(parameters: List<Para
 
 
 }
+
 //TODO: make it obvious that required builder functions are required somehow
-//TODO: add @dslmarker
-//
-//const val SingularOfArrayPrefix = "addOneOf"
-//
-class AstToKotPlot(builder: PublicFlatBuilderRepresentation) {
-    val file: FileSpec.Builder = FileSpec.builder(PackageName, "PlotlyTypes")
+
+class FBRToKotPlot(val builder: PublicFlatBuilderRepresentation, targetFileName: String) {
+    val file: FileSpec.Builder = FileSpec.builder(PackageName, targetFileName)
 
     private val builderClasses = builder.builderClasses
     private val builderFunctions = builder.builderFunctions
-    private val parameters = builder.parameters
+    private val enums = builder.enums
 
-
-    //TODO: add root builder functions
-    init {
+    fun writeTo(folder: File) {
         val file = file.apply {
+
             setIndentToTab()
             addImport("kotlinx.serialization.json", "JsonLiteral", "JsonArray")
 
@@ -71,12 +86,18 @@ class AstToKotPlot(builder: PublicFlatBuilderRepresentation) {
                 addTopLevelBuilderFunction(BuilderAssembly(builder).assemble(topLevelBuilderFunction))
             }
 
+            for (enum in enums) {
+                addEnum(enum)
+            }
+
 
         }.build()
 
-
-        file.writeTo(File("src\\main\\kotlin"))
+        file.writeTo(folder)
     }
+
+
+
 
     private fun FileSpec.Builder.setIndentToTab() = indent("\t")
 
@@ -155,13 +176,14 @@ class AstToKotPlot(builder: PublicFlatBuilderRepresentation) {
 
     private fun FileSpec.Builder.addTopLevelBuilderFunction(functionComponents: BuilderFunctionComponents) {
         addFunction(name = functionComponents.name) {
+            returns(JsonObject::class)
             addBuilderFunctionBody(functionComponents)
         }
     }
 
     private fun FunSpec.Builder.addBuilderFunctionBody(functionComponents: BuilderFunctionComponents) {
         for (param in functionComponents.parameters) {
-            addParameter(name = param.name, type = param.type.toClassName().copy(nullable = param.isOptional)) {
+            addParameter(name = param.name, type = param.type.toTypeNameWithArrayCheck().copy(nullable = param.isOptional)) {
                 if (param.isOptional) defaultValue("null")
             }
         }
@@ -181,6 +203,14 @@ class AstToKotPlot(builder: PublicFlatBuilderRepresentation) {
         addKdoc(functionComponents.documentation)
 
         addStatement(functionComponents.body)
+    }
+
+    private fun addEnum(enum: Enum) {
+        file.addEnum(name = enum.name) {
+            for (constant in enum.elements) {
+                addEnumConstant(name = constant)
+            }
+        }
     }
 //TODO: put parameter docs on the parameters instead of the functions
 

@@ -8,7 +8,6 @@ data class BuilderFunction(
     val name: String,
     val inClass: String?,
     val isOptional: Boolean,
-//    val type: BuilderFunctionsType,
     val builderNameOfConstructedType: String
 )
 
@@ -20,18 +19,23 @@ data class BuilderParameter(
     val type: String,
     val optional: Boolean,
     val belongsToFunction: String,
+    val overloadNumOfFunctionBelongingTo : Int,
     val paramInConstructorOfClass: String?,
     val documentation: String
 )
+
+data class Enum(val name : String, val elements:  List<String>)
 
 
 
 fun String.toBuilderName() = toTitleCase() + "Builder"
 
+
 data class FlatBuilderRepresentation(
     private val builderClasses: MutableList<BuilderClass>,
     private val builderFunctions: MutableList<BuilderFunction>,
-    private val parameters: MutableList<BuilderParameter>
+    private val parameters: MutableList<BuilderParameter>,
+    private val enums : MutableList<Enum>
 ) {
     fun addBuilderClass(name: String) = builderClasses.addIfNotIn(BuilderClass(name))
     fun addBuilderFunction(
@@ -42,16 +46,27 @@ data class FlatBuilderRepresentation(
         builderNameOfConstructedType: String
     ) = builderFunctions.add(BuilderFunction(name, inClass, isOptional, /*type,*/ builderNameOfConstructedType))
 
+    companion object{
+        const val defaultOverloadNum = 1
+    }
+
     fun addParameter(
         name: String,
         type: String,
         optional: Boolean,
         belongsToFunction: String,
+        overloadNumOfFunctionBelongingTo: Int = defaultOverloadNum,
         paramInConstructorOfClass: String?,
         documentation: String
     ) = parameters.addIfNotIn(
-        BuilderParameter(name, type, optional, belongsToFunction, paramInConstructorOfClass, documentation)
+        BuilderParameter(name, type, optional, belongsToFunction,overloadNumOfFunctionBelongingTo, paramInConstructorOfClass, documentation)
     )
+
+    fun getParametersOfFunction(functionName : String)=
+         parameters.filter { it.belongsToFunction == functionName && it.overloadNumOfFunctionBelongingTo == defaultOverloadNum }
+
+
+    fun addEnum(name : String, elements: List<String>) = enums.addIfNotIn(Enum(name,elements))
 
     override fun toString() =
         "FlatBuilderRepresentation(\nbuilderClasses = [\n\t" + builderClasses.joinToString(",\n\t") +
@@ -59,14 +74,14 @@ data class FlatBuilderRepresentation(
                 parameters.joinToString(",\n\t") + "\n]\n)"
 
     fun extractDataAtTheEndOfProcessing() =
-        PublicFlatBuilderRepresentation(builderClasses, builderFunctions, parameters)
+        PublicFlatBuilderRepresentation(builderClasses, builderFunctions, parameters,enums)
 
-//    operator fun component1() = builderClasses
 
 }
 
 data class PublicFlatBuilderRepresentation(
-    val builderClasses: MutableList<BuilderClass>,
-    val builderFunctions: MutableList<BuilderFunction>,
-    val parameters: MutableList<BuilderParameter>
+    val builderClasses: List<BuilderClass>,
+    val builderFunctions: List<BuilderFunction>,
+    val parameters: List<BuilderParameter>,
+    val enums: List<Enum>
 )

@@ -39,6 +39,7 @@ dependencies {
     testCompile("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testCompile("org.junit.jupiter:junit-jupiter-params:$junitVersion")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testCompile(group= "org.jetbrains.kotlin", name =  "kotlin-test", version= "1.1.51")
 
 }
 

@@ -16,15 +16,25 @@ fun main() {
         interfaceTypeData = deserialized.interfaces,
         typeAliasData = deserialized.typeAliases,
         functions = deserialized.functions
-    ).getApi()
+    ).get()
 
-//    print(api)
 
-    AstToKotPlot(api.extractDataAtTheEndOfProcessing())
+//    FBRToKotPlot(api.extractDataAtTheEndOfProcessing())
 
-//    print(api)
     val x = 2
 
 
 }
 
+fun DeclarationFile.writeTo(location: String) {
+    val fbr = JsonToFBR(
+        interfaceTypeData = interfaces,
+        typeAliasData = typeAliases,
+        functions = functions
+    ).get()
+
+
+    FBRToKotPlot(fbr.extractDataAtTheEndOfProcessing(), targetFileName = File(location).nameWithoutExtension).writeTo(
+        File(location).parentFile
+    )
+}

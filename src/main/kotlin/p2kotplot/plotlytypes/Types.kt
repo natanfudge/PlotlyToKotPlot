@@ -1,6 +1,5 @@
 package p2kotplot.plotlytypes
 
-import com.squareup.kotlinpoet.*
 import p2kotplot.ast.FlatBuilderRepresentation
 //import p2kotplot.JsonToKotPlot
 import p2kotplot.ast.TypeData
@@ -24,21 +23,21 @@ data class Interface(val name: String, val documentation: String, val props: Lis
 
 //----------------------------------//
 ////-------- SIGNATURE ----------------//
-sealed class Signature(val name: String, val documentation: String)
+sealed class Signature(/*val name: String, val documentation: String*/)
 
-class PropertySignature(
-    name: String,
+data class PropertySignature(
+    val name: String,
     val type: KotPlotType,
-    documentation: String,
+    val documentation: String,
     val optional: Boolean
-) : Signature(name, documentation)
+) : Signature(/*name, documentation*/)
 
-class FunctionSignature(
-    name: String,
+data class FunctionSignature(
+    val name: String,
     val returnType: KotPlotType,
     val parameters: List<Parameter>,
-    documentation: String
-) : Signature(name, documentation)
+    val documentation: String
+) : Signature(/*name, documentation*/)
 
 //data class TypeContext(val data: JsonToKotPlotAST,
 //                       val apiFunctionName: String,
@@ -100,17 +99,51 @@ fun String.toTitleCase() = if (this.isEmpty()) this else this[0].toUpperCase() +
 fun String.toCamelCase() = if (this.isEmpty()) this else this[0].toLowerCase() + this.substring(1)
 
 
-/**
- * E.g. Tuple<String,Int> becomes "TupleOfStringAndInt"
- */
-fun TypeName.getRepresentativeName(): String = when {
-    this is ClassName -> simpleName
-    this is ParameterizedTypeName -> rawType.simpleName + "Of" + typeArguments.joinToString("And") {
-        it.getRepresentativeName()
-    }
-    else -> TODO("Not sure how to handle the non-ClassName/ParameterizedTypeName case")
-}
+///**
+// * E.g. Tuple<String,Int> becomes "TupleOfStringAndInt"
+// */
+//fun TypeName.getRepresentativeName(): String = when {
+//    this is ClassName -> simpleName
+//    this is ParameterizedTypeName -> rawType.simpleName + "Of" + typeArguments.joinToString("And") {
+//        it.getRepresentativeName()
+//    }
+//    else -> TODO("Not sure how to handle the non-ClassName/ParameterizedTypeName case")
+//}
+//
 
+fun List<PropertySignature>.sortedSoUnionsAreLast() = sortedWith(Comparator { sig1, sig2 ->
+    when {
+        sig1.type is UnionType && sig2.type is UnionType -> 0
+        // sig1 comes before
+        sig1.type is UnionType -> 1
+        // sig2 comes before
+        sig2.type is UnionType -> -1
+        else -> 0
+    }
+})
+
+fun List<PropertySignature>.addTypes(
+    builder: FlatBuilderRepresentation,
+    typeData: TypeData,
+    builderClassIn: String,
+    functionAppearsIn: String,
+    isPartial: Boolean
+) {
+    // Unions are last so they can duplicate the other parameters
+    for (prop in this.sortedSoUnionsAreLast()) {
+        prop.type.add(
+            builder = builder,
+            typeData = typeData,
+            builderClassIn = builderClassIn,
+            nameAsParameter = prop.name,
+            isOptional = isPartial || prop.optional,
+            functionAppearsIn = functionAppearsIn,
+            documentationAsParameter = prop.documentation
+        )
+    }
+
+
+}
 
 //--------------------------------//
 //------- PARAMETER --------------//

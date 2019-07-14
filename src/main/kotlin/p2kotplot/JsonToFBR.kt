@@ -27,7 +27,7 @@ class JsonToFBR(
 //    }
     //TODO union functions are emitted later I think
 
-    fun getApi(): FlatBuilderRepresentation {
+    fun get(): FlatBuilderRepresentation {
 //        val apiParameters = mutableListOf<ApiParameter>()
 //        val builderFunctions = mutableListOf<BuilderFunction>()
 //        val applyStatements = mutableListOf<String>()
@@ -61,7 +61,8 @@ class JsonToFBR(
         return FlatBuilderRepresentation(
             builderClasses = mutableListOf(),
             builderFunctions = mutableListOf(),
-            parameters = mutableListOf()
+            parameters = mutableListOf(),
+            enums = mutableListOf()
         ).also {
             for (function in functions) {
                 it.addBuilderFunction(

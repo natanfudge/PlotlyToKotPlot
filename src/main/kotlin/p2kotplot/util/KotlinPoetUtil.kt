@@ -1,8 +1,7 @@
 package p2kotplot.util
 
 import com.squareup.kotlinpoet.*
-import p2kotplot.AstToKotPlot
-import java.sql.Types
+import p2kotplot.FBRToKotPlot
 
 //fun file(packageName: String, fileName: String, init: FileSpec.Builder.() -> Unit): FileSpec =
 //    FileSpec.builder(packageName, fileName).apply(init).build()
@@ -15,11 +14,11 @@ import java.sql.Types
 //    addType(classType(className, init))
 //}
 
-inline fun AstToKotPlot.addClass(className: String, init: TypeSpec.Builder.() -> Unit) {
+inline fun FBRToKotPlot.addClass(className: String, init: TypeSpec.Builder.() -> Unit) {
     file.addType(TypeSpec.classBuilder(className).apply(init).build())
 }
 
-inline fun AstToKotPlot.addAnnotationClass(name : String, init: TypeSpec.Builder.() -> Unit){
+inline fun FBRToKotPlot.addAnnotationClass(name: String, init: TypeSpec.Builder.() -> Unit) {
     file.addType(TypeSpec.annotationBuilder(name).apply(init).build())
 }
 
@@ -79,10 +78,14 @@ inline fun TypeSpec.Builder.addFunction(name: String, init: FunSpec.Builder.() -
     addFunction(FunSpec.builder(name).apply(init).build())
 }
 
-inline fun AstToKotPlot.addFunction(name: String, init: FunSpec.Builder.() -> Unit) {
+inline fun FBRToKotPlot.addFunction(name: String, init: FunSpec.Builder.() -> Unit) {
     file.addFunction(FunSpec.builder(name).apply(init).build())
 }
 
 inline fun TypeSpec.Builder.primaryConstructor(init: FunSpec.Builder.() -> Unit) {
     primaryConstructor(FunSpec.constructorBuilder().apply(init).build())
+}
+
+inline fun FileSpec.Builder.addEnum(name: String, init: TypeSpec.Builder.() -> Unit) {
+    addType(TypeSpec.enumBuilder(name).apply(init).build())
 }

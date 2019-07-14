@@ -1,58 +1,122 @@
 package p2kotplot.plotlytypes
 
+import kotlinx.serialization.json.JsonLiteral
+import p2kotplot.ast.FlatBuilderRepresentation
+import p2kotplot.ast.TypeData
+import sun.plugin.dom.exception.InvalidStateException
 
-//import p2kotplot.JsonToKotPlot
-//import p2kotplot.util.addClass
-//import p2kotplot.toClassName
+
+fun String.hasArrayTypePrefix() = this.startsWith(UnionArrayMarkerPrefix)
+fun String.getArrayTypeElementName() = this.removePrefix(UnionArrayMarkerPrefix)
+private const val UnionArrayMarkerPrefix = "[UNION_ARRAY_MARKER]"
 
 data class UnionType(val types: List<KotPlotType>) : KotPlotType {
 
+    private fun KotPlotType.getName(): String {
+        assert(this is ReferenceType || this is ArrayType || this is ParameterizedType)
+        { "Non-literal Union types contain only reference types or array types." }
+        return when (this) {
+            is ParameterizedType -> {
+                assert(this.name == "Array" && this.typeArguments.size == 1) { "Non-literal Union types contain only reference types or array types." }
+                UnionArrayMarkerPrefix + this.typeArguments[0].getName()
+            }
 
-//    override fun getNameAndCreate(
-//        converter: JsonToKotPlot,
-//        knownName: String?
-//    ): TypeName {
-//
-//        val literals = types.filterIsInstance<LiteralType>()
-//        val references = types.filter { it !is LiteralType }
-//
-//
-//        //TODO: when we get some literals and some references , we convert the literals into objects and the references into classes,
-//        //TODO: and return a sealed class that is the objects or the classes.
-//        //TODO: but if we get only literals, we return an enum class.
-//
-//        // If there are actual type in the union type the only way to handle it would be a sealed class where
-//        // each reference is a subclass of the sealed class and then all the literals are also a enum as a subclass.
-//        if (references.isNotEmpty()) {
-//            val typeNames = mutableListOf<String>()
-//
-//            val sealedClassName = references.joinToString { reference ->
-//                reference.getNameAndCreate(converter).getRepresentativeName().also { typeNames.add(it) }
-//            }
-//
-//            //TODO: think about adding the subclasses as an inner class of the sealed class
-//
-//            // Add sealed class
-//            converter.addClass(className = knownName?: sealedClassName) {
-//                addModifiers(KModifier.SEALED)
-//            }
-//
-//            // Add subclasses of sealed class
-//            for (typeName in typeNames) {
-//                converter.addClass(className = typeName) {
-//                    superclass(sealedClassName.toClassName())
-//                }
-//            }
-//
-//            return sealedClassName.toClassName()
-//        } else {
-//            return literals.getNameAndCreate(converter)
-//        }
-//
-//
-//        //TODO: handle duplication of union type
-//        //TODO: handle serialization of union/sealed type
-//
-//
-//    }
+            is ReferenceType -> this.typeName
+            is ArrayType -> this.elementType.getName()
+            else -> throw InvalidStateException("Impossible")
+        }
+
+    }
+
+    override fun add(
+        builder: FlatBuilderRepresentation,
+        typeData: TypeData,
+        builderClassIn: String?,
+        nameAsParameter: String,
+        isOptional: Boolean,
+        functionAppearsIn: String,
+        documentationAsParameter: String,
+        isPartial: Boolean
+    ) {
+
+        val literals = types.filterIsInstance<LiteralType>()
+        val types = types.filter { it !is LiteralType }
+
+        assert(literals.isEmpty() || types.isEmpty()) { "A union type contains only literals or only non-literals" }
+
+        // Literals are turned into one big enums
+        fun addEnumOfLiterals() {
+            val createdEnumName = literals.joinToString("Or") { it.literal }
+            builder.addEnum(name = createdEnumName, elements = literals.map { it.literal })
+            builder.addParameter(
+                name = nameAsParameter,
+                type = createdEnumName,
+                belongsToFunction = functionAppearsIn,
+                paramInConstructorOfClass = builderClassIn,
+                optional = isOptional,
+                documentation = documentationAsParameter
+            )
+        }
+
+        //TODO for now we just add overloads for every union type, a more complete solution would create entire new classes
+        // Things that are not literals in a union type duplicate the builder functions and created a new override.
+        fun addOverloadsOfTypes() {
+            // Just add parameter to the constructor with an "any" type
+            builder.addParameter(
+                name = nameAsParameter,
+                optional = isOptional,
+                documentation = documentationAsParameter,
+                type = "Any",
+                paramInConstructorOfClass = builderClassIn,
+                belongsToFunction = "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY FUNCTION"
+            )
+
+            val existingParameters = builder.getParametersOfFunction(functionAppearsIn)
+
+            // Add the first type as a parameter to the function. The other types will be duplicates of the original function.
+            builder.addParameter(
+                name = nameAsParameter,
+                belongsToFunction = functionAppearsIn,
+                type = types[0].getName(),
+                documentation = documentationAsParameter,
+                optional = isOptional,
+                paramInConstructorOfClass = "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS",
+                overloadNumOfFunctionBelongingTo = FlatBuilderRepresentation.defaultOverloadNum
+            )
+
+            // Add the other types as duplicates of the original function
+            for (i in 1 until types.size) {
+                // Add the existing parameters
+                for (parameter in existingParameters) {
+                    builder.addParameter(
+                        parameter.name,
+                        parameter.type,
+                        parameter.optional,
+                        parameter.belongsToFunction,
+                        overloadNumOfFunctionBelongingTo = FlatBuilderRepresentation.defaultOverloadNum + i,
+                        paramInConstructorOfClass = parameter.paramInConstructorOfClass,
+                        documentation = parameter.documentation
+                    )
+                }
+                // Add the additional typed parameter
+                builder.addParameter(
+                    name = nameAsParameter,
+                    belongsToFunction = functionAppearsIn,
+                    type = types[i].getName(),
+                    documentation = documentationAsParameter,
+                    optional = isOptional,
+                    paramInConstructorOfClass = "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS",
+                    overloadNumOfFunctionBelongingTo = FlatBuilderRepresentation.defaultOverloadNum + i
+                )
+            }
+
+
+        }
+
+        if (literals.isNotEmpty()) addEnumOfLiterals()
+        if (types.isNotEmpty()) addOverloadsOfTypes()
+
+
+    }
+
 }

@@ -28,24 +28,31 @@ data class TypeLiteral(val nestedProperties: List<PropertySignature>) : KotPlotT
         // Type literals are anonymous so we give them an arbitrary name.
         val inventedTypeName = "TypeLiteralNum${typeLiteralCount++}"
         builder.addBuilderClass(name = inventedTypeName.toBuilderName())
-            builder.addBuilderFunction(
-                name = nameAsParameter,
-                inClass = builderClassIn,
+        builder.addBuilderFunction(
+            name = nameAsParameter,
+            inClass = builderClassIn,
 //                type = BuilderFunctionsType.Reference,
-                builderNameOfConstructedType = inventedTypeName.toBuilderName(),
-                isOptional = isOptional
-            )
-            for (prop in nestedProperties) {
-                prop.type.add(
-                    builder = builder,
-                    typeData = typeData,
-                    builderClassIn = inventedTypeName.toBuilderName(),
-                    nameAsParameter = prop.name,
-                    isOptional = prop.optional,
-                    functionAppearsIn = nameAsParameter,
-                    documentationAsParameter = prop.documentation
-                )
-            }
+            builderNameOfConstructedType = inventedTypeName.toBuilderName(),
+            isOptional = isOptional
+        )
+        nestedProperties.addTypes(
+            builder,
+            typeData,
+            builderClassIn = inventedTypeName.toBuilderName(),
+            isPartial = isPartial,
+            functionAppearsIn = nameAsParameter
+        )
+//            for (prop in nestedProperties) {
+//                prop.type.add(
+//                    builder = builder,
+//                    typeData = typeData,
+//                    builderClassIn = inventedTypeName.toBuilderName(),
+//                    nameAsParameter = prop.name,
+//                    isOptional = prop.optional,
+//                    functionAppearsIn = nameAsParameter,
+//                    documentationAsParameter = prop.documentation
+//                )
+//            }
     }
 
 //    override fun getNameAndCreate(

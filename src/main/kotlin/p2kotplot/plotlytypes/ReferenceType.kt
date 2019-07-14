@@ -21,7 +21,6 @@ data class ReferenceType(val typeName: String) : KotPlotType {
         fun emitValueType() {
             builder.addParameter(
                 name = nameAsParameter,
-                //TODO: this is completely wrong...
                 type = this.typeName.toTitleCase(),
                 belongsToFunction = functionAppearsIn,
                 paramInConstructorOfClass = builderClassIn,
@@ -31,10 +30,9 @@ data class ReferenceType(val typeName: String) : KotPlotType {
         }
 
 
-
         fun emitReferenceType() {
             var builderClassName = typeName.toBuilderName()
-            if(isPartial) builderClassName = "Partial$builderClassName"
+            if (isPartial) builderClassName = "Partial$builderClassName"
             builder.addBuilderClass(name = builderClassName)
             builder.addBuilderFunction(
                 name = nameAsParameter,
@@ -42,17 +40,24 @@ data class ReferenceType(val typeName: String) : KotPlotType {
                 builderNameOfConstructedType = typeName.toBuilderName(),
                 isOptional = isOptional
             )
-            for (prop in typeData.findTypeProps(typeName)) {
-                prop.type.add(
-                    builder = builder,
-                    typeData = typeData,
-                    builderClassIn = typeName.toBuilderName(),
-                    nameAsParameter = prop.name,
-                    isOptional = isPartial || prop.optional,
-                    functionAppearsIn = nameAsParameter,
-                    documentationAsParameter = prop.documentation
-                )
-            }
+            typeData.findTypeProps(typeName).addTypes(
+                builder,
+                typeData,
+                builderClassIn = typeName.toBuilderName(),
+                isPartial = isPartial,
+                functionAppearsIn = nameAsParameter
+            )
+//            for (prop in typeData.findTypeProps(typeName)) {
+//                prop.type.add(
+//                    builder = builder,
+//                    typeData = typeData,
+//                    builderClassIn = ,
+//                    nameAsParameter = prop.name,
+//                    isOptional = isPartial || prop.optional,
+//                    functionAppearsIn = nameAsParameter,
+//                    documentationAsParameter = prop.documentation
+//                )
+//            }
         }
 
         when (this.typeName.toLowerCase()) {
