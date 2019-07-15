@@ -15,8 +15,8 @@ data class ReferenceType(val typeName: String) : KotPlotType {
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
-
-        isPartial: Boolean
+        isPartial: Boolean,
+        overloadNum: Int
     ) {
         fun emitValueType() {
             builder.addParameter(
@@ -25,7 +25,8 @@ data class ReferenceType(val typeName: String) : KotPlotType {
                 belongsToFunction = functionAppearsIn,
                 paramInConstructorOfClass = builderClassIn,
                 optional = isOptional,
-                documentation = documentationAsParameter
+                documentation = documentationAsParameter,
+                overloadNum = overloadNum
             )
         }
 

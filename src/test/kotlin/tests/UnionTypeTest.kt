@@ -1,10 +1,7 @@
 package tests
 
 import org.junit.jupiter.api.Test
-import p2kotplot.plotlytypes.UnionType
-import util.declarationFile
 import util.fixture
-import util.isEqualTo
 import util.union
 
 class UnionTypeTest {
@@ -17,12 +14,20 @@ class UnionTypeTest {
                 }
             }
 
-            val kotlin = generatedKotlinFile
-//            val actualDeclarationFile = fixtureDecFile()
-//            val expectedDeclarationFile = declarationFile {
-//
-//            }
-//            actualDeclarationFile isEqualTo expectedDeclarationFile
+            expectedKotlinApi {
+                topLevelFunction(name = "test", hasInitParam = false){
+                    parameter(name = "param", type = "String")
+                }
+                topLevelFunction(name = "test",hasInitParam = false){
+                    parameter(name = "param", type = "Number")
+                }
+
+                builderClass(name = "TestBuilder"){
+                    constructorArgument(name = "param", type = "Any")
+                }
+
+            }
+
         }
     }
 }

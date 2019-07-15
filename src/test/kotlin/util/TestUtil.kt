@@ -1,41 +1,44 @@
 package util
 
+import p2kotplot.KotlinApi
 import p2kotplot.plotlytypes.DeclarationFile
-import p2kotplot.plotlytypes.FunctionSignature
-import p2kotplot.plotlytypes.Interface
-import p2kotplot.plotlytypes.Parameter
+import p2kotplot.toKotlinApi
 import p2kotplot.util.gson
 import p2kotplot.writeTo
-import sun.plugin.dom.exception.InvalidStateException
 import java.io.File
 import java.lang.Exception
 import java.util.concurrent.TimeUnit
-import kotlin.test.assertEquals
 
 inline fun File.doesNotExist() = !exists()
 
-fun fixture(name: String, category : String, tests: FixtureContext.() -> Unit) {
+fun fixture(name: String, category: String, tests: FixtureContext.() -> Unit) {
     FixtureContext(name, category).apply(tests)
 }
+
 const val tsNodeLocation = "C:\\Users\\natan\\AppData\\Roaming\\npm\\ts-node.cmd"
 const val plotly2JsonLocation = "src/ts/plotly2json.ts"
-class FixtureContext(private val fixtureName: String, private val fixtureCategory : String) {
-    val fixtureDeclarationFile : DeclarationFile
-    val generatedKotlinFile : String
+
+class FixtureContext(private val fixtureName: String, private val fixtureCategory: String) {
+    private val targetLocation = "$fixtureCategory/$fixtureName"
+
+    val fixtureDeclarationFile: DeclarationFile
+//    val generatedKotlinFile : String
 
     init {
         // Generate and parse declaration file
         val declarationFileLocation = generateDeclarationFile()
-        fixtureDeclarationFile =  gson.fromJson(File(declarationFileLocation).readText(), DeclarationFile::class.java)
+        fixtureDeclarationFile = gson.fromJson(File(declarationFileLocation).readText(), DeclarationFile::class.java)
 
-        val kotlinFileLocation = generateKotlinFile()
-        generatedKotlinFile = File(kotlinFileLocation).readText()
+//        val kotlinFileLocation = generateKotlinFile()
+//        generatedKotlinFile = File(kotlinFileLocation).readText()
 
     }
 
-    private fun generateKotlinFile(): String {
-        val kotlinFileLocation = "src/test/out/$fixtureName.kt"
-        fixtureDeclarationFile.writeTo(kotlinFileLocation)
+    private fun fixtureAsKotlinApi(): KotlinApi = fixtureDeclarationFile.toKotlinApi()
+
+    private fun writeToFile(kotlinApi: KotlinApi): String {
+        val kotlinFileLocation = "src/test/out/$targetLocation.kt"
+        kotlinApi.writeTo(kotlinFileLocation)
         return kotlinFileLocation
     }
 
@@ -47,26 +50,26 @@ class FixtureContext(private val fixtureName: String, private val fixtureCategor
     private fun generateDeclarationFile(): String {
         val targetFolder = "src/test/out/$fixtureCategory"
         if (!File(targetFolder).exists()) File(targetFolder).mkdir()
-        val declarationFileJsonLocation = "$targetFolder/$fixtureName.json"
-        val fixtureLocation = "src/test/fixtures/$fixtureCategory/$fixtureName.d.ts"
+        val declarationFileJsonLocation = "src/test/out/$targetLocation.json"
+        val fixtureLocation = "src/test/fixtures/$targetLocation.d.ts"
 
-        if(File(fixtureLocation).doesNotExist()) throw TestException("The fixture $fixtureLocation does not exist!")
+        if (File(fixtureLocation).doesNotExist()) throw TestException("The fixture $fixtureLocation does not exist!")
 
         "$tsNodeLocation $plotly2JsonLocation $fixtureLocation $declarationFileJsonLocation".runCommand()
         return declarationFileJsonLocation
     }
-//
-//    fun generatedKotlinFile(): String {
-//
-////        while (!File(targetLocation).exists()) {
-////        }
-//        return File(targetLocation).readText()
-//    }
 
-    fun expectedDeclarationFile(init: DeclarationFileBuilder.() -> Unit){
-//        val actualDeclarationFile = fixtureDecFile()
+
+    fun expectedDeclarationFile(init: DeclarationFileBuilder.() -> Unit) {
         val expectedDeclarationFile = declarationFile(init)
-        expectedDeclarationFile isEqualTo  fixtureDeclarationFile
+        expectedDeclarationFile assertEqualsTo fixtureDeclarationFile
+    }
+
+    fun expectedKotlinApi(init: KotlinApiBuilder.() -> Unit) {
+
+        val expectedApi = kotlinApi(init)
+        writeToFile(expectedApi)
+        expectedApi assertEqualsTo fixtureAsKotlinApi()
     }
 
 
@@ -82,6 +85,4 @@ fun String.runCommand(workingDir: File = File(System.getProperty("user.dir"))) {
 }
 
 
-
-
-class TestException(problem : String) : Exception(problem)
+class TestException(problem: String) : Exception(problem)

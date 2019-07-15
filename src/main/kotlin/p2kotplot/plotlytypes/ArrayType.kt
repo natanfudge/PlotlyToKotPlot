@@ -20,7 +20,8 @@ data class ArrayType(val elementType: KotPlotType) : KotPlotType {
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
-        isPartial: Boolean
+        isPartial: Boolean,
+        overloadNum: Int
     ) {
 //        builder.addBuilderClass(name = name.toBuilderName())
 //            builder.addBuilderFunction(

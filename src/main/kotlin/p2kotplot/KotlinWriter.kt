@@ -2,7 +2,6 @@ package p2kotplot
 
 import com.squareup.kotlinpoet.*
 import kotlinx.serialization.json.JsonElement
-import p2kotplot.ast.PublicFlatBuilderRepresentation
 import java.io.File
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import kotlinx.serialization.json.JsonObject
@@ -27,8 +26,6 @@ fun String.toTypeNameWithArrayCheck() : TypeName{
 }
 
 
-//private data class Parameter(val name: String, val type: String)
-
 
 
 /**
@@ -36,9 +33,6 @@ fun String.toTypeNameWithArrayCheck() : TypeName{
  * class Foo(private val x : Bar, private val y : Baz, ...)
  */
 private fun TypeSpec.Builder.privateValsPrimaryConstructor(parameters: List<ParameterComponents>) {
-//    primaryConstructor {
-//
-//    }
     primaryConstructor {
         for (parameter in parameters) {
             addParameter(
@@ -63,12 +57,12 @@ private fun TypeSpec.Builder.privateValsPrimaryConstructor(parameters: List<Para
 
 //TODO: make it obvious that required builder functions are required somehow
 
-class FBRToKotPlot(val builder: PublicFlatBuilderRepresentation, targetFileName: String) {
+class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
     val file: FileSpec.Builder = FileSpec.builder(PackageName, targetFileName)
 
-    private val builderClasses = builder.builderClasses
-    private val builderFunctions = builder.builderFunctions
-    private val enums = builder.enums
+//    private val builderClasses = builder.builderClasses
+//    private val builderFunctions = builder.builderFunctions
+//    private val enums = builder.enums
 
     fun writeTo(folder: File) {
         val file = file.apply {
@@ -78,15 +72,17 @@ class FBRToKotPlot(val builder: PublicFlatBuilderRepresentation, targetFileName:
 
             addDslMarkerAnnotation()
 
-            for (builderClass in builderClasses) {
-                addBuilderClass(BuilderAssembly(builder).assemble(builderClass))
+//            val kotlinApi = BuilderAssembly(builder).assembleAll()
+
+            for (builderClass in kotlinApi.builderClasses) {
+                addBuilderClass(builderClass)
             }
 
-            for (topLevelBuilderFunction in builderFunctions.filter { it.inClass == null }) {
-                addTopLevelBuilderFunction(BuilderAssembly(builder).assemble(topLevelBuilderFunction))
+            for (topLevelBuilderFunction in kotlinApi.topLevelFunctions) {
+                addTopLevelBuilderFunction(topLevelBuilderFunction)
             }
 
-            for (enum in enums) {
+            for (enum in kotlinApi.enums) {
                 addEnum(enum)
             }
 
@@ -124,7 +120,7 @@ class FBRToKotPlot(val builder: PublicFlatBuilderRepresentation, targetFileName:
                 addModifiers(KModifier.PRIVATE)
             }
 
-            for (arrayFieldName in classComponents.arrayFields) {
+            for (arrayFieldName in classComponents.arrayFieldNames) {
                 addArrayField(arrayFieldName)
             }
 

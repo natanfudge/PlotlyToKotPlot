@@ -1,5 +1,6 @@
 package p2kotplot.plotlytypes
 
+import p2kotplot.ast.DefaultOverloadNum
 import p2kotplot.ast.FlatBuilderRepresentation
 //import p2kotplot.JsonToKotPlot
 import p2kotplot.ast.TypeData
@@ -71,7 +72,8 @@ interface KotPlotType {
          *  It is both used by `Foo` to tell `Bar` that It's partial, and used by `Bar` to tell y and other props that they are optional.
          */
 
-        isPartial: Boolean = false
+        isPartial: Boolean = false,
+        overloadNum: Int = DefaultOverloadNum
     ) {
 
     }

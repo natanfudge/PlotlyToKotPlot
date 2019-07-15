@@ -1,0 +1,1 @@
+export function test(param1 : string  | boolean, param2 : number | boolean)

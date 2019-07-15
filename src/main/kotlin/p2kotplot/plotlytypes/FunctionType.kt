@@ -14,7 +14,8 @@ data class FunctionType(val parameters: List<Parameter>, val returnType: KotPlot
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
-        isPartial: Boolean
+        isPartial: Boolean,
+        overloadNum: Int
     ) {
         // Can't be serialized easily
     }

@@ -7,34 +7,37 @@ import java.io.File
 
 @ExperimentalStdlibApi
 fun main() {
-    val plotlyTypesFile = File("src/ts/data/plotlyTypes.json")
-    val plotlyTypes = plotlyTypesFile.readText()
-    val deserialized = plotlyTypes.parseTo<DeclarationFile>()
+//    val plotlyTypesFile = File("src/ts/data/plotlyTypes.json")
+//    val plotlyTypes = plotlyTypesFile.readText()
+//    val deserialized = plotlyTypes.parseTo<DeclarationFile>()
 
 
-    val api = JsonToFBR(
-        interfaceTypeData = deserialized.interfaces,
-        typeAliasData = deserialized.typeAliases,
-        functions = deserialized.functions
-    ).get()
+//    val api = JsonToFBR(
+//        interfaceTypeData = deserialized.interfaces,
+//        typeAliasData = deserialized.typeAliases,
+//        functions = deserialized.functions
+//    ).get()
 
 
 //    FBRToKotPlot(api.extractDataAtTheEndOfProcessing())
 
-    val x = 2
 
 
 }
 
-fun DeclarationFile.writeTo(location: String) {
+fun DeclarationFile.toKotlinApi() : KotlinApi{
     val fbr = JsonToFBR(
         interfaceTypeData = interfaces,
         typeAliasData = typeAliases,
         functions = functions
     ).get()
 
+    return BuilderAssembly(fbr.extractDataAtTheEndOfProcessing()).assembleAll()
+}
 
-    FBRToKotPlot(fbr.extractDataAtTheEndOfProcessing(), targetFileName = File(location).nameWithoutExtension).writeTo(
+fun KotlinApi.writeTo(location: String) {
+
+    KotlinWriter(this, targetFileName = File(location).nameWithoutExtension).writeTo(
         File(location).parentFile
     )
 }

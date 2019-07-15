@@ -1,6 +1,6 @@
 package p2kotplot.plotlytypes
 
-import kotlinx.serialization.json.JsonLiteral
+import p2kotplot.ast.DefaultOverloadNum
 import p2kotplot.ast.FlatBuilderRepresentation
 import p2kotplot.ast.TypeData
 import sun.plugin.dom.exception.InvalidStateException
@@ -10,23 +10,24 @@ fun String.hasArrayTypePrefix() = this.startsWith(UnionArrayMarkerPrefix)
 fun String.getArrayTypeElementName() = this.removePrefix(UnionArrayMarkerPrefix)
 private const val UnionArrayMarkerPrefix = "[UNION_ARRAY_MARKER]"
 
+//TODO: solution is incomplete. best solution is probably to add a "overloadNum" parameter to `add`.
 data class UnionType(val types: List<KotPlotType>) : KotPlotType {
 
-    private fun KotPlotType.getName(): String {
-        assert(this is ReferenceType || this is ArrayType || this is ParameterizedType)
-        { "Non-literal Union types contain only reference types or array types." }
-        return when (this) {
-            is ParameterizedType -> {
-                assert(this.name == "Array" && this.typeArguments.size == 1) { "Non-literal Union types contain only reference types or array types." }
-                UnionArrayMarkerPrefix + this.typeArguments[0].getName()
-            }
-
-            is ReferenceType -> this.typeName
-            is ArrayType -> this.elementType.getName()
-            else -> throw InvalidStateException("Impossible")
-        }
-
-    }
+//    private fun KotPlotType.getName(): String {
+//        assert(this is ReferenceType || this is ArrayType || this is ParameterizedType)
+//        { "Non-literal Union types contain only reference types or array types." }
+//        return when (this) {
+//            is ParameterizedType -> {
+//                assert(this.name == "Array" && this.typeArguments.size == 1) { "Non-literal Union types contain only reference types or array types." }
+//                UnionArrayMarkerPrefix + this.typeArguments[0].getName()
+//            }
+//
+//            is ReferenceType -> this.typeName
+//            is ArrayType -> this.elementType.getName()
+//            else -> throw InvalidStateException("Impossible")
+//        }
+//
+//    }
 
     override fun add(
         builder: FlatBuilderRepresentation,
@@ -36,7 +37,8 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
-        isPartial: Boolean
+        isPartial: Boolean,
+        overloadNum: Int
     ) {
 
         val literals = types.filterIsInstance<LiteralType>()
@@ -73,19 +75,8 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
 
             val existingParameters = builder.getParametersOfFunction(functionAppearsIn)
 
-            // Add the first type as a parameter to the function. The other types will be duplicates of the original function.
-            builder.addParameter(
-                name = nameAsParameter,
-                belongsToFunction = functionAppearsIn,
-                type = types[0].getName(),
-                documentation = documentationAsParameter,
-                optional = isOptional,
-                paramInConstructorOfClass = "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS",
-                overloadNumOfFunctionBelongingTo = FlatBuilderRepresentation.defaultOverloadNum
-            )
-
             // Add the other types as duplicates of the original function
-            for (i in 1 until types.size) {
+            types.forEachIndexed { i, type ->
                 // Add the existing parameters
                 for (parameter in existingParameters) {
                     builder.addParameter(
@@ -93,30 +84,29 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
                         parameter.type,
                         parameter.optional,
                         parameter.belongsToFunction,
-                        overloadNumOfFunctionBelongingTo = FlatBuilderRepresentation.defaultOverloadNum + i,
-                        paramInConstructorOfClass = parameter.paramInConstructorOfClass,
+                        overloadNum = DefaultOverloadNum + i,
+                        paramInConstructorOfClass = "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS",
                         documentation = parameter.documentation
                     )
                 }
                 // Add the additional typed parameter
-                builder.addParameter(
-                    name = nameAsParameter,
-                    belongsToFunction = functionAppearsIn,
-                    type = types[i].getName(),
-                    documentation = documentationAsParameter,
-                    optional = isOptional,
-                    paramInConstructorOfClass = "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS",
-                    overloadNumOfFunctionBelongingTo = FlatBuilderRepresentation.defaultOverloadNum + i
+                type.add(
+                    builder,
+                    typeData,
+                    "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS",
+                    nameAsParameter,
+                    isOptional,
+                    functionAppearsIn,
+                    documentationAsParameter,
+                    overloadNum = DefaultOverloadNum + i
                 )
             }
-
 
         }
 
         if (literals.isNotEmpty()) addEnumOfLiterals()
         if (types.isNotEmpty()) addOverloadsOfTypes()
-
+        val x = 2
 
     }
-
 }

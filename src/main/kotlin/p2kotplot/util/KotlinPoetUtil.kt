@@ -1,7 +1,7 @@
 package p2kotplot.util
 
 import com.squareup.kotlinpoet.*
-import p2kotplot.FBRToKotPlot
+import p2kotplot.KotlinWriter
 
 //fun file(packageName: String, fileName: String, init: FileSpec.Builder.() -> Unit): FileSpec =
 //    FileSpec.builder(packageName, fileName).apply(init).build()
@@ -14,11 +14,11 @@ import p2kotplot.FBRToKotPlot
 //    addType(classType(className, init))
 //}
 
-inline fun FBRToKotPlot.addClass(className: String, init: TypeSpec.Builder.() -> Unit) {
+inline fun KotlinWriter.addClass(className: String, init: TypeSpec.Builder.() -> Unit) {
     file.addType(TypeSpec.classBuilder(className).apply(init).build())
 }
 
-inline fun FBRToKotPlot.addAnnotationClass(name: String, init: TypeSpec.Builder.() -> Unit) {
+inline fun KotlinWriter.addAnnotationClass(name: String, init: TypeSpec.Builder.() -> Unit) {
     file.addType(TypeSpec.annotationBuilder(name).apply(init).build())
 }
 
@@ -78,7 +78,7 @@ inline fun TypeSpec.Builder.addFunction(name: String, init: FunSpec.Builder.() -
     addFunction(FunSpec.builder(name).apply(init).build())
 }
 
-inline fun FBRToKotPlot.addFunction(name: String, init: FunSpec.Builder.() -> Unit) {
+inline fun KotlinWriter.addFunction(name: String, init: FunSpec.Builder.() -> Unit) {
     file.addFunction(FunSpec.builder(name).apply(init).build())
 }
 

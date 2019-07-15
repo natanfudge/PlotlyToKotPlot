@@ -39,7 +39,8 @@ dependencies {
     testCompile("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testCompile("org.junit.jupiter:junit-jupiter-params:$junitVersion")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
-    testCompile(group= "org.jetbrains.kotlin", name =  "kotlin-test", version= "1.1.51")
+    testCompile(group = "org.jetbrains.kotlin", name = "kotlin-test", version = "1.1.51")
+    testCompile("de.danielbechler:java-object-diff:0.95")
 
 }
 
@@ -53,3 +54,11 @@ tasks.withType<Test> {
         events("passed", "skipped", "failed")
     }
 }
+//
+//tasks.withType<KotlinCompile>().all {
+//    kotlinOptions {
+////        jvmTarget = '1.6'
+//        freeCompilerArgs = freeCompilerArgs + " -Xuse-experimental=kotlin.ExperimentalStdlibApi"
+//    }
+//
+//}

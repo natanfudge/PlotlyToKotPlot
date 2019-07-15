@@ -17,7 +17,8 @@ data class LiteralType(val literal: String) : KotPlotType {
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
-        isPartial: Boolean
+        isPartial: Boolean,
+        overloadNum: Int
     ) {
         //This is only called when it's not as a union type, i.e. interface x { thing : "literal" }, this (almost) never happens.
 

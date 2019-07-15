@@ -12,7 +12,8 @@ data class TupleType(val tupleTypes: List<KotPlotType>) : KotPlotType {
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
-        isPartial: Boolean
+        isPartial: Boolean,
+        overloadNum: Int
     ) {
         ArrayType(elementType = ReferenceType("Any")).add(
             builder,

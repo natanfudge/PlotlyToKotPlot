@@ -1,9 +1,14 @@
 package tests
 
-import util.declarationFile
+import de.danielbechler.diff.ObjectDifferBuilder
 import util.fixture
-import util.isEqualTo
 import org.junit.jupiter.api.Test
+import util.kotlinApi
+import kotlin.test.assertEquals
+import de.danielbechler.diff.node.Visit
+import de.danielbechler.diff.node.DiffNode
+import jdk.nashorn.internal.runtime.PropertyMap.diff
+import util.assertEqualsTo
 
 
 const val tscLocation = "C:\\Users\\natan\\AppData\\Roaming\\npm\\tsc.cmd"
@@ -30,7 +35,59 @@ class ReferenceTypeTest {
                 }
             }
 
-            val kotlin = generatedKotlinFile
+            expectedKotlinApi {
+                topLevelFunction("test", hasInitParam = true) {
+                    parameter(name = "stringParam", type = "String")
+                    parameter(name = "booleanParam", type = "Boolean")
+                    parameter(name = "numberParam", type = "Number")
+                }
+                builderClass(name = "TestBuilder") {
+                    constructorArgument(name = "stringParam", type = "String")
+                    constructorArgument(name = "booleanParam", type = "Boolean")
+                    constructorArgument(name = "numberParam", type = "Number")
+
+                    builderFunction(
+                        name = "interfaceParam",
+                        builderNameOfConstructedType = "TestInterfaceBuilder",
+                        hasInitParam = false
+                    ) {
+                        parameter(name = "stringProp", type = "String")
+                        parameter(name = "numberProp", type = "Number")
+                    }
+
+                }
+
+                builderClass(name = "TestInterfaceBuilder"){
+                    constructorArgument("stringProp", type = "String")
+                    constructorArgument("numberProp", type = "Number")
+                }
+            }
+
+        }
+    }
+
+    @Test
+    fun primitive() {
+        fixture(category = "reference", name = "primitive") {
+            expectedDeclarationFile {
+                function("test") {
+                    parameter(name = "param", type = "string")
+                }
+            }
+
+            expectedKotlinApi {
+                topLevelFunction(
+                    name = "test",
+                    hasInitParam = false
+                ) {
+                    parameter(name = "param", type = "String")
+                }
+
+                builderClass(name = "TestBuilder") {
+                    constructorArgument(name = "param", type = "String")
+                }
+            }
+
         }
     }
 }

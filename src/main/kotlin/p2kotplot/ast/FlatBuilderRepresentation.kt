@@ -19,23 +19,23 @@ data class BuilderParameter(
     val type: String,
     val optional: Boolean,
     val belongsToFunction: String,
-    val overloadNumOfFunctionBelongingTo : Int,
+    val overloadNum: Int,
     val paramInConstructorOfClass: String?,
     val documentation: String
 )
 
-data class Enum(val name : String, val elements:  List<String>)
-
+data class Enum(val name: String, val elements: List<String>)
 
 
 fun String.toBuilderName() = toTitleCase() + "Builder"
 
+const val DefaultOverloadNum = 0
 
 data class FlatBuilderRepresentation(
     private val builderClasses: MutableList<BuilderClass>,
     private val builderFunctions: MutableList<BuilderFunction>,
     private val parameters: MutableList<BuilderParameter>,
-    private val enums : MutableList<Enum>
+    private val enums: MutableList<Enum>
 ) {
     fun addBuilderClass(name: String) = builderClasses.addIfNotIn(BuilderClass(name))
     fun addBuilderFunction(
@@ -46,27 +46,31 @@ data class FlatBuilderRepresentation(
         builderNameOfConstructedType: String
     ) = builderFunctions.add(BuilderFunction(name, inClass, isOptional, /*type,*/ builderNameOfConstructedType))
 
-    companion object{
-        const val defaultOverloadNum = 1
-    }
-
     fun addParameter(
         name: String,
         type: String,
         optional: Boolean,
         belongsToFunction: String,
-        overloadNumOfFunctionBelongingTo: Int = defaultOverloadNum,
+        overloadNum: Int = DefaultOverloadNum,
         paramInConstructorOfClass: String?,
         documentation: String
     ) = parameters.addIfNotIn(
-        BuilderParameter(name, type, optional, belongsToFunction,overloadNumOfFunctionBelongingTo, paramInConstructorOfClass, documentation)
+        BuilderParameter(
+            name,
+            type,
+            optional,
+            belongsToFunction,
+            overloadNum,
+            if (overloadNum == DefaultOverloadNum) paramInConstructorOfClass else "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS",
+            documentation
+        )
     )
 
-    fun getParametersOfFunction(functionName : String)=
-         parameters.filter { it.belongsToFunction == functionName && it.overloadNumOfFunctionBelongingTo == defaultOverloadNum }
+    fun getParametersOfFunction(functionName: String) =
+        parameters.filter { it.belongsToFunction == functionName && it.overloadNum == DefaultOverloadNum }
 
 
-    fun addEnum(name : String, elements: List<String>) = enums.addIfNotIn(Enum(name,elements))
+    fun addEnum(name: String, elements: List<String>) = enums.addIfNotIn(Enum(name, elements))
 
     override fun toString() =
         "FlatBuilderRepresentation(\nbuilderClasses = [\n\t" + builderClasses.joinToString(",\n\t") +
@@ -74,7 +78,7 @@ data class FlatBuilderRepresentation(
                 parameters.joinToString(",\n\t") + "\n]\n)"
 
     fun extractDataAtTheEndOfProcessing() =
-        PublicFlatBuilderRepresentation(builderClasses, builderFunctions, parameters,enums)
+        PublicFlatBuilderRepresentation(builderClasses, builderFunctions, parameters, enums)
 
 
 }

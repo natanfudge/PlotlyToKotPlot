@@ -23,7 +23,8 @@ data class TypeLiteral(val nestedProperties: List<PropertySignature>) : KotPlotT
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
-        isPartial: Boolean
+        isPartial: Boolean,
+        overloadNum: Int
     ) {
         // Type literals are anonymous so we give them an arbitrary name.
         val inventedTypeName = "TypeLiteralNum${typeLiteralCount++}"

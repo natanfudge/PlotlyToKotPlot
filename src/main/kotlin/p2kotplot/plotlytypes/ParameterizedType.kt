@@ -15,7 +15,8 @@ data class ParameterizedType(val name: String, val typeArguments: List<KotPlotTy
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
-        isPartial: Boolean
+        isPartial: Boolean,
+        overloadNum: Int
     ) {
         assert(typeArguments.size != 1) {"Only one type argument is expected"}
         when (name) {
@@ -38,6 +39,7 @@ data class ParameterizedType(val name: String, val typeArguments: List<KotPlotTy
                 functionAppearsIn,
                 documentationAsParameter,
                 isPartial
+
             )
             else -> throw InvalidStateException("Did not expect anything other than 'Array' or 'Partial'")
         }

@@ -2,7 +2,6 @@ package p2kotplot.plotlytypes
 
 import p2kotplot.ast.FlatBuilderRepresentation
 import p2kotplot.ast.TypeData
-import p2kotplot.ast.toBuilderName
 
 
 /*
@@ -24,7 +23,8 @@ data class IntersectionType(val types: List<KotPlotType>) : KotPlotType {
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
-        isPartial: Boolean
+        isPartial: Boolean,
+        overloadNum: Int
     ) {
         //   Handled manually because it's easier to do it manually...
 
