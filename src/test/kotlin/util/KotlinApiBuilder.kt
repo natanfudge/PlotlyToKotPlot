@@ -1,8 +1,8 @@
 package util
 
 import p2kotplot.*
-import p2kotplot.ast.BuilderClass
 import p2kotplot.ast.Enum
+import p2kotplot.ast.EnumConstant
 import p2kotplot.ast.toBuilderName
 import util.BuilderFunctionType.*
 
@@ -19,14 +19,15 @@ class KotlinApiBuilder {
     }
 
     fun topLevelFunction(
-        name: String, documentation: String = "",
+        name: String,
+//        documentation: String = "",
         hasInitParam: Boolean,
-        init: BuilderFunctionBuilder.() -> Unit
+        init: BuilderFunctionBuilder.() -> Unit = {}
     ) {
         topLevelFunctions.add(
             BuilderFunctionBuilder().apply(init).build(
                 name,
-                documentation,
+//                documentation,
                 name.toBuilderName(),
                 hasInitParam,
                 functionType = TopLevel
@@ -34,8 +35,22 @@ class KotlinApiBuilder {
         )
     }
 
+    fun enum(name: String, constants: EnumConstantsBuilder.() -> Unit) {
+        enums.add(Enum(name, EnumConstantsBuilder().apply(constants).build()))
+    }
+
     fun build() = KotlinApi(builderClasses, topLevelFunctions, enums)
 
+}
+
+@TestBuilder
+class EnumConstantsBuilder {
+    private val constants = mutableListOf<EnumConstant>()
+    fun constant(name: String, originalName: String) {
+        constants.add(EnumConstant(name, originalName))
+    }
+
+    fun build() = constants
 }
 
 enum class BuilderFunctionType {
@@ -48,20 +63,20 @@ enum class BuilderFunctionType {
 class BuilderFunctionBuilder {
     private val parameters = mutableListOf<ParameterComponents>()
 
-    fun parameter(name: String, type: String, isOptional: Boolean = false) {
-        parameters.add(ParameterComponents(name, type, isOptional))
+    fun parameter(name: String, type: String, isOptional: Boolean = false, documentation: String = "") {
+        parameters.add(ParameterComponents(name, type, isOptional,documentation))
     }
 
     fun build(
         name: String,
-        documentation: String,
+//        documentation: String,
         builderNameOfConstructedType: String,
         hasInitParam: Boolean,
         functionType: BuilderFunctionType,
         arrayName: String? = null
     ): BuilderFunctionComponents = BuilderFunctionComponents(
         name,
-        documentation,
+//        documentation,
         parameters,
         body = when (functionType) {
             TopLevel -> topLevelFunctionBody(
@@ -97,7 +112,7 @@ class BuilderClassBuilder {
 
     fun builderFunction(
         name: String,
-        documentation: String = "",
+//        documentation: String = "",
         builderNameOfConstructedType: String,
         hasInitParam: Boolean,
         init: BuilderFunctionBuilder.() -> Unit
@@ -105,7 +120,7 @@ class BuilderClassBuilder {
         builderFunctions.add(
             BuilderFunctionBuilder().apply(init).build(
                 name,
-                documentation,
+//                documentation,
                 builderNameOfConstructedType,
                 hasInitParam,
                 DataClass
@@ -113,32 +128,42 @@ class BuilderClassBuilder {
         )
     }
 
-    fun arrayField(fieldName: String) {
-        arrayFields.add(fieldName)
+    fun arrayField(arrayName: String) {
+        arrayFields.add(arrayName)
     }
 
     private fun applyStatement(
         variableName: String,
         variableIsOptional: Boolean = false,
-        variableIsAny: Boolean = false
+        variableIsAny: Boolean = false,
+        variableIsEnum: Boolean = false
     ) {
         applyStatements.add(
             applyStatementString(
                 variableIsOptional,
                 isForArray = false,
                 variableName = variableName,
-                variableIsAny = variableIsAny
+                variableIsAny = variableIsAny,
+                variableIsEnum = variableIsEnum
             )
         )
     }
 
     fun arrayApplyStatement(variableName: String, variableIsOptional: Boolean = false) {
-        applyStatements.add(applyStatementString(variableIsOptional, isForArray = true, variableName = variableName, variableIsAny = false))
+        applyStatements.add(
+            applyStatementString(
+                variableIsOptional,
+                isForArray = true,
+                variableName = variableName,
+                variableIsAny = false,
+                variableIsEnum = false
+            )
+        )
     }
 
-    fun constructorArgument(name: String, type: String, isOptional: Boolean = false) {
-        constructorArguments.add(ParameterComponents(name, type, isOptional))
-        applyStatement(name,isOptional, variableIsAny = type == "Any")
+    fun constructorArgument(name: String, type: String, isOptional: Boolean = false, isEnum: Boolean = false, documentation: String = "") {
+        constructorArguments.add(ParameterComponents(name, type, isOptional,documentation))
+        applyStatement(name, isOptional, variableIsAny = type == "Any", variableIsEnum = isEnum)
     }
 
 

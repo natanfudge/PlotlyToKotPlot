@@ -1,6 +1,7 @@
 package p2kotplot.plotlytypes
 
 import p2kotplot.ast.DefaultOverloadNum
+import p2kotplot.ast.EnumConstant
 import p2kotplot.ast.FlatBuilderRepresentation
 import p2kotplot.ast.TypeData
 import sun.plugin.dom.exception.InvalidStateException
@@ -47,16 +48,20 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
         assert(literals.isEmpty() || types.isEmpty()) { "A union type contains only literals or only non-literals" }
 
         // Literals are turned into one big enums
+        //TODO: add an "original name" property that we can use when serializing
         fun addEnumOfLiterals() {
-            val createdEnumName = literals.joinToString("Or") { it.literal }
-            builder.addEnum(name = createdEnumName, elements = literals.map { it.literal })
+            val createdEnumName = literals.joinToString("Or") { it.literal.toTitleCase() }
+            builder.addEnum(
+                name = createdEnumName,
+                elements = literals.map { EnumConstant(name = it.literal.toTitleCase(), originalName = it.literal) })
             builder.addParameter(
                 name = nameAsParameter,
                 type = createdEnumName,
                 belongsToFunction = functionAppearsIn,
                 paramInConstructorOfClass = builderClassIn,
                 optional = isOptional,
-                documentation = documentationAsParameter
+                documentation = documentationAsParameter,
+                isEnumType = true
             )
         }
 
@@ -70,7 +75,8 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
                 documentation = documentationAsParameter,
                 type = "Any",
                 paramInConstructorOfClass = builderClassIn,
-                belongsToFunction = "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY FUNCTION"
+                belongsToFunction = "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY FUNCTION",
+                isEnumType = false
             )
 
             val existingParameters = builder.getParametersOfFunction(functionAppearsIn)
@@ -86,7 +92,8 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
                         parameter.belongsToFunction,
                         overloadNum = DefaultOverloadNum + i,
                         paramInConstructorOfClass = "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS",
-                        documentation = parameter.documentation
+                        documentation = parameter.documentation,
+                        isEnumType = false
                     )
                 }
                 // Add the additional typed parameter

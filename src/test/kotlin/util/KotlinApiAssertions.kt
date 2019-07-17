@@ -9,11 +9,9 @@ import p2kotplot.plotlytypes.DeclarationFile
 import p2kotplot.plotlytypes.FunctionSignature
 import p2kotplot.plotlytypes.Interface
 import p2kotplot.plotlytypes.Parameter
-import java.lang.Exception
-import kotlin.test.assertEquals
 
-private inline fun <T> assertEquals(obj1: T, obj2: T, lazyMessage: () -> String) {
-    if (obj1 != obj2) error(lazyMessage() + "\n\n\n\n\n\n\n\n\n\n\n")
+private inline fun <T> assertEquals(expected: T, actual: T, lazyMessage: () -> String) {
+    if (expected != actual) error(lazyMessage() + "\nExpected: <$expected>, Actual: <$actual> \n\n\n\n\n\n\n\n\n\n\n")
 }
 
 private fun <T> List<T>.difference(other: List<T>, iterableName: String): String {
@@ -71,7 +69,7 @@ fun BuilderClassComponents.assertEqualsTo(other: BuilderClassComponents, positio
 }
 
 fun BuilderFunctionComponents.assertEqualsTo(other: BuilderFunctionComponents, position: Int) {
-    this.documentation.assertEqualsToPrimitive(other.documentation, "Builder Function Documentation", position)
+//    this.documentation.assertEqualsToPrimitive(other.documentation, "Builder Function Documentation", position)
     this.parameters.assertEqualsTo(other.parameters, "Builder Function Parameters", ParameterComponents::assertEqualsTo)
     this.body.assertEqualsToPrimitive(other.body, "Builder Function Body", position)
     this.builderNameOfConstructedType.assertEqualsToPrimitive(
@@ -96,6 +94,7 @@ fun ParameterComponents.assertEqualsTo(other: ParameterComponents, position: Int
     this.name.assertEqualsToPrimitive(other.name, "Parameter Name", position)
     this.isOptional.assertEqualsToPrimitive(other.isOptional, "Whether Or Not A Parameter Is Optional", position)
     this.type.assertEqualsToPrimitive(other.type, "Parameter Type", position)
+    this.documentation.assertEqualsToPrimitive(other.documentation, "Parameter Documentation", position)
 }
 
 

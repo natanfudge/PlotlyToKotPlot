@@ -22,6 +22,10 @@ inline fun KotlinWriter.addAnnotationClass(name: String, init: TypeSpec.Builder.
     file.addType(TypeSpec.annotationBuilder(name).apply(init).build())
 }
 
+inline fun TypeSpec.Builder.addEnumConstant(name: String, init: TypeSpec.Builder.() -> Unit){
+    addEnumConstant(name,TypeSpec.anonymousClassBuilder().apply(init).build())
+}
+
 //inline fun TypeSpec.Builder.classType(className: String, init: TypeSpec.Builder.() -> Unit): TypeSpec =
 //    TypeSpec.classBuilder(className).apply(init).build()
 //

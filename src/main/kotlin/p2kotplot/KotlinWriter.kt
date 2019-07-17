@@ -4,35 +4,30 @@ import com.squareup.kotlinpoet.*
 import kotlinx.serialization.json.JsonElement
 import java.io.File
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.sun.org.apache.xpath.internal.operations.Bool
 import kotlinx.serialization.json.JsonObject
+import p2kotplot.KotlinWriter.Companion.PackageName
 import p2kotplot.ast.Enum
 import p2kotplot.plotlytypes.getArrayTypeElementName
 import p2kotplot.plotlytypes.hasArrayTypePrefix
 import p2kotplot.util.*
+import java.sql.Types
 
-const val PackageName = ""
-const val InitFunctionName = "init"
-const val BuildFunctionName = "build"
-const val JsonMapName = "jsonMap"
-const val SingularOfArrayFunctionPrefix = "addOneOf"
-const val DslMarkerAnnotationName = "Builder"
 
 fun String.toClassName() = ClassName(packageName = PackageName, simpleName = this)
 
-fun String.toTypeNameWithArrayCheck() : TypeName{
-    return if(this.hasArrayTypePrefix()){
-        "List".toClassName() .parameterizedBy(this.getArrayTypeElementName().toClassName())
-    }else toClassName()
+fun String.toTypeNameWithArrayCheck(): TypeName {
+    return if (this.hasArrayTypePrefix()) {
+        "List".toClassName().parameterizedBy(this.getArrayTypeElementName().toClassName())
+    } else toClassName()
 }
-
-
 
 
 /**
  * creates:
  * class Foo(private val x : Bar, private val y : Baz, ...)
  */
-private fun TypeSpec.Builder.privateValsPrimaryConstructor(parameters: List<ParameterComponents>) {
+private fun TypeSpec.Builder.valsPrimaryConstructor(parameters: List<ParameterComponents>, private: Boolean) {
     primaryConstructor {
         for (parameter in parameters) {
             addParameter(
@@ -48,11 +43,9 @@ private fun TypeSpec.Builder.privateValsPrimaryConstructor(parameters: List<Para
             type = parameter.type.toTypeNameWithArrayCheck().copy(nullable = parameter.isOptional)
         ) {
             initializer(parameter.name)
-            addModifiers(KModifier.PRIVATE)
+            if (private) addModifiers(KModifier.PRIVATE)
         }
     }
-
-
 }
 
 //TODO: make it obvious that required builder functions are required somehow
@@ -93,8 +86,6 @@ class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
     }
 
 
-
-
     private fun FileSpec.Builder.setIndentToTab() = indent("\t")
 
     private fun FileSpec.Builder.addDslMarkerAnnotation() {
@@ -105,7 +96,7 @@ class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
 
     private fun FileSpec.Builder.addBuilderClass(classComponents: BuilderClassComponents) {
         addClass(className = classComponents.name) {
-            privateValsPrimaryConstructor(classComponents.constructorArguments)
+            valsPrimaryConstructor(classComponents.constructorArguments, private = true)
             addAnnotation(DslMarkerAnnotationName.toClassName())
 
             addProperty(
@@ -179,7 +170,10 @@ class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
 
     private fun FunSpec.Builder.addBuilderFunctionBody(functionComponents: BuilderFunctionComponents) {
         for (param in functionComponents.parameters) {
-            addParameter(name = param.name, type = param.type.toTypeNameWithArrayCheck().copy(nullable = param.isOptional)) {
+            addParameter(
+                name = param.name,
+                type = param.type.toTypeNameWithArrayCheck().copy(nullable = param.isOptional)
+            ) {
                 if (param.isOptional) defaultValue("null")
             }
         }
@@ -196,19 +190,41 @@ class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
             }
         }
 
-        addKdoc(functionComponents.documentation)
+        //TODO: change documentation from per-function to per-parameter
+//        addKdoc(functionComponents.documentation)
 
         addStatement(functionComponents.body)
     }
 
     private fun addEnum(enum: Enum) {
         file.addEnum(name = enum.name) {
+            valsPrimaryConstructor(
+                listOf(
+                    ParameterComponents(
+                        name = EnumOriginalName,
+                        type = "String",
+                        isOptional = false,
+                        documentation = ""
+                    )
+                ), private = false
+            )
             for (constant in enum.elements) {
-                addEnumConstant(name = constant)
+                addEnumConstant(name = constant.name) {
+                    addSuperclassConstructorParameter("%S", constant.originalName)
+                }
             }
         }
     }
 //TODO: put parameter docs on the parameters instead of the functions
 
+    companion object {
+        const val PackageName = ""
+        const val InitFunctionName = "init"
+        const val BuildFunctionName = "build"
+        const val JsonMapName = "jsonMap"
+        const val SingularOfArrayFunctionPrefix = "addOneOf"
+        const val DslMarkerAnnotationName = "Builder"
+        const val EnumOriginalName = "originalName"
+    }
 }
 

@@ -8,7 +8,11 @@ import kotlin.test.assertEquals
 import de.danielbechler.diff.node.Visit
 import de.danielbechler.diff.node.DiffNode
 import jdk.nashorn.internal.runtime.PropertyMap.diff
+import p2kotplot.KotlinWriter
+import util.array
 import util.assertEqualsTo
+import javax.lang.model.type.ArrayType
+import javax.lang.model.type.ReferenceType
 
 
 const val tscLocation = "C:\\Users\\natan\\AppData\\Roaming\\npm\\tsc.cmd"
@@ -90,5 +94,7 @@ class ReferenceTypeTest {
 
         }
     }
+
+
 }
 

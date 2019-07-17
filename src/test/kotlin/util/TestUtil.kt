@@ -9,6 +9,7 @@ import java.io.File
 import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
+@Suppress("NOTHING_TO_INLINE")
 inline fun File.doesNotExist() = !exists()
 
 fun fixture(name: String, category: String, tests: FixtureContext.() -> Unit) {
@@ -59,19 +60,17 @@ class FixtureContext(private val fixtureName: String, private val fixtureCategor
         return declarationFileJsonLocation
     }
 
-
     fun expectedDeclarationFile(init: DeclarationFileBuilder.() -> Unit) {
         val expectedDeclarationFile = declarationFile(init)
         expectedDeclarationFile assertEqualsTo fixtureDeclarationFile
     }
 
     fun expectedKotlinApi(init: KotlinApiBuilder.() -> Unit) {
-
         val expectedApi = kotlinApi(init)
-        writeToFile(expectedApi)
-        expectedApi assertEqualsTo fixtureAsKotlinApi()
+        val actualApi = fixtureAsKotlinApi()
+        writeToFile(actualApi)
+        expectedApi assertEqualsTo actualApi
     }
-
 
 }
 

@@ -8,7 +8,8 @@ annotation class TestBuilder
 
 fun reference(name: String) = ReferenceType(name)
 fun union(vararg referenceTypes : String) = UnionType(referenceTypes.map { reference(it) })
-
+fun union(vararg types : KotPlotType) = UnionType(types.toList())
+fun array(elementType:String) = ArrayType(ReferenceType(elementType))
 
 fun declarationFile(init: DeclarationFileBuilder.() -> Unit): DeclarationFile {
     return DeclarationFileBuilder().apply(init).build()

@@ -1,0 +1,1 @@
+export function test(param1 : string ,paramOptional ?: boolean)

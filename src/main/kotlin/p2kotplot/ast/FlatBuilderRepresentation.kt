@@ -21,10 +21,18 @@ data class BuilderParameter(
     val belongsToFunction: String,
     val overloadNum: Int,
     val paramInConstructorOfClass: String?,
-    val documentation: String
+    val documentation: String,
+    val isEnumType : Boolean
 )
 
-data class Enum(val name: String, val elements: List<String>)
+data class Enum(val name: String, val elements: List<EnumConstant>)
+
+data class EnumConstant(val name : String,
+                        /**
+                 * If the typescript file had a literal 'abcd' name would be 'Abcd' to comply with kotlin standards
+                 * but originalName would be 'abcd' for serialization purposes
+                 */
+                        val originalName: String)
 
 
 fun String.toBuilderName() = toTitleCase() + "Builder"
@@ -53,7 +61,8 @@ data class FlatBuilderRepresentation(
         belongsToFunction: String,
         overloadNum: Int = DefaultOverloadNum,
         paramInConstructorOfClass: String?,
-        documentation: String
+        documentation: String,
+        isEnumType: Boolean
     ) = parameters.addIfNotIn(
         BuilderParameter(
             name,
@@ -62,7 +71,8 @@ data class FlatBuilderRepresentation(
             belongsToFunction,
             overloadNum,
             if (overloadNum == DefaultOverloadNum) paramInConstructorOfClass else "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS",
-            documentation
+            documentation,
+            isEnumType
         )
     )
 
@@ -70,7 +80,7 @@ data class FlatBuilderRepresentation(
         parameters.filter { it.belongsToFunction == functionName && it.overloadNum == DefaultOverloadNum }
 
 
-    fun addEnum(name: String, elements: List<String>) = enums.addIfNotIn(Enum(name, elements))
+    fun addEnum(name: String, elements: List<EnumConstant>) = enums.addIfNotIn(Enum(name, elements))
 
     override fun toString() =
         "FlatBuilderRepresentation(\nbuilderClasses = [\n\t" + builderClasses.joinToString(",\n\t") +

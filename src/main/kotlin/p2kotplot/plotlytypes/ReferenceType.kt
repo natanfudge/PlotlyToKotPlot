@@ -26,7 +26,8 @@ data class ReferenceType(val typeName: String) : KotPlotType {
                 paramInConstructorOfClass = builderClassIn,
                 optional = isOptional,
                 documentation = documentationAsParameter,
-                overloadNum = overloadNum
+                overloadNum = overloadNum,
+                isEnumType = false
             )
         }
 

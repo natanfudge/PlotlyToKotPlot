@@ -1,5 +1,10 @@
 package p2kotplot
 
+import p2kotplot.KotlinWriter.Companion.BuildFunctionName
+import p2kotplot.KotlinWriter.Companion.EnumOriginalName
+import p2kotplot.KotlinWriter.Companion.InitFunctionName
+import p2kotplot.KotlinWriter.Companion.JsonMapName
+import p2kotplot.KotlinWriter.Companion.SingularOfArrayFunctionPrefix
 import p2kotplot.ast.BuilderClass
 import p2kotplot.ast.BuilderFunction
 import p2kotplot.ast.BuilderParameter
@@ -30,7 +35,6 @@ data class BuilderClassComponents(
 
 data class BuilderFunctionComponents(
     val name: String,
-    val documentation: String,
     val parameters: List<ParameterComponents>,
     val body: String,
     /**```
@@ -47,7 +51,8 @@ data class BuilderFunctionComponents(
 data class ParameterComponents(
     val name: String,
     val type: String,
-    val isOptional: Boolean
+    val isOptional: Boolean,
+    val documentation: String
 )
 
 fun applyStatementString(
@@ -57,20 +62,28 @@ fun applyStatementString(
     /**
      * Does not matter when isForArray = true
      */
-    variableIsAny: Boolean
+    variableIsAny: Boolean,
+    /**
+     * Does not matter when isForArray = true
+     */
+    variableIsEnum: Boolean
 ): String {
-    return if (isForArray) {
+    if (isForArray) {
         val isEmptyCheck = if (variableIsOptional) "if($variableName.isNotEmpty())" else ""
-        "$isEmptyCheck $JsonMapName[\"$variableName\"] = JsonArray($variableName)"
+        return "$isEmptyCheck $JsonMapName[\"$variableName\"] = JsonArray($variableName)"
     } else {
         val nullCheck = if (variableIsOptional) "if($variableName != null)" else ""
-        val assignedValue = if (variableIsAny) """ when ($variableName) {
+        val assignedValue = when {
+            variableIsAny -> """ when ($variableName) {
                     is String -> JsonLiteral($variableName)
                     is Number -> JsonLiteral($variableName)
                     is Boolean -> JsonLiteral($variableName)
                     else -> error("unexpected")
-                }""" else "JsonLiteral($variableName)"
-        "$nullCheck $JsonMapName[\"$variableName\"] = $assignedValue"
+                }"""
+            variableIsEnum -> "JsonLiteral($variableName.$EnumOriginalName)"
+            else -> "JsonLiteral($variableName)"
+        }
+        return "$nullCheck $JsonMapName[\"$variableName\"] = $assignedValue"
     }
 }
 
@@ -99,8 +112,7 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
             assemble(it)
         }
 
-        // Group by name to handle overloads
-
+    // Group by name to handle overloads
 
 
     private fun assemble(builderClass: BuilderClass): BuilderClassComponents {
@@ -118,7 +130,8 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
                 variableIsOptional = it.optional,
                 variableName = it.name,
                 isForArray = false,
-                variableIsAny = it.type == "Any"
+                variableIsAny = it.type == "Any",
+                variableIsEnum = it.isEnumType
             )
         } + builderClass.getBuilderFunctions().filter {
             it.name.isBuilderFunctionNameForOneOfArray()
@@ -127,7 +140,8 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
                 variableIsOptional = it.isOptional,
                 variableName = it.name.getArrayBuilderFunctionOriginalName(),
                 isForArray = true,
-                variableIsAny = false // Does not matter
+                variableIsAny = false, // Does not matter
+            variableIsEnum = false // Does not matter
             )
         }
 
@@ -139,16 +153,20 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
     }
 
     private fun assemble(builderFunction: BuilderFunction): List<BuilderFunctionComponents> {
-        return builderFunction.getParameterComponents().mapIndexed { i, overload ->
+        var parametersOfFunction = builderFunction.getOverloadsParameterComponents()
+        // When a function has no parameters it leads to the function not existing, so we add one empty overload here.
+        if(parametersOfFunction.isEmpty()) parametersOfFunction = listOf(listOf())
+        return parametersOfFunction.map { parametersOfOverload ->
             BuilderFunctionComponents(
                 name = builderFunction.getFinalName(),
-                parameters = overload,
-                body = builderFunction.getBody(i),
+                parameters = parametersOfOverload,
+                body = builderFunction.getBody(parametersOfOverload),
                 builderNameOfConstructedType = builderFunction.builderNameOfConstructedType,
-                hasInitParam = builderFunction.builderClassUsedInFunctionHasBuilderFunctions(),
+                hasInitParam = builderFunction.builderClassUsedInFunctionHasBuilderFunctions()
 
-                documentation = builderFunction.getOverloadsParameters()[i].filter { it.documentation != "" }
-                    .joinToString("\n") { "@param " + it.name + " " + it.documentation }
+//                documentation =
+//                parametersOfOverload.filter { it.documentation != "" }
+//                    .joinToString("\n") { "@param " + it.name + " " + it.documentation }
             )
         }
     }
@@ -161,7 +179,8 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
         return ParameterComponents(
             name = name,
             type = type,
-            isOptional = optional
+            isOptional = optional,
+            documentation = documentation
         )
     }
 
@@ -185,8 +204,8 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
         }.toList()
 
 
-    private fun BuilderFunction.getParameterComponents(): List<List<ParameterComponents>> =
-        getOverloadsParameters().map { overload -> overload.map { it.toParameterComponents() } }
+    private fun BuilderFunction.getOverloadsParameterComponents(): List<List<ParameterComponents>> =
+        getOverloadsParameters().map { overload -> overload.map { it. toParameterComponents() } }
 
     private fun BuilderFunction.getFinalName() = if (name.isBuilderFunctionNameForOneOfArray()) {
         SingularOfArrayFunctionPrefix + name.getArrayBuilderFunctionOriginalName().toTitleCase()
@@ -199,9 +218,9 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
     private fun BuilderFunction.builderClassUsedInFunctionHasBuilderFunctions() =
         this.getBuilderClassUsedInFunction().getBuilderFunctions().isNotEmpty()
 
-    private fun BuilderFunction.getBody(overloadNum: Int): String {
+    private fun BuilderFunction.getBody(parametersOfOverload: List<ParameterComponents>): String {
         val builderConstructorParams =
-            "(" + this.getOverloadsParameters()[overloadNum].joinToString(", ") { it.name } + ")"
+            "(" + parametersOfOverload.joinToString(", ") { it.name } + ")"
 
         // If the builder class used has no builder functions there is no need for an init function.
         // This is also handled in the FBRToKotPlot side.
@@ -234,9 +253,7 @@ private fun objectConstruction(
 }
 
 private fun topLevelFunctionBody(objectConstructionString: String) = "return $objectConstructionString"
-//TODO: add
 
-// When type = Any
 private fun dataClassFunctionBody(objectConstructionString: String, builderFunctionName: String) =
     "$JsonMapName[\"$builderFunctionName\"] = $objectConstructionString"
 
