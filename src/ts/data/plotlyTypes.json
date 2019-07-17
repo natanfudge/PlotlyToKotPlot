@@ -1,0 +1,35 @@
+{
+    "constants": [],
+    "functions": [
+        {
+            "name": "test",
+            "returnType": {
+                "kotPlotTypeType": "ReferenceType",
+                "typeName": ""
+            },
+            "parameters": [
+                {
+                    "name": "c1",
+                    "type": {
+                        "types": [
+                            {
+                                "literal": "asdf",
+                                "kotPlotTypeType": "LiteralType"
+                            },
+                            {
+                                "literal": "amar",
+                                "kotPlotTypeType": "LiteralType"
+                            }
+                        ],
+                        "kotPlotTypeType": "UnionType"
+                    },
+                    "optional": false
+                }
+            ],
+            "documentation": "",
+            "signatureType": "FunctionSignature"
+        }
+    ],
+    "interfaces": [],
+    "typeAliases": []
+}
