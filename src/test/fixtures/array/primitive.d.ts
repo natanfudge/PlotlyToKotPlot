@@ -1,6 +1,2 @@
-export function test(interfaces : TestInterface[])
+export function test(interfaces : string[])
 
-export interface TestInterface {
-    stringProp: string
-    numberProp: number
-}

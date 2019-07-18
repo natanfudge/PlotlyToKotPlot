@@ -5,14 +5,12 @@ import p2kotplot.KotlinWriter.Companion.EnumOriginalName
 import p2kotplot.KotlinWriter.Companion.InitFunctionName
 import p2kotplot.KotlinWriter.Companion.JsonMapName
 import p2kotplot.KotlinWriter.Companion.SingularOfArrayFunctionPrefix
-import p2kotplot.ast.BuilderClass
-import p2kotplot.ast.BuilderFunction
-import p2kotplot.ast.BuilderParameter
+import p2kotplot.ast.*
 import p2kotplot.ast.Enum
-import p2kotplot.ast.PublicFlatBuilderRepresentation
 import p2kotplot.plotlytypes.getArrayBuilderFunctionOriginalName
 import p2kotplot.plotlytypes.isBuilderFunctionNameForOneOfArray
 import p2kotplot.plotlytypes.toTitleCase
+import p2kotplot.util.deepMap
 import sun.plugin.dom.exception.InvalidStateException
 
 data class KotlinApi(
@@ -42,8 +40,10 @@ data class BuilderFunctionComponents(
      *    [builderNameOfConstructedType -->] someBuilder    ().apply(init).build()
      * }
      * ```
+     * Null means nothing is constructed, so we just use the accepted primitive value as-is
+     * (this happens when adding a singular of a primitive type to an array)
      */
-    val builderNameOfConstructedType: String,
+    val builderNameOfConstructedType: String?,
     val hasInitParam: Boolean
 )
 
@@ -100,17 +100,18 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
 
         val assembledTopLevelFunctions = assemble(topLevelFunctions)
 
+        val assembledBuilderClasses = builder.builderClasses.map { assemble(it) }
+
         return KotlinApi(
-            builderClasses = builder.builderClasses.map { assemble(it) },
+            builderClasses = assembledBuilderClasses,
             enums = builder.enums,
             topLevelFunctions = assembledTopLevelFunctions
         )
     }
 
-    private fun assemble(builderFunctions: List<BuilderFunction>): List<BuilderFunctionComponents> =
-        builderFunctions.flatMap {
-            assemble(it)
-        }
+    private fun assemble(builderFunctions: List<BuilderFunction>) = builderFunctions.flatMap {
+        assemble(it)
+    }
 
     // Group by name to handle overloads
 
@@ -141,7 +142,7 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
                 variableName = it.name.getArrayBuilderFunctionOriginalName(),
                 isForArray = true,
                 variableIsAny = false, // Does not matter
-            variableIsEnum = false // Does not matter
+                variableIsEnum = false // Does not matter
             )
         }
 
@@ -155,7 +156,7 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
     private fun assemble(builderFunction: BuilderFunction): List<BuilderFunctionComponents> {
         var parametersOfFunction = builderFunction.getOverloadsParameterComponents()
         // When a function has no parameters it leads to the function not existing, so we add one empty overload here.
-        if(parametersOfFunction.isEmpty()) parametersOfFunction = listOf(listOf())
+        if (parametersOfFunction.isEmpty()) parametersOfFunction = listOf(listOf())
         return parametersOfFunction.map { parametersOfOverload ->
             BuilderFunctionComponents(
                 name = builderFunction.getFinalName(),
@@ -196,38 +197,60 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
     /**
      * Returns the list of overloads of a function, each one with the list of parameters it has.
      */
-    private fun BuilderFunction.getOverloadsParameters(): List<List<BuilderParameter>> =
-        builder.parameters.asSequence().filter {
-            it.belongsToFunction == name
-        }.groupBy { it.overloadNum }.toList().sortedBy { it.first }.map {
+    private fun BuilderFunction.getOverloadsParameters(): List<List<BuilderParameter>> {
+        val parametersOfFunction = builder.parameters.filter { parameter ->
+            parameter.belongsToFunction == this.name &&
+                    parameter.paramInConstructorOfClass builderClassNameEquals this.builderNameOfConstructedType
+        }
+        return parametersOfFunction.groupBy { it.overloadNum }.toList().sortedBy { it.first }.map {
             it.second
         }.toList()
+    }
+
+    /**
+     * In the context above 'NotTopLevelOrInConstructor' and 'null` mean the same thing, so we sort that out.
+     */
+    private infix fun String?.builderClassNameEquals(other: String?) = this == other ||
+            (this == NotTopLevelOrInConstructor && other == null) || (this == null && other == NotTopLevelOrInConstructor)
+//    builder.parameters.asSequence().filter
+//    {
+//        parameter ->
+//        parameter.belongsToFunction == this.name && parameter.paramInConstructorOfClass == this.builderNameOfConstructedType
+//    }.groupBy
+//    { it.overloadNum }.toList().sortedBy
+//    { it.first }.map
+//    {
+//        it.second
+//    }.toList()
 
 
     private fun BuilderFunction.getOverloadsParameterComponents(): List<List<ParameterComponents>> =
-        getOverloadsParameters().map { overload -> overload.map { it. toParameterComponents() } }
+        getOverloadsParameters().deepMap { it.toParameterComponents() }
 
     private fun BuilderFunction.getFinalName() = if (name.isBuilderFunctionNameForOneOfArray()) {
         SingularOfArrayFunctionPrefix + name.getArrayBuilderFunctionOriginalName().toTitleCase()
     } else name
 
-    private fun BuilderFunction.getBuilderClassUsedInFunction() = builder.builderClasses.find {
-        it.name == this.builderNameOfConstructedType
-    } ?: throw InvalidStateException("Could not find class $inClass")
+//    private fun BuilderFunction.getBuilderClassUsedInFunction(): BuilderClass? =
+//        if (builderNameOfConstructedType == null) null
+//        else builder.builderClasses.find {
+//            it.name == this.builderNameOfConstructedType
+//        } ?: error("Could not find class $inClass")
 
-    private fun BuilderFunction.builderClassUsedInFunctionHasBuilderFunctions() =
-        this.getBuilderClassUsedInFunction().getBuilderFunctions().isNotEmpty()
+    private fun BuilderFunction.builderClassUsedInFunctionHasBuilderFunctions(): Boolean {
+        if (builderNameOfConstructedType == null) return false
+        val builderFunctions = BuilderClass(this.builderNameOfConstructedType).getBuilderFunctions()
+        return builderFunctions.isNotEmpty()
+    }
+
 
     private fun BuilderFunction.getBody(parametersOfOverload: List<ParameterComponents>): String {
-        val builderConstructorParams =
-            "(" + parametersOfOverload.joinToString(", ") { it.name } + ")"
 
-        // If the builder class used has no builder functions there is no need for an init function.
-        // This is also handled in the FBRToKotPlot side.
-        val applyCall = if (builderClassUsedInFunctionHasBuilderFunctions()) ".apply($InitFunctionName)" else ""
-
-        val objectConstruction =
-            "$builderNameOfConstructedType$builderConstructorParams$applyCall.$BuildFunctionName()"
+        val objectConstruction = objectConstruction(
+            builderNameOfConstructedType = builderNameOfConstructedType,
+            parameters = parametersOfOverload,
+            withApplyCall = builderClassUsedInFunctionHasBuilderFunctions()
+        )
 
         return when {
             // Array
@@ -243,13 +266,19 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
 }
 
 private fun objectConstruction(
-    builderClassName: String,
+    builderNameOfConstructedType: String?,
     parameters: List<ParameterComponents>,
     withApplyCall: Boolean
 ): String {
     val builderConstructorParams = "(" + parameters.joinToString(", ") { it.name } + ")"
     val applyCall = if (withApplyCall) ".apply($InitFunctionName)" else ""
-    return "$builderClassName$builderConstructorParams$applyCall.$BuildFunctionName()"
+    return if (builderNameOfConstructedType != null) {
+        "$builderNameOfConstructedType$builderConstructorParams$applyCall.$BuildFunctionName()"
+    } else {
+        // If builderNameOfConstructedType is null we use the parameters as-is
+        builderConstructorParams
+    }
+
 }
 
 private fun topLevelFunctionBody(objectConstructionString: String) = "return $objectConstructionString"
@@ -260,6 +289,10 @@ private fun dataClassFunctionBody(objectConstructionString: String, builderFunct
 private fun oneOfArrayFunctionBody(objectConstructionString: String, arrayName: String) =
     "$arrayName.add($objectConstructionString)"
 
+
+/******************
+For tests mainly
+ *******************/
 fun topLevelFunctionBody(
     builderNameOfConstructedType: String,
     parameters: List<ParameterComponents>,
@@ -276,11 +309,10 @@ fun dataClassFunctionBody(
     builderFunctionName
 )
 
-
 fun oneOfArrayFunctionBody(
-    builderNameOfConstructedType: String,
+    builderNameOfConstructedType: String?,
     parameters: List<ParameterComponents>,
     withApplyCall: Boolean,
     arrayName: String
 ): String =
-    dataClassFunctionBody(objectConstruction(builderNameOfConstructedType, parameters, withApplyCall), arrayName)
+    oneOfArrayFunctionBody(objectConstruction(builderNameOfConstructedType, parameters, withApplyCall), arrayName)

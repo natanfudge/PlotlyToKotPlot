@@ -124,12 +124,14 @@ fun List<PropertySignature>.sortedSoUnionsAreLast() = sortedWith(Comparator { si
     }
 })
 
+//TODO: i think i need to add ovelroadnum here
 fun List<PropertySignature>.addTypes(
     builder: FlatBuilderRepresentation,
     typeData: TypeData,
     builderClassIn: String,
     functionAppearsIn: String,
-    isPartial: Boolean
+    isPartial: Boolean,
+    overloadNum : Int
 ) {
     // Unions are last so they can duplicate the other parameters
     for (prop in this.sortedSoUnionsAreLast()) {
@@ -140,7 +142,8 @@ fun List<PropertySignature>.addTypes(
             nameAsParameter = prop.name,
             isOptional = isPartial || prop.optional,
             functionAppearsIn = functionAppearsIn,
-            documentationAsParameter = prop.documentation
+            documentationAsParameter = prop.documentation,
+            overloadNum = overloadNum
         )
     }
 

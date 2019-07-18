@@ -2,7 +2,12 @@ package tests
 
 import org.junit.jupiter.api.Test
 import p2kotplot.KotlinWriter
+import p2kotplot.plotlytypes.arrParamName
 import util.fixture
+
+fun main() {
+    ArrayTypeTest().primitive()
+}
 
 class ArrayTypeTest {
     @Test
@@ -20,17 +25,46 @@ class ArrayTypeTest {
 
             expectedKotlinApi {
                 topLevelFunction(name = "test", hasInitParam = true)
-                builderClass(name = "TestInterfaceBuilder") {
-                    arrayField("interfaces")
-                    builderFunction(
-                        name = KotlinWriter.SingularOfArrayFunctionPrefix + "interfaces",
+                builderClass(name = "TestBuilder") {
+                    arrayBuilderFunction(
+                        arrayName = "interfaces",
                         hasInitParam = false,
-                        builderNameOfConstructedType = "???"
+                        constructedTypeBuilderName = "TestInterfaceBuilder"
                     ) {
-//                        parameter(name = "")
+                        parameter(name = "stringProp", type = "String")
+                        parameter(name = "numberProp", type = "Number")
                     }
 
-                    arrayApplyStatement(variableName = "interfaces")
+                }
+
+                builderClass("TestInterfaceBuilder") {
+                    constructorArgument(name = "stringProp", type = "String")
+                    constructorArgument(name = "numberProp", type = "Number")
+                }
+            }
+        }
+    }
+
+
+    @Test
+    fun primitive() {
+        fixture(category = "array", name = "primitive") {
+            expectedDeclarationFile {
+                function("test") {
+                    parameter(name = "interfaces", type = util.array("string"))
+                }
+            }
+
+            expectedKotlinApi {
+                topLevelFunction(name = "test", hasInitParam = true)
+                builderClass(name = "TestBuilder") {
+                    arrayBuilderFunction(
+                        arrayName = "interfaces",
+                        hasInitParam = false,
+                        constructedTypeBuilderName = null
+                    ) {
+                        parameter(name = "interfaces".arrParamName, type = "string")
+                    }
                 }
             }
         }

@@ -10,8 +10,9 @@ fun reference(name: String) = ReferenceType(name)
 fun union(vararg referenceTypes : String) = UnionType(referenceTypes.map { reference(it) })
 fun union(vararg types : KotPlotType) = UnionType(types.toList())
 fun array(elementType:String) = ArrayType(ReferenceType(elementType))
+fun array(elementType: KotPlotType) = ArrayType(elementType)
 
-fun declarationFile(init: DeclarationFileBuilder.() -> Unit): DeclarationFile {
+inline fun declarationFile(init: DeclarationFileBuilder.() -> Unit): DeclarationFile {
     return DeclarationFileBuilder().apply(init).build()
 }
 

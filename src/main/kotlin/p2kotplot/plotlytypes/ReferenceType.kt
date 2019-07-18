@@ -4,6 +4,10 @@ import p2kotplot.ast.FlatBuilderRepresentation
 import p2kotplot.ast.TypeData
 import p2kotplot.ast.toBuilderName
 
+fun ReferenceType.isPrimitive() = when (typeName.toLowerCase()) {
+    "number", "string", "any", "boolean" -> true
+    else -> false
+}
 
 data class ReferenceType(val typeName: String) : KotPlotType {
 
@@ -18,7 +22,7 @@ data class ReferenceType(val typeName: String) : KotPlotType {
         isPartial: Boolean,
         overloadNum: Int
     ) {
-        fun emitValueType() {
+        fun emitPrimitiveType() {
             builder.addParameter(
                 name = nameAsParameter,
                 type = this.typeName.toTitleCase(),
@@ -42,30 +46,25 @@ data class ReferenceType(val typeName: String) : KotPlotType {
                 builderNameOfConstructedType = typeName.toBuilderName(),
                 isOptional = isOptional
             )
-            typeData.findTypeProps(typeName).addTypes(
+            // Add all the types of the properties of the interface that has this type's name
+            typeData.findInterfaceProperties(typeName).addTypes(
                 builder,
                 typeData,
                 builderClassIn = typeName.toBuilderName(),
                 isPartial = isPartial,
-                functionAppearsIn = nameAsParameter
-            )
-//            for (prop in typeData.findTypeProps(typeName)) {
-//                prop.type.add(
-//                    builder = builder,
-//                    typeData = typeData,
-//                    builderClassIn = ,
-//                    nameAsParameter = prop.name,
-//                    isOptional = isPartial || prop.optional,
-//                    functionAppearsIn = nameAsParameter,
-//                    documentationAsParameter = prop.documentation
-//                )
-//            }
-        }
+                functionAppearsIn = nameAsParameter,
+                overloadNum = overloadNum
 
-        when (this.typeName.toLowerCase()) {
-            "number", "string", "any", "boolean" -> emitValueType()
-            else -> emitReferenceType()
+            )
+
         }
+        if(this.isPrimitive()) emitPrimitiveType()
+        else emitReferenceType()
+
+//        when (this.typeName.toLowerCase()) {
+//            "number", "string", "any", "boolean" -> emitValueType()
+//            else -> emitReferenceType()
+//        }
 
 
     }

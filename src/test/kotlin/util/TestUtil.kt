@@ -5,6 +5,8 @@ import p2kotplot.plotlytypes.DeclarationFile
 import p2kotplot.toKotlinApi
 import p2kotplot.util.gson
 import p2kotplot.writeTo
+import util.kotlinApiBuilders.KotlinApiBuilder
+import util.kotlinApiBuilders.kotlinApi
 import java.io.File
 import java.lang.Exception
 import java.util.concurrent.TimeUnit
@@ -12,14 +14,16 @@ import java.util.concurrent.TimeUnit
 @Suppress("NOTHING_TO_INLINE")
 inline fun File.doesNotExist() = !exists()
 
-fun fixture(name: String, category: String, tests: FixtureContext.() -> Unit) {
+inline fun fixture(name: String, category: String, tests: FixtureContext.() -> Unit) {
     FixtureContext(name, category).apply(tests)
 }
 
 const val tsNodeLocation = "C:\\Users\\natan\\AppData\\Roaming\\npm\\ts-node.cmd"
 const val plotly2JsonLocation = "src/ts/plotly2json.ts"
 
-class FixtureContext(private val fixtureName: String, private val fixtureCategory: String) {
+const val writeFiles = false
+
+class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
     private val targetLocation = "$fixtureCategory/$fixtureName"
 
     val fixtureDeclarationFile: DeclarationFile
@@ -35,11 +39,11 @@ class FixtureContext(private val fixtureName: String, private val fixtureCategor
 
     }
 
-    private fun fixtureAsKotlinApi(): KotlinApi = fixtureDeclarationFile.toKotlinApi()
+     fun fixtureAsKotlinApi(): KotlinApi = fixtureDeclarationFile.toKotlinApi()
 
-    private fun writeToFile(kotlinApi: KotlinApi): String {
+     fun writeToFile(kotlinApi: KotlinApi): String {
         val kotlinFileLocation = "src/test/out/$targetLocation.kt"
-        kotlinApi.writeTo(kotlinFileLocation)
+         kotlinApi.writeTo(kotlinFileLocation)
         return kotlinFileLocation
     }
 
@@ -60,15 +64,15 @@ class FixtureContext(private val fixtureName: String, private val fixtureCategor
         return declarationFileJsonLocation
     }
 
-    fun expectedDeclarationFile(init: DeclarationFileBuilder.() -> Unit) {
+    inline fun expectedDeclarationFile(init: DeclarationFileBuilder.() -> Unit) {
         val expectedDeclarationFile = declarationFile(init)
         expectedDeclarationFile assertEqualsTo fixtureDeclarationFile
     }
 
-    fun expectedKotlinApi(init: KotlinApiBuilder.() -> Unit) {
+    inline fun expectedKotlinApi(init: KotlinApiBuilder.() -> Unit) {
         val expectedApi = kotlinApi(init)
         val actualApi = fixtureAsKotlinApi()
-        writeToFile(actualApi)
+       if(writeFiles) writeToFile(actualApi)
         expectedApi assertEqualsTo actualApi
     }
 

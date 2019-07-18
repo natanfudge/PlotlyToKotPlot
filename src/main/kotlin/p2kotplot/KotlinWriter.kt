@@ -49,7 +49,6 @@ private fun TypeSpec.Builder.valsPrimaryConstructor(parameters: List<ParameterCo
 }
 
 //TODO: make it obvious that required builder functions are required somehow
-
 class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
     val file: FileSpec.Builder = FileSpec.builder(PackageName, targetFileName)
 
@@ -61,7 +60,7 @@ class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
         val file = file.apply {
 
             setIndentToTab()
-            addImport("kotlinx.serialization.json", "JsonLiteral", "JsonArray")
+            addImport("kotlinx.serialization.json", "JsonLiteral", "JsonArray", "JsonElement", "JsonObject")
 
             addDslMarkerAnnotation()
 
@@ -90,7 +89,7 @@ class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
 
     private fun FileSpec.Builder.addDslMarkerAnnotation() {
         addAnnotationClass(name = DslMarkerAnnotationName) {
-            addAnnotation(DslMarker::class)
+            addAnnotation("DslMarker".toClassName())
         }
     }
 
@@ -103,7 +102,7 @@ class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
                 name = JsonMapName,
                 type = "MutableMap".toClassName().parameterizedBy(
                     "String".toClassName(),
-                    JsonElement::class.asTypeName()
+                    "JsonElement".toClassName()
                 )
             ) {
                 initializer("mutableMapOf()")
@@ -127,7 +126,7 @@ class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
     private fun TypeSpec.Builder.addArrayField(arrayFieldName: String) {
         addProperty(
             name = arrayFieldName,
-            type = "MutableList".toClassName().parameterizedBy(JsonElement::class.asTypeName())
+            type = "MutableList".toClassName().parameterizedBy("JsonElement".toClassName())
         ) {
             initializer("mutableListOf()")
 
@@ -138,7 +137,7 @@ class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
 
     private fun TypeSpec.Builder.addBuildFunction(applyStatements: List<String>) {
         addFunction(name = BuildFunctionName) {
-            returns(returnType = JsonObject::class)
+            returns(returnType = "JsonObject".toClassName())
             addModifiers(KModifier.INTERNAL)
             addCode(buildCodeBlock {
                 addStatement("$JsonMapName.apply {")
@@ -163,7 +162,7 @@ class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
 
     private fun FileSpec.Builder.addTopLevelBuilderFunction(functionComponents: BuilderFunctionComponents) {
         addFunction(name = functionComponents.name) {
-            returns(JsonObject::class)
+            returns("JsonObject".toClassName())
             addBuilderFunctionBody(functionComponents)
         }
     }
@@ -175,6 +174,7 @@ class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
                 type = param.type.toTypeNameWithArrayCheck().copy(nullable = param.isOptional)
             ) {
                 if (param.isOptional) defaultValue("null")
+                addKdoc(param.documentation)
             }
         }
         // Add "init" receiver parameter at the end
@@ -182,7 +182,7 @@ class KotlinWriter(val kotlinApi: KotlinApi, targetFileName: String) {
             addParameter(
                 name = InitFunctionName,
                 type = LambdaTypeName.get(
-                    receiver = functionComponents.builderNameOfConstructedType.toClassName(),
+                    receiver = functionComponents.builderNameOfConstructedType!!.toClassName(),
                     returnType = UNIT
                 )
             ) {

@@ -1,9 +1,6 @@
 package p2kotplot.plotlytypes
 
-import p2kotplot.ast.DefaultOverloadNum
-import p2kotplot.ast.EnumConstant
-import p2kotplot.ast.FlatBuilderRepresentation
-import p2kotplot.ast.TypeData
+import p2kotplot.ast.*
 import sun.plugin.dom.exception.InvalidStateException
 
 
@@ -11,24 +8,8 @@ fun String.hasArrayTypePrefix() = this.startsWith(UnionArrayMarkerPrefix)
 fun String.getArrayTypeElementName() = this.removePrefix(UnionArrayMarkerPrefix)
 private const val UnionArrayMarkerPrefix = "[UNION_ARRAY_MARKER]"
 
-//TODO: solution is incomplete. best solution is probably to add a "overloadNum" parameter to `add`.
+//TODO: make it obvious that when you have part of a union create a builder function that only ONE can be used of the union parts.
 data class UnionType(val types: List<KotPlotType>) : KotPlotType {
-
-//    private fun KotPlotType.getName(): String {
-//        assert(this is ReferenceType || this is ArrayType || this is ParameterizedType)
-//        { "Non-literal Union types contain only reference types or array types." }
-//        return when (this) {
-//            is ParameterizedType -> {
-//                assert(this.name == "Array" && this.typeArguments.size == 1) { "Non-literal Union types contain only reference types or array types." }
-//                UnionArrayMarkerPrefix + this.typeArguments[0].getName()
-//            }
-//
-//            is ReferenceType -> this.typeName
-//            is ArrayType -> this.elementType.getName()
-//            else -> throw InvalidStateException("Impossible")
-//        }
-//
-//    }
 
     override fun add(
         builder: FlatBuilderRepresentation,
@@ -48,7 +29,6 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
         assert(literals.isEmpty() || types.isEmpty()) { "A union type contains only literals or only non-literals" }
 
         // Literals are turned into one big enums
-        //TODO: add an "original name" property that we can use when serializing
         fun addEnumOfLiterals() {
             val createdEnumName = literals.joinToString("Or") { it.literal.toTitleCase() }
             builder.addEnum(
@@ -65,21 +45,22 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
             )
         }
 
-        //TODO for now we just add overloads for every union type, a more complete solution would create entire new classes
-        // Things that are not literals in a union type duplicate the builder functions and created a new override.
         fun addOverloadsOfTypes() {
-            // Just add parameter to the constructor with an "any" type
-            builder.addParameter(
-                name = nameAsParameter,
-                optional = isOptional,
-                documentation = documentationAsParameter,
-                type = "Any",
-                paramInConstructorOfClass = builderClassIn,
-                belongsToFunction = "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY FUNCTION",
-                isEnumType = false
-            )
+            if (types.any { it is ReferenceType && it.isPrimitive() }) {
+                // Just add parameter to the constructor with an "any" type
+                builder.addParameter(
+                    name = nameAsParameter,
+                    optional = isOptional,
+                    documentation = documentationAsParameter,
+                    type = "Any",
+                    paramInConstructorOfClass = builderClassIn,
+                    belongsToFunction = "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY FUNCTION",
+                    isEnumType = false
+                )
+            }
 
-            val existingParameters = builder.getParametersOfFunction(functionAppearsIn)
+
+            val existingParameters = builder.getParametersOfFunction(nameAsParameter)
 
             // Add the other types as duplicates of the original function
             types.forEachIndexed { i, type ->
@@ -91,20 +72,20 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
                         parameter.optional,
                         parameter.belongsToFunction,
                         overloadNum = DefaultOverloadNum + i,
-                        paramInConstructorOfClass = "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS",
+                        paramInConstructorOfClass = NotTopLevelOrInConstructor,
                         documentation = parameter.documentation,
                         isEnumType = false
                     )
                 }
                 // Add the additional typed parameter
                 type.add(
-                    builder,
-                    typeData,
-                    "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS",
-                    nameAsParameter,
-                    isOptional,
-                    functionAppearsIn,
-                    documentationAsParameter,
+                    builder = builder,
+                    typeData = typeData,
+                    builderClassIn = builderClassIn,
+                    nameAsParameter = nameAsParameter,
+                    isOptional = isOptional,
+                    functionAppearsIn = functionAppearsIn,
+                    documentationAsParameter = documentationAsParameter,
                     overloadNum = DefaultOverloadNum + i
                 )
             }

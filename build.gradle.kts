@@ -2,6 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val serializationVersion = "0.11.1"
 val junitVersion: String = "5.3.2"
+
+
 buildscript {
     val kotlin_version = "1.3.40"
     repositories {
@@ -18,6 +20,8 @@ plugins {
     kotlin("jvm") version "1.3.40"
     id("kotlinx-serialization") version "1.3.40"
 }
+
+
 //apply plugin:
 group = "com.fudge"
 version = "1.0-SNAPSHOT"

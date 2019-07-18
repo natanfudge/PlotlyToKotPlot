@@ -8,7 +8,8 @@ data class BuilderFunction(
     val name: String,
     val inClass: String?,
     val isOptional: Boolean,
-    val builderNameOfConstructedType: String
+    // Can be null when adding a singular primitive of an array
+    val builderNameOfConstructedType: String?
 )
 
 data class BuilderParameter(
@@ -38,6 +39,7 @@ data class EnumConstant(val name : String,
 fun String.toBuilderName() = toTitleCase() + "Builder"
 
 const val DefaultOverloadNum = 0
+const val NotTopLevelOrInConstructor = "#"
 
 data class FlatBuilderRepresentation(
     private val builderClasses: MutableList<BuilderClass>,
@@ -51,7 +53,7 @@ data class FlatBuilderRepresentation(
         inClass: String?,
         isOptional: Boolean,
 //        type: BuilderFunctionsType,
-        builderNameOfConstructedType: String
+        builderNameOfConstructedType: String?
     ) = builderFunctions.add(BuilderFunction(name, inClass, isOptional, /*type,*/ builderNameOfConstructedType))
 
     fun addParameter(
@@ -60,6 +62,10 @@ data class FlatBuilderRepresentation(
         optional: Boolean,
         belongsToFunction: String,
         overloadNum: Int = DefaultOverloadNum,
+        /**
+         * Careful putting null! Null means it's a top level function!
+         * To say that it's not a top level function or in any constructor, use  [NotTopLevelOrInConstructor]
+         */
         paramInConstructorOfClass: String?,
         documentation: String,
         isEnumType: Boolean
@@ -70,7 +76,7 @@ data class FlatBuilderRepresentation(
             optional,
             belongsToFunction,
             overloadNum,
-            if (overloadNum == DefaultOverloadNum) paramInConstructorOfClass else "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS",
+            /*if (overloadNum == DefaultOverloadNum)*/ paramInConstructorOfClass/* else "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS"*/,
             documentation,
             isEnumType
         )

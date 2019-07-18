@@ -18,7 +18,7 @@ data class ParameterizedType(val name: String, val typeArguments: List<KotPlotTy
         isPartial: Boolean,
         overloadNum: Int
     ) {
-        assert(typeArguments.size != 1) {"Only one type argument is expected"}
+        assert(typeArguments.size == 1) {"Only one type argument is expected. Actual: ${typeArguments.size}"}
         when (name) {
             "Partial" -> typeArguments[0].add(
                 builder,

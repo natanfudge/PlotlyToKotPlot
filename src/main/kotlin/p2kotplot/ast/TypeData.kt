@@ -51,7 +51,7 @@ class TypeData(
     }
 
 
-    fun findTypeProps(name: String): List<PropertySignature> {
+    fun findInterfaceProperties(name: String): List<PropertySignature> {
         val interfaceType =
             typeData.find { it.name == name } ?: throw InvalidStateException("Could not find class with name $name")
         if (interfaceType.props.any { it !is PropertySignature }) throw InvalidStateException("Did not expect to be directed to an interfaces with methods.")

@@ -41,7 +41,8 @@ data class TypeLiteral(val nestedProperties: List<PropertySignature>) : KotPlotT
             typeData,
             builderClassIn = inventedTypeName.toBuilderName(),
             isPartial = isPartial,
-            functionAppearsIn = nameAsParameter
+            functionAppearsIn = nameAsParameter,
+            overloadNum = overloadNum
         )
 //            for (prop in nestedProperties) {
 //                prop.type.add(

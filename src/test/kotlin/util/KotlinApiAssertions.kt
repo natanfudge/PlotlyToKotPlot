@@ -5,13 +5,11 @@ import p2kotplot.BuilderFunctionComponents
 import p2kotplot.KotlinApi
 import p2kotplot.ParameterComponents
 import p2kotplot.ast.Enum
-import p2kotplot.plotlytypes.DeclarationFile
-import p2kotplot.plotlytypes.FunctionSignature
-import p2kotplot.plotlytypes.Interface
-import p2kotplot.plotlytypes.Parameter
+import p2kotplot.plotlytypes.*
+import java.lang.AssertionError
 
 private inline fun <T> assertEquals(expected: T, actual: T, lazyMessage: () -> String) {
-    if (expected != actual) error(lazyMessage() + "\nExpected: <$expected>, Actual: <$actual> \n\n\n\n\n\n\n\n\n\n\n")
+    if (expected != actual) throw AssertionError(lazyMessage() + "\nExpected: <$expected>, Actual: <$actual> \n\n\n\n\n\n\n\n\n\n\n")
 }
 
 private fun <T> List<T>.difference(other: List<T>, iterableName: String): String {
@@ -25,7 +23,10 @@ private fun <T> List<T>.difference(other: List<T>, iterableName: String): String
 
 private fun <T> List<T>.assertEqualsTo(other: List<T>, iterableName: String, elementAsserter: T.(T, Int) -> Unit) {
     assertEquals(this.size, other.size) {
-        "$iterableName amount is not equal. (Expected: <${this.size}>, Actual: <${other.size}>) \n${this.difference(other, iterableName)}"
+        "$iterableName amount is not equal. (Expected: <${this.size}>, Actual: <${other.size}>) \n${this.difference(
+            other,
+            iterableName
+        )}"
     }
     this.forEachIndexed { i, function ->
         function.elementAsserter(other[i], i)
@@ -39,7 +40,7 @@ private fun <T> List<T>.assertEqualsToPrimitiveList(other: List<T>, iterableName
 }
 
 private fun <T> T.assertEqualsToPrimitive(other: T, objectsName: String, position: Int) {
-    assertEquals(this, other) { "${objectsName}s at position $position are not equal. Expected: <$this>, Actual: <$other>" }
+    assertEquals(this, other) { "${objectsName}s at position $position are not equal." }
 }
 
 infix fun KotlinApi.assertEqualsTo(other: KotlinApi) {
@@ -142,9 +143,47 @@ fun Parameter.assertEqualsTo(other: Parameter, functionPosition: Int, parameterP
     assertEquals(this.name, other.name) { "Name of parameters are not equal. $positionData" }
 
 
-    assertEquals(this.type, other.type) {
-        "Types of parameters are not equal. $positionData"
+    this.type.assertEqualsTo(other.type, functionPosition)
+
+//    assertEquals(this.type, other.type) {
+//        "Types of parameters are not equal. $positionData"
+//    }
+
+}
+
+fun KotPlotType.getType() = when (this) {
+    is ReferenceType -> "ReferenceType"
+    is UnionType -> "UnionType"
+    is ArrayType -> "ArrayType"
+    is FunctionType -> "FunctionType"
+    is IntersectionType -> "IntersectionType"
+    is LiteralType -> "LiteralType"
+    is ParameterizedType -> "ParameterizedType"
+    is TupleType -> "TupleType"
+    is TypeLiteral -> "TypeLiteral"
+    else -> error("unexpected")
+}
+
+fun KotPlotType.assertEqualsTo(other: KotPlotType, position: Int) {
+    assertEquals(this.getType(), other.getType()) { "Type subclass at position $position is not equal." }
+    when (this) {
+        is UnionType -> {
+            if (other !is UnionType) error("unexpected")
+            this.types.assertEqualsTo(other.types, "Union Part", KotPlotType::assertEqualsTo)
+        }
+        is ReferenceType -> {
+            if (other !is ReferenceType) error("unexpected")
+            assertEquals(this.typeName, other.typeName) { "Reference Type type name at position $position is not equal." }
+        }
+        is ArrayType -> {
+            if (other !is ArrayType) error("unexpected")
+            this.elementType.assertEqualsTo(other.elementType, position)
+        }
+        else -> assertEquals(this, other) { "Type contents at position $position is not equal." }
     }
 
+//    when (this) {
+//        is ReferenceType ->
+//    }
 }
 
