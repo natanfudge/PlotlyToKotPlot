@@ -6,7 +6,11 @@ import com.google.gson.typeadapters.RuntimeTypeAdapterFactory
 import p2kotplot.plotlytypes.*
 import kotlin.reflect.KClass
 
-fun createGson() : Gson {
+object GsonTest {
+    val gson = createGson()
+}
+
+fun createGson(): Gson {
     val signatureTypeFactory = RuntimeTypeAdapterFactory
         .of(Signature::class.java, "signatureType")
         .registerSubtype(PropertySignature::class.java)
@@ -24,22 +28,21 @@ fun createGson() : Gson {
         .registerSubtype(IntersectionType::class.java)
         .registerSubtype(ParameterizedType::class.java)
 
-    return  GsonBuilder().registerTypeAdapterFactory(signatureTypeFactory)
+    return GsonBuilder().registerTypeAdapterFactory(signatureTypeFactory)
         .registerTypeAdapterFactory(kotPlotTypeTypeFactory)
         .create()
 }
 
-val gson = createGson()
 
-@ExperimentalStdlibApi
-inline fun <reified T> String.parseTo(): T {
-    return gson.fromJson(this, T::class.java)
-}
+//@ExperimentalStdlibApi
+//inline fun <reified T> String.parseTo(): T {
+//    return GsonTest.gson.fromJson(this, T::class.java)
+//}
 
 
-@ExperimentalStdlibApi
-inline fun <reified T> T.stringify(): String {
-    return gson.toJson(this)
-}
-
-fun <T> KClass<Array<T>>.parseList(s: String): List<T>  = listOf(*gson.fromJson(s, this.java))
+//@ExperimentalStdlibApi
+//inline fun <reified T> T.stringify(): String {
+//    return GsonTest.gson.toJson(this)
+//}
+//
+//fun <T> KClass<Array<T>>.parseList(s: String): List<T> = listOf(*GsonTest.gson.fromJson(s, this.java))

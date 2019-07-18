@@ -1,7 +1,6 @@
 package p2kotplot
 
 import p2kotplot.plotlytypes.DeclarationFile
-import p2kotplot.util.parseTo
 import java.io.File
 
 

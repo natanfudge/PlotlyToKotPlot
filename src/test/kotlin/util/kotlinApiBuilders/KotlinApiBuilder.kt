@@ -10,15 +10,15 @@ import util.kotlinApiBuilders.BuilderFunctionType.*
 
 @TestBuilder
 class KotlinApiBuilder {
-    private val builderClasses = mutableListOf<BuilderClassComponents>()
-    private val topLevelFunctions = mutableListOf<BuilderFunctionComponents>()
-    private val enums = mutableListOf<Enum>()
+    /*private*/ val builderClasses = mutableListOf<BuilderClassComponents>()
+    /*private*/ val topLevelFunctions = mutableListOf<BuilderFunctionComponents>()
+    /*private*/ val enums = mutableListOf<Enum>()
 
-    fun builderClass(name: String, init: BuilderClassBuilder.() -> Unit) {
+    inline fun builderClass(name: String, init: BuilderClassBuilder.() -> Unit) {
         builderClasses.add(BuilderClassBuilder().apply(init).build(name))
     }
 
-    fun topLevelFunction(
+    inline fun topLevelFunction(
         name: String,
 //        documentation: String = "",
         hasInitParam: Boolean,
@@ -35,7 +35,7 @@ class KotlinApiBuilder {
         )
     }
 
-    fun enum(name: String, constants: EnumConstantsBuilder.() -> Unit) {
+    inline fun enum(name: String, constants: EnumConstantsBuilder.() -> Unit) {
         enums.add(Enum(name, EnumConstantsBuilder().apply(constants).build()))
     }
 

@@ -3,7 +3,7 @@ package util
 import p2kotplot.KotlinApi
 import p2kotplot.plotlytypes.DeclarationFile
 import p2kotplot.toKotlinApi
-import p2kotplot.util.gson
+import p2kotplot.util.GsonTest
 import p2kotplot.writeTo
 import util.kotlinApiBuilders.KotlinApiBuilder
 import util.kotlinApiBuilders.kotlinApi
@@ -21,7 +21,7 @@ inline fun fixture(name: String, category: String, tests: FixtureContext.() -> U
 const val tsNodeLocation = "C:\\Users\\natan\\AppData\\Roaming\\npm\\ts-node.cmd"
 const val plotly2JsonLocation = "src/ts/plotly2json.ts"
 
-const val writeFiles = true
+const val updateFiles = false
 
 class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
     private val targetLocation = "$fixtureCategory/$fixtureName"
@@ -32,7 +32,7 @@ class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
     init {
         // Generate and parse declaration file
         val declarationFileLocation = generateDeclarationFile()
-        fixtureDeclarationFile = gson.fromJson(File(declarationFileLocation).readText(), DeclarationFile::class.java)
+        fixtureDeclarationFile = GsonTest.gson.fromJson(File(declarationFileLocation).readText(), DeclarationFile::class.java)
 
 //        val kotlinFileLocation = generateKotlinFile()
 //        generatedKotlinFile = File(kotlinFileLocation).readText()
@@ -60,7 +60,7 @@ class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
 
         if (File(fixtureLocation).doesNotExist()) throw TestException("The fixture $fixtureLocation does not exist!")
 
-        "$tsNodeLocation $plotly2JsonLocation $fixtureLocation $declarationFileJsonLocation".runCommand()
+        if(updateFiles) "$tsNodeLocation $plotly2JsonLocation $fixtureLocation $declarationFileJsonLocation".runCommand()
         return declarationFileJsonLocation
     }
 
@@ -72,7 +72,7 @@ class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
     inline fun expectedKotlinApi(init: KotlinApiBuilder.() -> Unit) {
         val expectedApi = kotlinApi(init)
         val actualApi = fixtureAsKotlinApi()
-       if(writeFiles) writeToFile(actualApi)
+       if(updateFiles) writeToFile(actualApi)
         expectedApi assertEqualsTo actualApi
     }
 
