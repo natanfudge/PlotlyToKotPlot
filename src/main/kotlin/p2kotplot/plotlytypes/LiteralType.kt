@@ -12,13 +12,15 @@ data class LiteralType(val literal: String) : KotPlotType {
     override fun add(
         builder: FlatBuilderRepresentation,
         typeData: TypeData,
-        builderClassIn: String?,
+        builderFunctionInClass: String?,
         nameAsParameter: String,
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
         isPartial: Boolean,
-        overloadNum: Int
+        overloadNum: Int,
+        paramInConstructorOfClass: String?,
+        showInConstructor: Boolean
     ) {
         //This is only called when it's not as a union type, i.e. interface x { thing : "literal" }, this (almost) never happens.
 

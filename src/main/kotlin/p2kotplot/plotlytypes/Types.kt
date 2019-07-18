@@ -1,6 +1,5 @@
 package p2kotplot.plotlytypes
 
-import p2kotplot.ast.DefaultOverloadNum
 import p2kotplot.ast.FlatBuilderRepresentation
 //import p2kotplot.JsonToKotPlot
 import p2kotplot.ast.TypeData
@@ -53,7 +52,7 @@ interface KotPlotType {
     fun add(
         builder: FlatBuilderRepresentation,
         typeData: TypeData,
-        builderClassIn: String?,
+        builderFunctionInClass: String?,
         nameAsParameter: String,
         isOptional: Boolean,
         functionAppearsIn: String,
@@ -73,7 +72,10 @@ interface KotPlotType {
          */
 
         isPartial: Boolean = false,
-        overloadNum: Int = DefaultOverloadNum
+        overloadNum: Int,
+        //TODO: remove this
+        paramInConstructorOfClass: String?,
+        showInConstructor: Boolean = true
     ) {
 
     }
@@ -138,12 +140,13 @@ fun List<PropertySignature>.addTypes(
         prop.type.add(
             builder = builder,
             typeData = typeData,
-            builderClassIn = builderClassIn,
+            builderFunctionInClass = builderClassIn,
             nameAsParameter = prop.name,
             isOptional = isPartial || prop.optional,
             functionAppearsIn = functionAppearsIn,
             documentationAsParameter = prop.documentation,
-            overloadNum = overloadNum
+            overloadNum = overloadNum,
+            paramInConstructorOfClass =builderClassIn
         )
     }
 

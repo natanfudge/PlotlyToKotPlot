@@ -88,13 +88,13 @@ class UnionTypeTest {
 //                    parameter(name = "param", type = union(array(union("string", "boolean")), array("Interface1")))
 //                }
 
-            anInterface(name = "Interface1") {
-                property(name = "prop", type = "string")
-            }
-
-            anInterface(name = "Interface2") {
-                property("prop", type = "boolean")
-            }
+//            anInterface(name = "Interface1") {
+//                property(name = "prop", type = "string")
+//            }
+//
+//            anInterface(name = "Interface2") {
+//                property("prop", type = "boolean")
+//            }
 
         }
         //TODO: does not work
@@ -105,13 +105,13 @@ class UnionTypeTest {
 //                topLevelFunction(name = "testTwoTypes", hasInitParam = true)
 //                topLevelFunction(name = "testUnionOfTwoTypes", hasInitParam = true)
 
-            builderClass("Interface1Builder") {
-                constructorArgument(name = "prop", type = "string")
-            }
-
-            builderClass("Interface2Builder") {
-                constructorArgument(name = "prop", type = "boolean")
-            }
+//            builderClass("Interface1Builder") {
+//                constructorArgument(name = "prop", type = "string")
+//            }
+//
+//            builderClass("Interface2Builder") {
+//                constructorArgument(name = "prop", type = "boolean")
+//            }
 
             builderClass("TestPrimitiveBuilder") {
                 arrayBuilderFunction(arrayName = "param", hasInitParam = false, constructedTypeBuilderName = null) {
@@ -119,7 +119,7 @@ class UnionTypeTest {
                 }
 
                 arrayBuilderFunction(arrayName = "param", hasInitParam = false, constructedTypeBuilderName = null) {
-                    parameter(name = "param".arrParamName, type = "boolean")
+                    parameter(name = "param".arrParamName, type = "number")
                 }
             }
 

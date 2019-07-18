@@ -7,22 +7,26 @@ data class TupleType(val tupleTypes: List<KotPlotType>) : KotPlotType {
     override fun add(
         builder: FlatBuilderRepresentation,
         typeData: TypeData,
-        builderClassIn: String?,
+        builderFunctionInClass: String?,
         nameAsParameter: String,
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
         isPartial: Boolean,
-        overloadNum: Int
+        overloadNum: Int,
+        paramInConstructorOfClass: String?,
+        showInConstructor: Boolean
     ) {
         ArrayType(elementType = ReferenceType("Any")).add(
             builder,
             typeData,
-            builderClassIn,
+            builderFunctionInClass,
             nameAsParameter,
             isOptional,
             functionAppearsIn,
-            documentationAsParameter
+            documentationAsParameter,
+            paramInConstructorOfClass =builderFunctionInClass,
+            overloadNum = overloadNum
         )
     }
 }

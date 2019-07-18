@@ -10,35 +10,41 @@ data class ParameterizedType(val name: String, val typeArguments: List<KotPlotTy
     override fun add(
         builder: FlatBuilderRepresentation,
         typeData: TypeData,
-        builderClassIn: String?,
+        builderFunctionInClass: String?,
         nameAsParameter: String,
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
         isPartial: Boolean,
-        overloadNum: Int
+        overloadNum: Int,
+        paramInConstructorOfClass: String?,
+        showInConstructor: Boolean
     ) {
-        assert(typeArguments.size == 1) {"Only one type argument is expected. Actual: ${typeArguments.size}"}
+        assert(typeArguments.size == 1) { "Only one type argument is expected. Actual: ${typeArguments.size}" }
         when (name) {
             "Partial" -> typeArguments[0].add(
                 builder,
                 typeData,
-                builderClassIn,
+                builderFunctionInClass,
                 nameAsParameter,
                 isOptional,
                 functionAppearsIn,
                 documentationAsParameter,
-                isPartial = true
+                isPartial = true,
+                paramInConstructorOfClass = builderFunctionInClass,
+                overloadNum = overloadNum
             )
             "Array" -> ArrayType(typeArguments[0]).add(
                 builder,
                 typeData,
-                builderClassIn,
+                builderFunctionInClass,
                 nameAsParameter,
                 isOptional,
                 functionAppearsIn,
                 documentationAsParameter,
-                isPartial
+                isPartial,
+                paramInConstructorOfClass = builderFunctionInClass,
+                overloadNum = overloadNum
 
             )
             else -> throw InvalidStateException("Did not expect anything other than 'Array' or 'Partial'")

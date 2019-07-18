@@ -9,13 +9,15 @@ data class FunctionType(val parameters: List<Parameter>, val returnType: KotPlot
     override fun add(
         builder: FlatBuilderRepresentation,
         typeData: TypeData,
-        builderClassIn: String?,
+        builderFunctionInClass: String?,
         nameAsParameter: String,
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
         isPartial: Boolean,
-        overloadNum: Int
+        overloadNum: Int,
+        paramInConstructorOfClass: String?,
+        showInConstructor: Boolean
     ) {
         // Can't be serialized easily
     }

@@ -1,7 +1,6 @@
 package p2kotplot.plotlytypes
 
 import p2kotplot.ast.*
-import sun.plugin.dom.exception.InvalidStateException
 
 
 fun String.hasArrayTypePrefix() = this.startsWith(UnionArrayMarkerPrefix)
@@ -14,13 +13,15 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
     override fun add(
         builder: FlatBuilderRepresentation,
         typeData: TypeData,
-        builderClassIn: String?,
+        builderFunctionInClass: String?,
         nameAsParameter: String,
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
         isPartial: Boolean,
-        overloadNum: Int
+        overloadNum: Int,
+        paramInConstructorOfClass: String?,
+        showInConstructor: Boolean
     ) {
 
         val literals = types.filterIsInstance<LiteralType>()
@@ -38,7 +39,8 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
                 name = nameAsParameter,
                 type = createdEnumName,
                 belongsToFunction = functionAppearsIn,
-                paramInConstructorOfClass = builderClassIn,
+                inBuilderFunctionInClass = builderFunctionInClass,
+                inConstructorOfClass = builderFunctionInClass,
                 optional = isOptional,
                 documentation = documentationAsParameter,
                 isEnumType = true
@@ -46,14 +48,15 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
         }
 
         fun addOverloadsOfTypes() {
-            if (types.any { it is ReferenceType && it.isPrimitive() }) {
+            if (types.any { it.isPrimitiveType() }) {
                 // Just add parameter to the constructor with an "any" type
                 builder.addParameter(
                     name = nameAsParameter,
                     optional = isOptional,
                     documentation = documentationAsParameter,
                     type = "Any",
-                    paramInConstructorOfClass = builderClassIn,
+                    inConstructorOfClass = builderFunctionInClass,
+                    inBuilderFunctionInClass = null,
                     belongsToFunction = "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY FUNCTION",
                     isEnumType = false
                 )
@@ -71,8 +74,9 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
                         parameter.type,
                         parameter.optional,
                         parameter.belongsToFunction,
-                        overloadNum = DefaultOverloadNum + i,
-                        paramInConstructorOfClass = NotTopLevelOrInConstructor,
+                        overloadNum = StartingOverloadNum + i,
+                        inBuilderFunctionInClass = builderFunctionInClass,
+                        inConstructorOfClass = null,
                         documentation = parameter.documentation,
                         isEnumType = false
                     )
@@ -81,12 +85,16 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
                 type.add(
                     builder = builder,
                     typeData = typeData,
-                    builderClassIn = builderClassIn,
+                    // If it's not a primitive type we need to keep the builderFunctionInClass for tracking purposes later on.
+                    builderFunctionInClass = builderFunctionInClass,
                     nameAsParameter = nameAsParameter,
                     isOptional = isOptional,
                     functionAppearsIn = functionAppearsIn,
                     documentationAsParameter = documentationAsParameter,
-                    overloadNum = DefaultOverloadNum + i
+                    overloadNum = StartingOverloadNum + i,
+                    paramInConstructorOfClass = null,
+                    //TODO: this might be unnecessary
+                    showInConstructor = false
                 )
             }
 

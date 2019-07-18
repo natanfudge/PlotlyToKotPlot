@@ -21,25 +21,29 @@ data class BuilderParameter(
     val optional: Boolean,
     val belongsToFunction: String,
     val overloadNum: Int,
-    val paramInConstructorOfClass: String?,
+    val inConstructorOfClass: String?,
+    val inBuilderFunctionInClass: String?,
     val documentation: String,
-    val isEnumType : Boolean
+    val isEnumType: Boolean
 )
 
 data class Enum(val name: String, val elements: List<EnumConstant>)
 
-data class EnumConstant(val name : String,
-                        /**
-                 * If the typescript file had a literal 'abcd' name would be 'Abcd' to comply with kotlin standards
-                 * but originalName would be 'abcd' for serialization purposes
-                 */
-                        val originalName: String)
+data class EnumConstant(
+    val name: String,
+    /**
+     * If the typescript file had a literal 'abcd' name would be 'Abcd' to comply with kotlin standards
+     * but originalName would be 'abcd' for serialization purposes
+     */
+    val originalName: String
+)
 
 
 fun String.toBuilderName() = toTitleCase() + "Builder"
 
-const val DefaultOverloadNum = 0
-const val NotTopLevelOrInConstructor = "#"
+const val StartingOverloadNum = 0
+//const val NotTopLevelOrInConstructor = "#"
+const val TopLevel = "#TopLevel"
 
 data class FlatBuilderRepresentation(
     private val builderClasses: MutableList<BuilderClass>,
@@ -54,19 +58,16 @@ data class FlatBuilderRepresentation(
         isOptional: Boolean,
 //        type: BuilderFunctionsType,
         builderNameOfConstructedType: String?
-    ) = builderFunctions.add(BuilderFunction(name, inClass, isOptional, /*type,*/ builderNameOfConstructedType))
+    ) = builderFunctions.addIfNotIn(BuilderFunction(name, inClass, isOptional, /*type,*/ builderNameOfConstructedType))
 
     fun addParameter(
         name: String,
         type: String,
         optional: Boolean,
         belongsToFunction: String,
-        overloadNum: Int = DefaultOverloadNum,
-        /**
-         * Careful putting null! Null means it's a top level function!
-         * To say that it's not a top level function or in any constructor, use  [NotTopLevelOrInConstructor]
-         */
-        paramInConstructorOfClass: String?,
+        overloadNum: Int = StartingOverloadNum,
+        inConstructorOfClass: String?,
+        inBuilderFunctionInClass: String?,
         documentation: String,
         isEnumType: Boolean
     ) = parameters.addIfNotIn(
@@ -76,14 +77,15 @@ data class FlatBuilderRepresentation(
             optional,
             belongsToFunction,
             overloadNum,
-            /*if (overloadNum == DefaultOverloadNum)*/ paramInConstructorOfClass/* else "NONE - THIS IS AN ARBITRARY PLACEHOLDER SO IT ISN'T IN ANY CLASS"*/,
+            inConstructorOfClass,
+            inBuilderFunctionInClass,
             documentation,
             isEnumType
         )
     )
 
     fun getParametersOfFunction(functionName: String) =
-        parameters.filter { it.belongsToFunction == functionName && it.overloadNum == DefaultOverloadNum }
+        parameters.filter { it.belongsToFunction == functionName && it.overloadNum == StartingOverloadNum }
 
 
     fun addEnum(name: String, elements: List<EnumConstant>) = enums.addIfNotIn(Enum(name, elements))

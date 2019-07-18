@@ -9,25 +9,30 @@ fun ReferenceType.isPrimitive() = when (typeName.toLowerCase()) {
     else -> false
 }
 
+fun KotPlotType.isPrimitiveType() = this is ReferenceType && this.isPrimitive()
+
 data class ReferenceType(val typeName: String) : KotPlotType {
 
     override fun add(
         builder: FlatBuilderRepresentation,
         typeData: TypeData,
-        builderClassIn: String?,
+        builderFunctionInClass: String?,
         nameAsParameter: String,
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
         isPartial: Boolean,
-        overloadNum: Int
+        overloadNum: Int,
+        paramInConstructorOfClass: String?,
+        showInConstructor: Boolean
     ) {
         fun emitPrimitiveType() {
             builder.addParameter(
                 name = nameAsParameter,
                 type = this.typeName.toTitleCase(),
                 belongsToFunction = functionAppearsIn,
-                paramInConstructorOfClass = builderClassIn,
+                inConstructorOfClass =  paramInConstructorOfClass,
+                inBuilderFunctionInClass = builderFunctionInClass,
                 optional = isOptional,
                 documentation = documentationAsParameter,
                 overloadNum = overloadNum,
@@ -42,8 +47,8 @@ data class ReferenceType(val typeName: String) : KotPlotType {
             builder.addBuilderClass(name = builderClassName)
             builder.addBuilderFunction(
                 name = nameAsParameter,
-                inClass = builderClassIn,
-                builderNameOfConstructedType = typeName.toBuilderName(),
+                inClass = builderFunctionInClass,
+                builderNameOfConstructedType = if(isPrimitive()) null else typeName.toBuilderName(),
                 isOptional = isOptional
             )
             // Add all the types of the properties of the interface that has this type's name

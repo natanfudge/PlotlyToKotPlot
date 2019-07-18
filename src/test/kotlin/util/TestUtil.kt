@@ -21,7 +21,7 @@ inline fun fixture(name: String, category: String, tests: FixtureContext.() -> U
 const val tsNodeLocation = "C:\\Users\\natan\\AppData\\Roaming\\npm\\ts-node.cmd"
 const val plotly2JsonLocation = "src/ts/plotly2json.ts"
 
-const val writeFiles = false
+const val writeFiles = true
 
 class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
     private val targetLocation = "$fixtureCategory/$fixtureName"

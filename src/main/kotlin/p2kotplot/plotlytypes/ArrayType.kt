@@ -1,7 +1,7 @@
 package p2kotplot.plotlytypes
 
 import p2kotplot.ast.FlatBuilderRepresentation
-import p2kotplot.ast.NotTopLevelOrInConstructor
+//import p2kotplot.ast.NotTopLevelOrInConstructor
 import p2kotplot.ast.TypeData
 
 //import p2kotplot.JsonToKotPlot
@@ -24,19 +24,21 @@ data class ArrayType(val elementType: KotPlotType) : KotPlotType {
     override fun add(
         builder: FlatBuilderRepresentation,
         typeData: TypeData,
-        builderClassIn: String?,
+        builderFunctionInClass: String?,
         nameAsParameter: String,
         isOptional: Boolean,
         functionAppearsIn: String,
         documentationAsParameter: String,
         isPartial: Boolean,
-        overloadNum: Int
+        overloadNum: Int,
+        paramInConstructorOfClass: String?,
+        showInConstructor: Boolean
     ) {
         val arrayBuilderFunctionName = nameAsParameter.toArrayBuilderFunctionName()
         if (elementType is ReferenceType && elementType.isPrimitive()) {
             builder.addBuilderFunction(
                 name = arrayBuilderFunctionName,
-                inClass = builderClassIn,
+                inClass = builderFunctionInClass,
                 builderNameOfConstructedType = null,
                 isOptional = isOptional
             )
@@ -45,25 +47,29 @@ data class ArrayType(val elementType: KotPlotType) : KotPlotType {
                 type = elementType.typeName,
                 documentation = documentationAsParameter,
                 isEnumType = false,
-                paramInConstructorOfClass = NotTopLevelOrInConstructor,
+                inBuilderFunctionInClass = null,
                 optional = false,
-                belongsToFunction = arrayBuilderFunctionName
+                belongsToFunction = arrayBuilderFunctionName,
+                inConstructorOfClass = null,
+                overloadNum = overloadNum
             )
         } else {
             elementType.add(
                 builder = builder,
                 typeData = typeData,
-                builderClassIn = builderClassIn,
+                builderFunctionInClass = builderFunctionInClass,
+                paramInConstructorOfClass = builderFunctionInClass,
                 nameAsParameter = arrayBuilderFunctionName,
                 isOptional = false,
                 functionAppearsIn = arrayBuilderFunctionName,
-                documentationAsParameter = documentationAsParameter
+                documentationAsParameter = documentationAsParameter,
+                overloadNum = overloadNum
             )
         }
 //        builder.addBuilderClass(name = name.toBuilderName())
 //            builder.addBuilderFunction(
 //                name = nameAsParameter.toBuilderFunctionName(),
-//                inClass = builderClassIn,
+//                inClass = builderFunctionInClass,
 //                type = BuilderFunctionsType.Array
 //            )
 //            for (prop in typeData.findTypeProps(name)) {

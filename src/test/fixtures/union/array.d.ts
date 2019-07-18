@@ -8,10 +8,10 @@ export function testPrimitive(param: string[] | Array<number>)
 //
 // export function testUnionOfTwoTypes(param: (string | boolean)[] | Interface1[])
 
-interface Interface1 {
-    prop: string
-}
-
-interface Interface2 {
-    prop: boolean
-}
+// interface Interface1 {
+//     prop: string
+// }
+//
+// interface Interface2 {
+//     prop: boolean
+// }
