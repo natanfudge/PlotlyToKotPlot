@@ -22,73 +22,66 @@ const val tsNodeLocation = "C:\\Users\\natan\\AppData\\Roaming\\npm\\ts-node.cmd
 const val nodeCommand = "node"
 const val plotly2JsonSourceLocation = "src/ts/plotly2json.ts"
 const val plotly2JsonBinLocation = "out/plotly2json.js"
-const val updateFiles = false
+//TODO: change to 'refresh fixture cache' and document
+
+/**
+ * Run the typescript converter even if there are no changes in the declaration file fixture
+ */
+const val forceTypescriptRerun = false
 
 class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
     private val targetLocation = "$fixtureCategory/$fixtureName"
 
-    val fixtureDeclarationFile: DeclarationFile
-//    val generatedKotlinFile : String
+    private val fixtureDeclarationFile: DeclarationFile
+    private val decFileJsonLocation = "src/test/out/json/$targetLocation.json"
+    private val kotlinApiLocation = "src/test/out/$targetLocation.kt"
+    private val typescriptFixtureLocation = "src/test/fixtures/$targetLocation.d.ts"
+    private val typescriptFixtureCacheLocation = "src/test/out/fixture_cache/$targetLocation.d.ts"
+
 
     init {
         // Generate and parse declaration file
-        val declarationFileLocation = generateDeclarationFile()
-        fixtureDeclarationFile =
-            GsonTest.gson.fromJson(File(declarationFileLocation).readText(), DeclarationFile::class.java)
-
-//        val kotlinFileLocation = generateKotlinFile()
-//        generatedKotlinFile = File(kotlinFileLocation).readText()
-
+        generateDeclarationFile()
+        val declarationFile = File(decFileJsonLocation).readText()
+        fixtureDeclarationFile = GsonTest.gson.fromJson(declarationFile, DeclarationFile::class.java)
     }
 
-    fun fixtureAsKotlinApi(): KotlinApi = fixtureDeclarationFile.toKotlinApi()
 
-    fun test(kotlinFileLocation : String){
-                val file = File(kotlinFileLocation).readText()
-        println(file)
-    }
 
-    fun writeToFile(kotlinApi: KotlinApi): String {
-        val kotlinFileLocation = "src/test/out/$targetLocation.kt"
-//        test(kotlinFileLocation)
-//        val file = File(kotlinFileLocation).readText()
-//        println(file)
-        kotlinApi.writeTo(kotlinFileLocation)
-        return kotlinFileLocation
-    }
+    private fun generateDeclarationFile() {
+//        if (!File(targetFolder).exists()) File(targetFolder).mkdir()
 
-//    fun fixtureDecFile(): DeclarationFile {
-//        val targetLocation = generateDeclarationFile()
-//        return gson.fromJson(File(targetLocation).readText(), DeclarationFile::class.java)
-//    }
+        if (File(typescriptFixtureLocation).doesNotExist()) throw TestException("The fixture $typescriptFixtureLocation does not exist!")
 
-    private fun generateDeclarationFile(): String {
-        val targetFolder = "src/test/out/$fixtureCategory"
-        if (!File(targetFolder).exists()) File(targetFolder).mkdir()
-        val declarationFileJsonLocation = "src/test/out/$targetLocation.json"
-        val fixtureLocation = "src/test/fixtures/$targetLocation.d.ts"
 
-        if (File(fixtureLocation).doesNotExist()) throw TestException("The fixture $fixtureLocation does not exist!")
-
-        if (updateFiles) {
-            "$nodeCommand $plotly2JsonBinLocation $fixtureLocation $declarationFileJsonLocation".runCommand()
+        if (shouldRerunTypescriptConverter()) {
+            "$nodeCommand $plotly2JsonBinLocation $typescriptFixtureLocation $decFileJsonLocation".runCommand()
+            File(typescriptFixtureLocation).copyTo(File(typescriptFixtureCacheLocation),overwrite = true)
         }
 
-//        if(updateFiles) "$tsNodeLocation $plotly2JsonLocation $fixtureLocation $declarationFileJsonLocation".runCommand()
-        return declarationFileJsonLocation
     }
 
-    inline fun expectedDeclarationFile(init: DeclarationFileBuilder.() -> Unit) {
+    private fun shouldRerunTypescriptConverter(): Boolean {
+        val fixtureCache = File(typescriptFixtureCacheLocation)
+        val handWrittenFixture = File(typescriptFixtureLocation)
+        if (fixtureCache.doesNotExist() || handWrittenFixture.doesNotExist()) return true
+        val cacheText = fixtureCache.readText()
+        val handWrittenText = handWrittenFixture.readText()
+        return cacheText != handWrittenText || forceTypescriptRerun
+    }
+
+     fun expectedDeclarationFile(init: DeclarationFileBuilder.() -> Unit) {
         val expectedDeclarationFile = declarationFile(init)
         expectedDeclarationFile assertEqualsTo fixtureDeclarationFile
     }
 
-    inline fun expectedKotlinApi(init: KotlinApiBuilder.() -> Unit) {
+    fun expectedKotlinApi(init: KotlinApiBuilder.() -> Unit) {
         val expectedApi = kotlinApi(init)
-        val actualApi = fixtureAsKotlinApi()
-        /*if(updateFiles)*/ writeToFile(actualApi)
+        val actualApi = fixtureDeclarationFile.toKotlinApi()
+        actualApi.writeTo(kotlinApiLocation)
         expectedApi assertEqualsTo actualApi
     }
+
 
 }
 

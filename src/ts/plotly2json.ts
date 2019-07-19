@@ -10,6 +10,7 @@ import {
     TypeAlias, TypeLiteral, UnionType
 } from "./types";
 import * as fs from "fs";
+import * as path from "path"
 import {AssertionError} from "assert";
 
 if(process.argv.length != 4) throw Error("Program needs to have exactly 2 arguments (arg1 = inFile, arg2 = outFile).");
@@ -61,7 +62,7 @@ let output: DeclarationFile = {
     typeAliases
 };
 
-
+fs.mkdirSync(path.dirname(outFile), { recursive: true });
 // print out the doc
 fs.writeFileSync(outFile, JSON.stringify(output, undefined, 4));
 
