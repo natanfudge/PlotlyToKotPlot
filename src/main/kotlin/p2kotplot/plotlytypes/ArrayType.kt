@@ -12,7 +12,7 @@ private const val OneOfArrayParameterPrefix = "oneOf"
 fun String.isBuilderFunctionNameForOneOfArray() = this.startsWith(OneOfArrayMarker)
 fun String.getArrayBuilderFunctionOriginalName() = this.removePrefix(OneOfArrayMarker)
 
-val String.arrParamName get() = OneOfArrayParameterPrefix + this.toTitleCase()
+fun String.withOneOfArrayParameterPrefix()  = OneOfArrayParameterPrefix + this.toTitleCase()
 
 //fun String.toArrayParameterName() = OneOfArrayParameterPrefix + this.toTitleCase()
 
@@ -43,7 +43,7 @@ data class ArrayType(val elementType: KotPlotType) : KotPlotType {
                 isOptional = isOptional
             )
             builder.addParameter(
-                name = nameAsParameter.arrParamName,
+                name = nameAsParameter.withOneOfArrayParameterPrefix(),
                 type = elementType.typeName,
                 documentation = documentationAsParameter,
                 isEnumType = false,

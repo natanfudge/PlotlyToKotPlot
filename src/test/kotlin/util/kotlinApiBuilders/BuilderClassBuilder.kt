@@ -18,7 +18,7 @@ class BuilderClassBuilder {
         init: BuilderFunctionBuilder.() -> Unit
     ) {
         builderFunctions.add(
-            BuilderFunctionBuilder().apply(init).build(
+            BuilderFunctionBuilder(forPrimitiveArray = false).apply(init).build(
                 name,
                 builderNameOfConstructedType,
                 hasInitParam,
@@ -35,7 +35,7 @@ class BuilderClassBuilder {
         init: BuilderFunctionBuilder.() -> Unit
     ) {
         builderFunctions.add(
-            BuilderFunctionBuilder().apply(init).build(
+            BuilderFunctionBuilder(forPrimitiveArray = constructedTypeBuilderName == null).apply(init).build(
                 name = KotlinWriter.SingularOfArrayFunctionPrefix + arrayName.toTitleCase(),
                 builderNameOfConstructedType =  constructedTypeBuilderName,
                 hasInitParam = hasInitParam,

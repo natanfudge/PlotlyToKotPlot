@@ -78,6 +78,7 @@ dependencies {
     testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     testCompile(group = "org.jetbrains.kotlin", name = "kotlin-test", version = "1.1.51")
     testCompile("de.danielbechler:java-object-diff:0.95")
+    testCompile(group= "org.jetbrains.kotlin", name= "kotlin-reflect", version="1.3.41")
 //    implementation ("org.jetbrains.kotlinx:kotlinx.benchmark.runtime:0.2.0" /*, "0.2.0"*/)
 //    implementation("org.jetbrains.kotlinx:kotlinx.benchmark.runtime:0.2.0-dev-2")
 

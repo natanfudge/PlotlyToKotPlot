@@ -72,10 +72,10 @@ class UnionTypeTest {
                 )
             }
 
-//                function("testHalfInterface") {
-//                    parameter(name = "param", type = union(array("string"), array("Interface1")))
-//                }
-//
+                function("testHalfInterface") {
+                    parameter(name = "param", type = union(array("string"), array("Interface1")))
+                }
+
 //                function("testInterface") {
 //                    parameter(name = "param", type = union(array("Interface1"), array("Interface2")))
 //                }
@@ -88,9 +88,9 @@ class UnionTypeTest {
 //                    parameter(name = "param", type = union(array(union("string", "boolean")), array("Interface1")))
 //                }
 
-//            anInterface(name = "Interface1") {
-//                property(name = "prop", type = "string")
-//            }
+            anInterface(name = "Interface1") {
+                property(name = "prop", type = "string")
+            }
 //
 //            anInterface(name = "Interface2") {
 //                property("prop", type = "boolean")
@@ -100,14 +100,14 @@ class UnionTypeTest {
         //TODO: does not work
         expectedKotlinApi {
             topLevelFunction(name = "testPrimitive", hasInitParam = true)
-//                topLevelFunction(name = "testHalfInterface", hasInitParam = true)
+                topLevelFunction(name = "testHalfInterface", hasInitParam = true)
 //                topLevelFunction(name = "testInterface", hasInitParam = true)
 //                topLevelFunction(name = "testTwoTypes", hasInitParam = true)
 //                topLevelFunction(name = "testUnionOfTwoTypes", hasInitParam = true)
 
-//            builderClass("Interface1Builder") {
-//                constructorArgument(name = "prop", type = "string")
-//            }
+            builderClass("Interface1Builder") {
+                constructorArgument(name = "prop", type = "string")
+            }
 //
 //            builderClass("Interface2Builder") {
 //                constructorArgument(name = "prop", type = "boolean")
@@ -115,51 +115,25 @@ class UnionTypeTest {
 
             builderClass("TestPrimitiveBuilder") {
                 arrayBuilderFunction(arrayName = "param", hasInitParam = false, constructedTypeBuilderName = null) {
-                    parameter(name = "param".arrParamName, type = "string")
+                    parameter(name = "param", type = "string")
                 }
 
                 arrayBuilderFunction(arrayName = "param", hasInitParam = false, constructedTypeBuilderName = null) {
-                    parameter(name = "param".arrParamName, type = "number")
+                    parameter(name = "param", type = "number")
+                }
+            }
+
+            builderClass("TestHalfInterfaceBuilder") {
+                arrayBuilderFunction(arrayName = "param", hasInitParam = false, constructedTypeBuilderName = null) {
+                    parameter(name = "param", type = "string")
+                }
+
+                arrayBuilderFunction(arrayName = "param", hasInitParam = true, constructedTypeBuilderName = "Interface1Builder") {
+                    parameter(name = "param", type = "Interface1")
                 }
             }
 
         }
-//            expectedKotlinApi {
-//                topLevelFunction(name = "test", hasInitParam = true)
-//                builderClass(name = "TestBuilder") {
-//                    arrayBuilderFunction(
-//                        arrayName = "interfaces",
-//                        hasInitParam = false,
-//                        builderNameOfConstructedType = "TestInterfaceBuilder"
-//                    ) {
-//                        parameter(name = "param", type = "String")
-//                    }
-//
-//                    arrayBuilderFunction(
-//                        arrayName = "interfaces",
-//                        hasInitParam = false,
-//                        builderNameOfConstructedType = "TestInterfaceBuilder"
-//                    ) {
-//                        parameter(name = "param", type = "String")
-//                    }
-//
-//                }
-//
-//                builderClass("TestInterfaceBuilder") {
-//                    constructorArgument(name = "stringProp", type = "String")
-//                    constructorArgument(name = "numberProp", type = "Number")
-//                }
-//            }
-
-
-//            expectedKotlinApi{
-//                topLevelFunction(name = "test", hasInitParam = true){
-//                }
-//
-//                builderClass("TestBuilder"){
-////                    builderFunction()
-//                }
-//            }
     }
 
 

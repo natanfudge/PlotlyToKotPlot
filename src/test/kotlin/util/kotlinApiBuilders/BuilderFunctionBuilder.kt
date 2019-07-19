@@ -1,14 +1,15 @@
 package util.kotlinApiBuilders
 
 import p2kotplot.*
+import p2kotplot.plotlytypes.withOneOfArrayParameterPrefix
 import util.TestBuilder
 
 @TestBuilder
-class BuilderFunctionBuilder {
+class BuilderFunctionBuilder(private val forPrimitiveArray : Boolean) {
     private val parameters = mutableListOf<ParameterComponents>()
 
     fun parameter(name: String, type: String, isOptional: Boolean = false, documentation: String = "") {
-        parameters.add(ParameterComponents(name, type, isOptional, documentation))
+        parameters.add(ParameterComponents(if(forPrimitiveArray) name.withOneOfArrayParameterPrefix() else name , type, isOptional, documentation))
     }
 
     fun build(

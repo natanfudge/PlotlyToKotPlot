@@ -1,12 +1,13 @@
 package util
 
-import p2kotplot.BuilderClassComponents
-import p2kotplot.BuilderFunctionComponents
-import p2kotplot.KotlinApi
-import p2kotplot.ParameterComponents
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
+import p2kotplot.*
 import p2kotplot.ast.Enum
 import p2kotplot.plotlytypes.*
 import java.lang.AssertionError
+import kotlin.reflect.typeOf
+
 
 private inline fun <T> assertEquals(expected: T, actual: T, lazyMessage: () -> String) {
     if (expected != actual) throw AssertionError(lazyMessage() + "\nExpected: <$expected>, Actual: <$actual> \n\n\n\n\n\n\n\n\n\n\n")
@@ -35,8 +36,9 @@ private fun <T> List<T>.assertEqualsTo(other: List<T>, iterableName: String, ele
 
 private fun <T> List<T>.assertEqualsToPrimitiveList(other: List<T>, iterableName: String) {
     val difference = this.difference(other, iterableName)
+    if(difference != "") throw AssertionError(difference + "\n\n\n\n\n\n\n")
 
-    assertEquals(difference, "") { difference }
+//    assertEquals(difference, "") { difference }
 }
 
 private fun <T> T.assertEqualsToPrimitive(other: T, objectsName: String, position: Int) {

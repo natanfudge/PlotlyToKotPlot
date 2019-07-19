@@ -25,7 +25,7 @@ class KotlinApiBuilder {
         init: BuilderFunctionBuilder.() -> Unit = {}
     ) {
         topLevelFunctions.add(
-            BuilderFunctionBuilder().apply(init).build(
+            BuilderFunctionBuilder(forPrimitiveArray = false).apply(init).build(
                 name,
 //                documentation,
                 name.toBuilderName(),

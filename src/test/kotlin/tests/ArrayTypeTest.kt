@@ -1,8 +1,7 @@
 package tests
 
 import org.junit.jupiter.api.Test
-import p2kotplot.KotlinWriter
-import p2kotplot.plotlytypes.arrParamName
+import p2kotplot.plotlytypes.withOneOfArrayParameterPrefix
 import util.fixture
 
 fun main() {
@@ -63,7 +62,7 @@ class ArrayTypeTest {
                         hasInitParam = false,
                         constructedTypeBuilderName = null
                     ) {
-                        parameter(name = "interfaces".arrParamName, type = "string")
+                        parameter(name = "interfaces", type = "string")
                     }
                 }
             }
