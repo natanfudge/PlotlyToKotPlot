@@ -1,26 +1,58 @@
+import me.champeau.gradle.JMHPluginExtension
+import me.champeau.gradle.JmhBytecodeGeneratorTask
+import org.jetbrains.kotlin.gradle.model.AllOpen
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.allopen.gradle.AllOpenExtension
 
 val serializationVersion = "0.11.1"
 val junitVersion: String = "5.3.2"
 
-
+//val kotlin_version = "1.3.40"
 buildscript {
     val kotlin_version = "1.3.40"
     repositories {
         jcenter()
+//        maven(url = "https://dl.bintray.com/kotlin/kotlinx")
+//        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
+        mavenCentral()
+        maven (
+      url= "https://plugins.gradle.org/m2/"
+        )
     }
 
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
         classpath("org.jetbrains.kotlin:kotlin-serialization:$kotlin_version")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:$kotlin_version")
+         classpath( "me.champeau.gradle:jmh-gradle-plugin:0.4.8")
+//        classPath("org.openjdk.jmh:jmh-generator-annprocess")
     }
 }
 
 plugins {
     kotlin("jvm") version "1.3.40"
     id("kotlinx-serialization") version "1.3.40"
+    id ("me.champeau.gradle.jmh") version "0.4.8"
+//    id("kotlinx.benchmark") version "0.2.0-dev-2"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.3.40"
+}
+//tasks.withType<allOpen>{
+//annotation("org.openjdk.jmh.annotations.State")
+//}
+configure<AllOpenExtension> {
+    annotation("org.openjdk.jmh.annotations.State")
 }
 
+configure<JMHPluginExtension>{
+     duplicateClassesStrategy = DuplicatesStrategy.WARN
+}
+//val jmh by tasks.registerin
+//tasks.withType<JmhBytecodeGeneratorTask>().doFirst{
+//
+//}
+//jmhJar.doFirst {
+//    new File("build/resources/test").mkdirs()
+//}
 
 //apply plugin:
 group = "com.fudge"
@@ -30,6 +62,7 @@ repositories {
     mavenCentral()
     jcenter()
     maven(url = "https://artifactory.cronapp.io/public-release")
+    maven(url = "https://dl.bintray.com/kotlin/kotlinx")
 }
 
 dependencies {
@@ -45,6 +78,8 @@ dependencies {
     testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     testCompile(group = "org.jetbrains.kotlin", name = "kotlin-test", version = "1.1.51")
     testCompile("de.danielbechler:java-object-diff:0.95")
+//    implementation ("org.jetbrains.kotlinx:kotlinx.benchmark.runtime:0.2.0" /*, "0.2.0"*/)
+//    implementation("org.jetbrains.kotlinx:kotlinx.benchmark.runtime:0.2.0-dev-2")
 
 }
 
@@ -58,6 +93,38 @@ tasks.withType<Test> {
         events("passed", "skipped", "failed")
     }
 }
+
+//sourceSets.create("jmh") {
+////    java.srcDirs = ['src/jmh/java']
+////    scala.srcDirs = ['src/jmh/scala']
+//    resources.srcDirs = ['src/jmh/resources']
+//    compileClasspath += sourceSets.main.runtimeClasspath
+//}
+//
+////sourceSets {
+//java.sourceSets["jmh"].java {
+//    java.srcDirs = ['src/jmh/java']
+//    scala.srcDirs = ['src/jmh/scala']
+//    resources.srcDirs = ['src/jmh/resources']
+//    compileClasspath += sourceSets.main.runtimeClasspath
+//}
+//}
+
+//benchmark {
+//    targets {
+//        register("main")
+//    }
+//}
+
+//sourceSets{
+//    jmh {
+//        java.srcDirs = ['src/jmh/java']
+//        scala.srcDirs = ['src/jmh/scala']
+//        resources.srcDirs = ['src/jmh/resources']
+//        compileClasspath += sourceSets.main.runtimeClasspath
+//    }
+//}
+
 //
 //tasks.withType<KotlinCompile>().all {
 //    kotlinOptions {

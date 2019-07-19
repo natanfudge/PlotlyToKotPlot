@@ -19,8 +19,9 @@ inline fun fixture(name: String, category: String, tests: FixtureContext.() -> U
 }
 
 const val tsNodeLocation = "C:\\Users\\natan\\AppData\\Roaming\\npm\\ts-node.cmd"
-const val plotly2JsonLocation = "src/ts/plotly2json.ts"
-
+const val nodeCommand = "node"
+const val plotly2JsonSourceLocation = "src/ts/plotly2json.ts"
+const val plotly2JsonBinLocation = "out/plotly2json.js"
 const val updateFiles = false
 
 class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
@@ -32,18 +33,27 @@ class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
     init {
         // Generate and parse declaration file
         val declarationFileLocation = generateDeclarationFile()
-        fixtureDeclarationFile = GsonTest.gson.fromJson(File(declarationFileLocation).readText(), DeclarationFile::class.java)
+        fixtureDeclarationFile =
+            GsonTest.gson.fromJson(File(declarationFileLocation).readText(), DeclarationFile::class.java)
 
 //        val kotlinFileLocation = generateKotlinFile()
 //        generatedKotlinFile = File(kotlinFileLocation).readText()
 
     }
 
-     fun fixtureAsKotlinApi(): KotlinApi = fixtureDeclarationFile.toKotlinApi()
+    fun fixtureAsKotlinApi(): KotlinApi = fixtureDeclarationFile.toKotlinApi()
 
-     fun writeToFile(kotlinApi: KotlinApi): String {
+    fun test(kotlinFileLocation : String){
+                val file = File(kotlinFileLocation).readText()
+        println(file)
+    }
+
+    fun writeToFile(kotlinApi: KotlinApi): String {
         val kotlinFileLocation = "src/test/out/$targetLocation.kt"
-         kotlinApi.writeTo(kotlinFileLocation)
+//        test(kotlinFileLocation)
+//        val file = File(kotlinFileLocation).readText()
+//        println(file)
+        kotlinApi.writeTo(kotlinFileLocation)
         return kotlinFileLocation
     }
 
@@ -60,7 +70,11 @@ class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
 
         if (File(fixtureLocation).doesNotExist()) throw TestException("The fixture $fixtureLocation does not exist!")
 
-        if(updateFiles) "$tsNodeLocation $plotly2JsonLocation $fixtureLocation $declarationFileJsonLocation".runCommand()
+        if (updateFiles) {
+            "$nodeCommand $plotly2JsonBinLocation $fixtureLocation $declarationFileJsonLocation".runCommand()
+        }
+
+//        if(updateFiles) "$tsNodeLocation $plotly2JsonLocation $fixtureLocation $declarationFileJsonLocation".runCommand()
         return declarationFileJsonLocation
     }
 
@@ -72,7 +86,7 @@ class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
     inline fun expectedKotlinApi(init: KotlinApiBuilder.() -> Unit) {
         val expectedApi = kotlinApi(init)
         val actualApi = fixtureAsKotlinApi()
-       if(updateFiles) writeToFile(actualApi)
+        /*if(updateFiles)*/ writeToFile(actualApi)
         expectedApi assertEqualsTo actualApi
     }
 
