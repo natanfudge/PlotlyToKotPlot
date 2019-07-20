@@ -9,7 +9,8 @@ data class BuilderFunction(
     val inClass: String?,
     val isOptional: Boolean,
     // Can be null when adding a singular primitive of an array
-    val builderNameOfConstructedType: String?
+    val builderNameOfConstructedType: String?,
+    val isForArray: Boolean
 )
 
 data class BuilderParameter(
@@ -57,8 +58,17 @@ data class FlatBuilderRepresentation(
         inClass: String?,
         isOptional: Boolean,
 //        type: BuilderFunctionsType,
-        builderNameOfConstructedType: String?
-    ) = builderFunctions.addIfNotIn(BuilderFunction(name, inClass, isOptional, /*type,*/ builderNameOfConstructedType))
+        builderNameOfConstructedType: String?,
+        isForArray: Boolean
+    ) = builderFunctions.addIfNotIn(
+        BuilderFunction(
+            name,
+            inClass,
+            isOptional, /*type,*/
+            builderNameOfConstructedType,
+            isForArray
+        )
+    )
 
     fun addParameter(
         name: String,

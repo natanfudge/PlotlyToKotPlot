@@ -5,6 +5,7 @@ import p2kotplot.plotlytypes.DeclarationFile
 import p2kotplot.toKotlinApi
 import p2kotplot.util.GsonTest
 import p2kotplot.writeTo
+import util.differ.preciseAssertEquals
 import util.kotlinApiBuilders.KotlinApiBuilder
 import util.kotlinApiBuilders.kotlinApi
 import java.io.File
@@ -47,7 +48,6 @@ class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
     }
 
 
-
     private fun generateDeclarationFile() {
 //        if (!File(targetFolder).exists()) File(targetFolder).mkdir()
 
@@ -56,7 +56,7 @@ class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
 
         if (shouldRerunTypescriptConverter()) {
             "$nodeCommand $plotly2JsonBinLocation $typescriptFixtureLocation $decFileJsonLocation".runCommand()
-            File(typescriptFixtureLocation).copyTo(File(typescriptFixtureCacheLocation),overwrite = true)
+            File(typescriptFixtureLocation).copyTo(File(typescriptFixtureCacheLocation), overwrite = true)
         }
 
     }
@@ -70,16 +70,18 @@ class FixtureContext(fixtureName: String, private val fixtureCategory: String) {
         return cacheText != handWrittenText || forceTypescriptRerun
     }
 
-     fun expectedDeclarationFile(init: DeclarationFileBuilder.() -> Unit) {
+    fun expectedDeclarationFile(init: DeclarationFileBuilder.() -> Unit) {
         val expectedDeclarationFile = declarationFile(init)
-        expectedDeclarationFile assertEqualsTo fixtureDeclarationFile
+        preciseAssertEquals(expectedDeclarationFile, fixtureDeclarationFile)
+//        expectedDeclarationFile assertEqualsTo fixtureDeclarationFile
     }
 
     fun expectedKotlinApi(init: KotlinApiBuilder.() -> Unit) {
         val expectedApi = kotlinApi(init)
         val actualApi = fixtureDeclarationFile.toKotlinApi()
         actualApi.writeTo(kotlinApiLocation)
-        expectedApi assertEqualsTo actualApi
+        preciseAssertEquals(expectedApi,actualApi)
+//        expectedApi assertEqualsTo actualApi
     }
 
 

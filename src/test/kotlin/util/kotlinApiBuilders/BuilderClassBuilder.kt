@@ -2,6 +2,7 @@ package util.kotlinApiBuilders
 
 import p2kotplot.*
 import p2kotplot.plotlytypes.toTitleCase
+import p2kotplot.util.addIfNotIn
 import util.TestBuilder
 
 @TestBuilder
@@ -48,7 +49,7 @@ class BuilderClassBuilder {
     }
 
     private fun arrayField(arrayName: String) {
-        arrayFields.add(arrayName)
+        arrayFields.addIfNotIn(arrayName)
     }
 
     private fun applyStatement(
@@ -69,7 +70,7 @@ class BuilderClassBuilder {
     }
 
     private fun arrayApplyStatement(variableName: String, variableIsOptional: Boolean = false) {
-        applyStatements.add(
+        applyStatements.addIfNotIn(
             applyStatementString(
                 variableIsOptional,
                 isForArray = true,

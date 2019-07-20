@@ -15,7 +15,8 @@ data class TupleType(val tupleTypes: List<KotPlotType>) : KotPlotType {
         isPartial: Boolean,
         overloadNum: Int,
         paramInConstructorOfClass: String?,
-        showInConstructor: Boolean
+        showInConstructor: Boolean,
+        isForArray: Boolean
     ) {
         ArrayType(elementType = ReferenceType("Any")).add(
             builder,
@@ -25,8 +26,9 @@ data class TupleType(val tupleTypes: List<KotPlotType>) : KotPlotType {
             isOptional,
             functionAppearsIn,
             documentationAsParameter,
+            overloadNum = overloadNum,
             paramInConstructorOfClass =builderFunctionInClass,
-            overloadNum = overloadNum
+            isForArray = false
         )
     }
 }

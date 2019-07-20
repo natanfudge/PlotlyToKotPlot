@@ -7,8 +7,6 @@ import p2kotplot.KotlinWriter.Companion.JsonMapName
 import p2kotplot.KotlinWriter.Companion.SingularOfArrayFunctionPrefix
 import p2kotplot.ast.*
 import p2kotplot.ast.Enum
-import p2kotplot.plotlytypes.getArrayBuilderFunctionOriginalName
-import p2kotplot.plotlytypes.isBuilderFunctionNameForOneOfArray
 import p2kotplot.plotlytypes.toTitleCase
 import p2kotplot.util.deepMap
 
@@ -120,10 +118,10 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
 
         val builderFunctions = assemble(builderClass.getBuilderFunctions())
 
-        val arrayFields =
-            builderClass.getBuilderFunctions().filter { it.name.isBuilderFunctionNameForOneOfArray() }.map {
-                it.name.getArrayBuilderFunctionOriginalName()
-            }
+        val arrayFields = builderClass.getBuilderFunctions()
+                .filter { it.isForArray }
+                .map { it.name }
+                .distinct()
 
         val applyStatements = builderClass.getConstructorArguments().map {
             applyStatementString(
@@ -134,16 +132,16 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
                 variableIsEnum = it.isEnumType
             )
         } + builderClass.getBuilderFunctions().filter {
-            it.name.isBuilderFunctionNameForOneOfArray()
+            it.isForArray
         }.map {
             applyStatementString(
                 variableIsOptional = it.isOptional,
-                variableName = it.name.getArrayBuilderFunctionOriginalName(),
+                variableName = it.name,
                 isForArray = true,
                 variableIsAny = false, // Does not matter
                 variableIsEnum = false // Does not matter
             )
-        }
+        }.distinct()
 
         val constructorArguments = builderClass.getConstructorArguments().map {
             it.toParameterComponents()
@@ -158,22 +156,15 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
         if (parametersOfFunction.isEmpty()) parametersOfFunction = listOf(listOf())
         return parametersOfFunction.map { parametersOfOverload ->
             BuilderFunctionComponents(
-                name = builderFunction.getFinalName(),
+                name = builderFunction.addOneOfIfNeeded(),
                 parameters = parametersOfOverload,
                 body = builderFunction.getBody(parametersOfOverload),
                 builderNameOfConstructedType = builderFunction.builderNameOfConstructedType,
                 hasInitParam = builderFunction.constructsBuilderClass()
 
-//                documentation =
-//                parametersOfOverload.filter { it.documentation != "" }
-//                    .joinToString("\n") { "@param " + it.name + " " + it.documentation }
             )
         }
     }
-
-
-//    fun assemble(enum : Enum) =
-
 
     private fun BuilderParameter.toParameterComponents(): ParameterComponents {
         return ParameterComponents(
@@ -206,35 +197,14 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
         }.toList()
     }
 
-//    /**
-//     * In the context above 'NotTopLevelOrInConstructor' and 'null` mean the same thing, so we sort that out.
-//     */
-//    private infix fun String?.builderClassNameEquals(other: String?) = this == other ||
-//            (this == NotTopLevelOrInConstructor && other == null) || (this == null && other == NotTopLevelOrInConstructor)
-//    builder.parameters.asSequence().filter
-//    {
-//        parameter ->
-//        parameter.belongsToFunction == this.name && parameter.paramInConstructorOfClass == this.builderNameOfConstructedType
-//    }.groupBy
-//    { it.overloadNum }.toList().sortedBy
-//    { it.first }.map
-//    {
-//        it.second
-//    }.toList()
-
 
     private fun BuilderFunction.getOverloadsParameterComponents(): List<List<ParameterComponents>> =
         getOverloadsParameters().deepMap { it.toParameterComponents() }
 
-    private fun BuilderFunction.getFinalName() = if (name.isBuilderFunctionNameForOneOfArray()) {
-        SingularOfArrayFunctionPrefix + name.getArrayBuilderFunctionOriginalName().toTitleCase()
+    private fun BuilderFunction.addOneOfIfNeeded() = if (isForArray) {
+        SingularOfArrayFunctionPrefix + name.toTitleCase()
     } else name
 
-//    private fun BuilderFunction.getBuilderClassUsedInFunction(): BuilderClass? =
-//        if (builderNameOfConstructedType == null) null
-//        else builder.builderClasses.find {
-//            it.name == this.builderNameOfConstructedType
-//        } ?: error("Could not find class $inClass")
 
     private fun BuilderFunction.constructsBuilderClass(): Boolean {
 //        return this.builderNameOfConstructedType != null
@@ -255,8 +225,7 @@ class BuilderAssembly(val builder: PublicFlatBuilderRepresentation) {
 
         return when {
             // Array
-            this.name.isBuilderFunctionNameForOneOfArray() ->
-                oneOfArrayFunctionBody(objectConstruction, this.name.getArrayBuilderFunctionOriginalName())
+            this.isForArray -> oneOfArrayFunctionBody(objectConstruction, this.name)
             // Top level
             this.inClass == TopLevel -> topLevelFunctionBody(objectConstruction)
             // Data class

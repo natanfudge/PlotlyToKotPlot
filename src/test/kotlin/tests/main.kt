@@ -12,7 +12,7 @@ fun main() {
     }
 
     UnionTypeTest().apply {
-        array()
+//        array()
         simpleEnum()
         simpleTypes()
         twoInterfaces()

@@ -6,12 +6,12 @@ import p2kotplot.ast.TypeData
 
 //import p2kotplot.JsonToKotPlot
 //import p2kotplot.toClassName
-private const val OneOfArrayMarker = "[ONE_OF_ARRAY_MARKER]"
+//private const val OneOfArrayMarker = "[ONE_OF_ARRAY_MARKER]"
 private const val OneOfArrayParameterPrefix = "oneOf"
 
-fun String.isBuilderFunctionNameForOneOfArray() = this.startsWith(OneOfArrayMarker)
-fun String.getArrayBuilderFunctionOriginalName() = this.removePrefix(OneOfArrayMarker)
-
+//fun String.isBuilderFunctionNameForOneOfArray() = this.startsWith(OneOfArrayMarker)
+//fun String.getArrayBuilderFunctionOriginalName() = this.removePrefix(OneOfArrayMarker)
+//
 fun String.withOneOfArrayParameterPrefix()  = OneOfArrayParameterPrefix + this.toTitleCase()
 
 //fun String.toArrayParameterName() = OneOfArrayParameterPrefix + this.toTitleCase()
@@ -19,37 +19,39 @@ fun String.withOneOfArrayParameterPrefix()  = OneOfArrayParameterPrefix + this.t
 
 
 data class ArrayType(val elementType: KotPlotType) : KotPlotType {
-    private fun String.toArrayBuilderFunctionName() = OneOfArrayMarker + this
+//    private fun String.toArrayBuilderFunctionName() = OneOfArrayMarker + this
     //TODO: investigate if [BuilderFunction.type] is necessary
     override fun add(
-        builder: FlatBuilderRepresentation,
-        typeData: TypeData,
-        builderFunctionInClass: String?,
-        nameAsParameter: String,
-        isOptional: Boolean,
-        functionAppearsIn: String,
-        documentationAsParameter: String,
-        isPartial: Boolean,
-        overloadNum: Int,
-        paramInConstructorOfClass: String?,
-        showInConstructor: Boolean
-    ) {
-        val arrayBuilderFunctionName = nameAsParameter.toArrayBuilderFunctionName()
+    builder: FlatBuilderRepresentation,
+    typeData: TypeData,
+    builderFunctionInClass: String?,
+    nameAsParameter: String,
+    isOptional: Boolean,
+    functionAppearsIn: String,
+    documentationAsParameter: String,
+    isPartial: Boolean,
+    overloadNum: Int,
+    paramInConstructorOfClass: String?,
+    showInConstructor: Boolean,
+    isForArray: Boolean
+) {
+//        val arrayBuilderFunctionName = nameAsParameter.toArrayBuilderFunctionName()
         if (elementType is ReferenceType && elementType.isPrimitive()) {
             builder.addBuilderFunction(
-                name = arrayBuilderFunctionName,
+                name = nameAsParameter,
                 inClass = builderFunctionInClass,
                 builderNameOfConstructedType = null,
-                isOptional = isOptional
+                isOptional = isOptional,
+                isForArray = true
             )
             builder.addParameter(
                 name = nameAsParameter.withOneOfArrayParameterPrefix(),
-                type = elementType.typeName,
+                type = elementType.typeName.toTitleCase(),
                 documentation = documentationAsParameter,
                 isEnumType = false,
                 inBuilderFunctionInClass = null,
                 optional = false,
-                belongsToFunction = arrayBuilderFunctionName,
+                belongsToFunction = nameAsParameter,
                 inConstructorOfClass = null,
                 overloadNum = overloadNum
             )
@@ -58,12 +60,13 @@ data class ArrayType(val elementType: KotPlotType) : KotPlotType {
                 builder = builder,
                 typeData = typeData,
                 builderFunctionInClass = builderFunctionInClass,
-                paramInConstructorOfClass = builderFunctionInClass,
-                nameAsParameter = arrayBuilderFunctionName,
+                nameAsParameter = nameAsParameter,
                 isOptional = false,
-                functionAppearsIn = arrayBuilderFunctionName,
+                functionAppearsIn = nameAsParameter,
                 documentationAsParameter = documentationAsParameter,
-                overloadNum = overloadNum
+                overloadNum = overloadNum,
+                paramInConstructorOfClass = builderFunctionInClass,
+                isForArray = true
             )
         }
 //        builder.addBuilderClass(name = name.toBuilderName())

@@ -75,7 +75,8 @@ interface KotPlotType {
         overloadNum: Int,
         //TODO: remove this
         paramInConstructorOfClass: String?,
-        showInConstructor: Boolean = true
+        showInConstructor: Boolean = true,
+        isForArray: Boolean
     ) {
 
     }
@@ -146,7 +147,8 @@ fun List<PropertySignature>.addTypes(
             functionAppearsIn = functionAppearsIn,
             documentationAsParameter = prop.documentation,
             overloadNum = overloadNum,
-            paramInConstructorOfClass =builderClassIn
+            paramInConstructorOfClass =builderClassIn,
+            isForArray = false
         )
     }
 

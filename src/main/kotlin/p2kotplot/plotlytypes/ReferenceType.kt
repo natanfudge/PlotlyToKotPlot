@@ -24,7 +24,8 @@ data class ReferenceType(val typeName: String) : KotPlotType {
         isPartial: Boolean,
         overloadNum: Int,
         paramInConstructorOfClass: String?,
-        showInConstructor: Boolean
+        showInConstructor: Boolean,
+        isForArray: Boolean
     ) {
         fun emitPrimitiveType() {
             builder.addParameter(
@@ -49,7 +50,8 @@ data class ReferenceType(val typeName: String) : KotPlotType {
                 name = nameAsParameter,
                 inClass = builderFunctionInClass,
                 builderNameOfConstructedType = if(isPrimitive()) null else typeName.toBuilderName(),
-                isOptional = isOptional
+                isOptional = isOptional,
+                isForArray = isForArray
             )
             // Add all the types of the properties of the interface that has this type's name
             typeData.findInterfaceProperties(typeName).addTypes(

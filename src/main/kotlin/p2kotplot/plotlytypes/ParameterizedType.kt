@@ -18,7 +18,8 @@ data class ParameterizedType(val name: String, val typeArguments: List<KotPlotTy
         isPartial: Boolean,
         overloadNum: Int,
         paramInConstructorOfClass: String?,
-        showInConstructor: Boolean
+        showInConstructor: Boolean,
+        isForArray: Boolean
     ) {
         assert(typeArguments.size == 1) { "Only one type argument is expected. Actual: ${typeArguments.size}" }
         when (name) {
@@ -31,8 +32,9 @@ data class ParameterizedType(val name: String, val typeArguments: List<KotPlotTy
                 functionAppearsIn,
                 documentationAsParameter,
                 isPartial = true,
+                overloadNum = overloadNum,
                 paramInConstructorOfClass = builderFunctionInClass,
-                overloadNum = overloadNum
+                isForArray = false
             )
             "Array" -> ArrayType(typeArguments[0]).add(
                 builder,
@@ -43,8 +45,9 @@ data class ParameterizedType(val name: String, val typeArguments: List<KotPlotTy
                 functionAppearsIn,
                 documentationAsParameter,
                 isPartial,
+                overloadNum = overloadNum,
                 paramInConstructorOfClass = builderFunctionInClass,
-                overloadNum = overloadNum
+                isForArray = false
 
             )
             else -> throw InvalidStateException("Did not expect anything other than 'Array' or 'Partial'")

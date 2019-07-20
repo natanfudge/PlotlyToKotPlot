@@ -26,7 +26,8 @@ data class IntersectionType(val types: List<KotPlotType>) : KotPlotType {
         isPartial: Boolean,
         overloadNum: Int,
         paramInConstructorOfClass: String?,
-        showInConstructor: Boolean
+        showInConstructor: Boolean,
+        isForArray: Boolean
     ) {
         //   Handled manually because it's easier to do it manually...
 

@@ -20,7 +20,8 @@ data class LiteralType(val literal: String) : KotPlotType {
         isPartial: Boolean,
         overloadNum: Int,
         paramInConstructorOfClass: String?,
-        showInConstructor: Boolean
+        showInConstructor: Boolean,
+        isForArray: Boolean
     ) {
         //This is only called when it's not as a union type, i.e. interface x { thing : "literal" }, this (almost) never happens.
 

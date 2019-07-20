@@ -21,7 +21,8 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
         isPartial: Boolean,
         overloadNum: Int,
         paramInConstructorOfClass: String?,
-        showInConstructor: Boolean
+        showInConstructor: Boolean,
+        isForArray: Boolean
     ) {
 
         val literals = types.filterIsInstance<LiteralType>()
@@ -94,7 +95,8 @@ data class UnionType(val types: List<KotPlotType>) : KotPlotType {
                     overloadNum = StartingOverloadNum + i,
                     paramInConstructorOfClass = null,
                     //TODO: this might be unnecessary
-                    showInConstructor = false
+                    showInConstructor = false,
+                    isForArray = isForArray
                 )
             }
 
